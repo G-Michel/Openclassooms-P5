@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -30,6 +31,17 @@ class User
 
     /**
      * @ORM\Column(name="user_name", type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez saisir un nom d’utilisateur")
+     * @Assert\Type(
+     *      type    = "string",
+     *      message = "Vous devez saisir une chaine de caractère"
+     * )
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 50,
+     *      minMessage ="Vous devez entrer au moins {{ limit }} caractères",
+     *      maxMessage ="Vous devez entrer moins de {{ limit }} caractères"
+     * )
      */
     private $userName;
 
@@ -40,13 +52,35 @@ class User
 
     /**
      * @ORM\Column(name="mail", type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez saisir votre mail")
+     * @Assert\Email(
+     *      message = "L’email {{ value }} n’est pas un mail valide",
+     *      checkMX = true
+     * )
      */
     private $mail;
 
     /**
      * @ORM\Column(name="password", type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez saisir un mot de passe")
+     * @Assert\Type(
+     *      type    = "string",
+     *      message = "Vous devez saisir une chaine de caractère"
+     * )
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 50,
+     *      minMessage ="Vous devez entrer au moins {{ limit }} caractères",
+     *      maxMessage ="Vous devez entrer moins de {{ limit }} caractères"
+     * )
      */
     private $password;
+
+    /**
+     * @ORM\Column(name="newsletter", type="boolean")
+     * @Assert\Type(type = "bool")
+     */
+    private $newsletter;
 
     /**
      * @return mixed
@@ -187,4 +221,26 @@ class User
 
         return $this;
     }
+
+    /**
+     * @param boolean $newsletter
+     *
+     * @return self
+     */
+    public function setNewsletter($newsletter)
+    {
+        $this->newsletter = $newsletter;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isNewsletter()
+    {
+        return $this->newsletter;
+    }
+
+
 }

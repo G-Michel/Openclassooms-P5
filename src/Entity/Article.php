@@ -21,19 +21,29 @@ class Article
     /**
      * @ORM\Column(name="date_add", type="datetime")
      */
-    private $dateAdd;     
+    private $dateAdd;
 
     /**
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez saisir un titre")
+     * @Assert\Type(
+     *      type    = "string",
+     *      message = "Vous devez saisir une chaine de caractère"
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(name="content" ,type="string")
+     * @Assert\NotBlank(message="Vous devez saisir un contenu")
+     * @Assert\Type(
+     *      type    = "string",
+     *      message = "Vous devez saisir une chaine de caractère"
+     * )
      */
     private $content;
 
-    
+
 
     /**
      * @return mixed

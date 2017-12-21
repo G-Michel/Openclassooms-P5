@@ -20,6 +20,11 @@ class Observation
 
     /**
      * @ORM\Column(name="date_obs", type="datetime")
+     * @Assert\NotBlank(message="Vous devez saisir une date et une heure")
+     * @Assert\DateTime(
+     *      format = "dd-MM-yyyy H:m",
+     *      message     = "Vous devez saisir une date et une heure valide entité"
+     * )
      */
     private $dateObs;
 
@@ -40,10 +45,18 @@ class Observation
 
     /**
      * @ORM\Column(name="comment", type="string", length=255)
+     * @Assert\Type(
+     *      type    = "string",
+     *      message = "Vous devez saisir une chaine de caractère"
+     * )
+     * @Assert\Length(
+     *      max        = 255,
+     *      maxMessage = "Vous devez entrer moins de {{ limit }} caractères"
+     * )
      */
     private $comment;
 
-    
+
 
     /**
      * @return mixed

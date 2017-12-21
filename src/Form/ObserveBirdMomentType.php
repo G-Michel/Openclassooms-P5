@@ -6,10 +6,9 @@ use App\Entity\ObserveBirdMoment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+//use pour les champs de formulaire
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-//use pour les champs de formulaire
-//use pour les validations du formulaire
 
 class ObserveBirdMomentType extends AbstractType
 {

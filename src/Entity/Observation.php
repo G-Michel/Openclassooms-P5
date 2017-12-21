@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Bird;
+use App\Entity\Picture;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
@@ -56,7 +59,28 @@ class Observation
      */
     private $comment;
 
+    /**
+     * Unidirectionnal - One Observation has One Location . (OWNED SIDE)
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Location", cascade={"persist"})
+     */
+    private $location;
 
+    /**
+     * Unidirectionnal - One Observation has One Bird . (OWNED SIDE)
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Bird", cascade={"persist"})
+     *
+     */
+    private $bird;
+
+    /**
+     * Unidirectionnal - One Observation has One Picture . (OWNED SIDE)
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist"})
+     *
+     */
+    private $picture;
 
     /**
      * @return mixed
@@ -176,5 +200,41 @@ class Observation
         $this->comment = $comment;
 
         return $this;
+    }
+
+    /**
+     * @return object
+     */
+    public function getBird()
+    {
+      return $this->bird;
+    }
+
+    /**
+     * @param object $bird
+     *
+     * @return self
+     */
+    public function setBird(Bird $bird = null)
+    {
+      $this->bird = $bird;
+    }
+
+    /**
+     * @return object
+     */
+    public function getPicture()
+    {
+      return $this->picture;
+    }
+
+    /**
+     * @param object $picture
+     *
+     * @return self
+     */
+    public function setPicture(UploadedFile $picture = null)
+    {
+      $this->picture = $picture;
     }
 }

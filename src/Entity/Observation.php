@@ -4,9 +4,9 @@ namespace App\Entity;
 
 use App\Entity\Bird;
 use App\Entity\Picture;
+use App\Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
@@ -23,7 +23,10 @@ class Observation
 
     /**
      * @ORM\Column(name="date_obs", type="datetime")
-     * @Assert\NotBlank(message="Vous devez saisir une date et une heure")
+     * @Assert\NotBlank(
+     *      groups = {"step2"},
+     *      message="Vous devez saisir une date et une heure"
+     * )
      * @Assert\DateTime(
      *      format = "dd-MM-yyyy H:m",
      *      message     = "Vous devez saisir une date et une heure valide entité"
@@ -43,6 +46,22 @@ class Observation
 
     /**
      * @ORM\Column(name="bird_number", type="integer")
+     * @Assert\NotBlank(
+     *     groups = {"step3"},
+     *     message = "Vous devez saisir un nombre"
+     * )
+     * @Assert\Type(
+     *     type    = "int",
+     *     message = "Vous devez saisir un nombre entier"
+     * )
+     * @Assert\GreaterThanOrEqual(
+     *     value   = 1,
+     *     message = "Le nombre d’oiseau doit être supérieur ou égale à {{ compared_value }}"
+     * )
+     * @Assert\LessThanOrEqual(
+     *     value   = 20,
+     *     message = "Le nombre d’oiseau doit être inférieur ou égale à {{ compared_value }}"
+     * )
      */
     private $birdNumber;
 
@@ -63,6 +82,7 @@ class Observation
      * Unidirectionnal - One Observation has One Location . (OWNED SIDE)
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Location", cascade={"persist"})
+     * @Assert\Valid()
      */
     private $location;
 
@@ -70,6 +90,11 @@ class Observation
      * Unidirectionnal - One Observation has One Bird . (OWNED SIDE)
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Bird", cascade={"persist"})
+     * @Assert\NotBlank(
+     *     groups = {"step3"},
+     *     message = "Vous devez sélectionner un oiseau"
+     * )
+     * @Assert\Valid()
      *
      */
     private $bird;
@@ -78,6 +103,7 @@ class Observation
      * Unidirectionnal - One Observation has One Picture . (OWNED SIDE)
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist"})
+     * @Assert\Valid()
      *
      */
     private $picture;
@@ -205,6 +231,24 @@ class Observation
     /**
      * @return object
      */
+    public function getLocation()
+    {
+      return $this->location;
+    }
+
+    /**
+     * @param object $location
+     *
+     * @return self
+     */
+    public function setLocation(Location $location = null)
+    {
+      $this->location = $location;
+    }
+
+    /**
+     * @return object
+     */
     public function getBird()
     {
       return $this->bird;
@@ -233,7 +277,7 @@ class Observation
      *
      * @return self
      */
-    public function setPicture(UploadedFile $picture = null)
+    public function setPicture(Picture $picture = null)
     {
       $this->picture = $picture;
     }

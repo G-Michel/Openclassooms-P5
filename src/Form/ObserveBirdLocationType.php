@@ -2,26 +2,21 @@
 
 namespace App\Form;
 
-use App\Entity\Location;
+use App\Form\ObservationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-//use pour les champs de formulaire
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class ObserveBirdLocationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('gpsX', NumberType::class, [
-                'invalid_message' => "Vous devez saisir une longitude valide"
-            ])
-            ->add('gpsY', NumberType::class, [
-                'invalid_message' => "Vous devez saisir une latitude valide"
-            ])
-            ->add('address', TextType::class)
+            ->remove('dateObs')
+            ->remove('comment')
+            ->remove('bird')
+            ->remove('birdNumber')
+            ->remove('picture')
         ;
     }
 
@@ -31,5 +26,9 @@ class ObserveBirdLocationType extends AbstractType
             // uncomment if you want to bind to a class
             //'data_class' => ObserveBirdLocation::class,
         ]);
+    }
+    public function getParent()
+    {
+      return ObservationType::class;
     }
 }

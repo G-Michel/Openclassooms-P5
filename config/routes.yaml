@@ -2,6 +2,21 @@
 #    path: /
 #    defaults: { _controller: 'App\Controller\DefaultController::index' }
 
-app_OC_helloWorkd:
-    path: /
-    controller: App\Controller\MainController::helloWorld
+frontRoute:
+    resource: './routes/front/routes.yaml'
+    type:     yaml
+    prefix:   /
+
+backRoute:
+    resource: './routes/back/routes.yaml'
+    type:     yaml
+    prefix:   /admin/
+
+
+
+
+
+
+
+
+

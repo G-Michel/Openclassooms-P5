@@ -1,0 +1,69 @@
+// Custom Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+
+//
+// Color system
+//
+
+// stylelint-disable
+$gray-primary: #272832;
+
+$grays: (
+  "gray-primary": $gray-primary
+);
+
+$yellow:    #ffac00;
+
+$colors: (
+  "gray-dark":  $gray-primary
+);
+
+$primary:       $yellow;
+// $secondary:     $gray-600 !default;
+// $success:       $green !default;
+// $info:          $cyan !default;
+// $warning:       $yellow !default;
+// $danger:        $red !default;
+// $light:         $gray-100 !default;
+$dark:          $gray-primary;
+
+$theme-colors: (
+  "primary":    $primary,
+  "dark":       $dark
+);
+// stylelint-enable
+
+// Body
+//
+// Settings for the `<body>` element.
+
+$body-bg: $gray-100;
+
+// Links
+//
+// Style anchor elements.
+
+$link-color:                $white;
+$link-hover-color:          darken($link-color, 15%);
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$component-active-color:      theme-color("primary");
+$component-active-bg:         none;
+
+
+// Navs
+
+$nav-pills-link-active-color:       $component-active-color;
+$nav-pills-link-active-bg:          $component-active-bg;
+
+// Navbar
+
+$navbar-dark-color:                 $white;
+$navbar-dark-hover-color:           darken($navbar-dark-color, 15%);
+$navbar-dark-active-color:          theme-color("primary");

@@ -2,18 +2,18 @@
 
 {% block title %}Test form - {{parent()}}{% endblock %}
 
-{% block stylesheets %}
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-{% endblock %}
+{% block stylesheets %}{% endblock %}
 
 {% block body %}
-  <div class="container">
-    <h2>Test Formulaire</h2>
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} <!-- 'novalidate' to test form validations -->
-    {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary">Envoyer</button>
-    {{ form_end(form) }}
-  </div>
+  <div class="row">
+      <div class="col-sm-4 ml-auto mr-auto pt-3">
+        <h2>Test Formulaire</h2>
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} <!-- 'novalidate' to test form validations -->
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+        {{ form_end(form) }}
+      </div>
+</div>
 {% endblock %}
 
 {% block javascripts %}

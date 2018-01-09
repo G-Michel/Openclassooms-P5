@@ -7,11 +7,13 @@
         <link rel="stylesheet" href="{{ asset('build/css/app.css')}}">
     </head>
     <body>
+
         {{ include('partials/horizontalNav.html.twig') }}
         <div class="container-fluid">
             <div class="row">
                 {{ include('partials/verticalNav.html.twig') }}
                 <main role="main" class="main">
+                    {# <svg><use xlink:href="{{ asset('social.svg#ic_person_24px')}}"></svg> #}
                     <div class="container-fluid">
                         {% block body %}{% endblock %}
                     </div>

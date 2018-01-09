@@ -4,9 +4,21 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('build/css/app.css')}}">
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {{ include('partials/horizontalNav.html.twig') }}
+        <div class="container-fluid">
+            <div class="row">
+                {{ include('partials/verticalNav.html.twig') }}
+                <main role="main" class="main">
+                    <div class="container-fluid">
+                        {% block body %}{% endblock %}
+                    </div>
+                </main>
+            </div>
+        </div>
         {% block javascripts %}{% endblock %}
+        <script src="{{ asset('build/js/app.js')}}"></script>
     </body>
 </html>

@@ -15,10 +15,9 @@
 /node_modules/
 /public/build/
 ###< symfony/webpack-encore-pack ###
-###Test Formulaires ###
-/src/Controller/TestFormController.php
-/templates/users/TestForm.html.twig
 
 ### delete after test  ###
+/src/Controller/TestController.php
+/templates/users/Test.html.twig
 /public/*.svg
 ### delete after test  ###

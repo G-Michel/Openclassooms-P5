@@ -4,15 +4,17 @@
 
 {% block stylesheets %}{% endblock %}
 
-{% block body %}
-  <div class="row">
-      <div class="col-sm-4 ml-auto mr-auto pt-3">
-        <h2>Test Formulaire</h2>
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} <!-- 'novalidate' to test form validations -->
-        {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary">Envoyer</button>
-        {{ form_end(form) }}
-      </div>
+{% block mainTitle %}
+<div class="container">
+    <h1 class="text-white display-3">Formulaire</h1>
+    <p class="text-primary lead">page de test</p>
+</div>
+{% endblock %}
+{% block mainContent %}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }} <!-- 'novalidate' to test form validations -->
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+    {{ form_end(form) }}
 </div>
 {% endblock %}
 

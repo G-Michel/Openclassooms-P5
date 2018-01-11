@@ -1,7 +1,16 @@
 // Contents
 //
+// Navbar brand
 // Navbar nav
+// Navbar search
 
+// Navbar brand
+//
+// Custom navbar brand
+
+.navbar-brand {
+  height:56px;
+}
 
 // Navbar nav
 //
@@ -21,6 +30,34 @@
     border-radius: 0;
     line-height: calc(56px - 16px);
     text-align: center;
+    i {
+      vertical-align: middle
+    }
+  }
+
+}
+
+// Navbar nav
+//
+// Custom navbar navigation (doesn't require `.nav`, but does make use of `.nav-link`).
+.navbar-search {
+
+  .nav-search {
+    text-align: left;
+    background-color: transparent;
+    border-radius: 0;
+    border: none;
+      // Placeholder
+    &::placeholder {
+      color: $gray-600;
+    }
+    &:focus {
+      color: $white;
+      box-shadow: none;
+      border-color: transparent;
+      border-bottom: solid 2px;;
+      border-bottom-color: $input-btn-focus-color;
+    }
   }
 
 }

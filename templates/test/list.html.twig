@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Test form - {{parent()}}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/search.js') }}"></script>
+{% endblock %}
+
+
+{% block mainTitle %}
+<div class="container mt-auto mb-auto">
+    <h1 class="text-white display-3">Listing</h1>
+    <p class="text-primary lead">Tous les oiseaux</p>
+</div>
+{% endblock %}
+{% block mainContent %}
+<div class="container">
+  <div id="resultsTaxref" class="card-columns p-3"></div>
+  <div id="listingTaxref" class="card-columns p-3">
+      {% for post in posts %}
+        <div class="card">
+          {% if post.picture and post.picture.url  %}
+            <img class="card-img-top" src="{{ post.picture.url }}" alt="{{ post.picture.alt }}">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ post.nomValideType }}</h5>
+            <p class="card-text">{{ post.nomVernType }}</p>
+            <a href="#" class="btn btn-primary">Plus de détail</a>
+          </div>
+        </div>
+      {% else %}
+        <div class="well">Aucun résultat</div>
+      {% endfor %}
+    </div>
+</div>
+
+  {# {% if posts.haveToPaginate %}
+  <div class="navigation text-center">
+      {{ pagerfanta(posts, 'twitter_bootstrap3_translated', {routeName: 'blog_index_paginated'}) }}
+  </div>
+  {% endif %} #}
+{% endblock %}

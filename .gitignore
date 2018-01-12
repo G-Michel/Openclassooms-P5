@@ -17,7 +17,6 @@
 ###< symfony/webpack-encore-pack ###
 
 ### delete after test  ###
-/src/Controller/TestController.php
-/templates/users/Test.html.twig
 /public/*.svg
+
 ### delete after test  ###

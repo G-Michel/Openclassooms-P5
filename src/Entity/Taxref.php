@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Picture;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,6 +12,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Taxref
 {
+    /**
+     * Use constants to define configuration options that rarely change instead
+     * of specifying them in app/config/config.yml.
+     *
+     * See https://symfony.com/doc/current/best_practices/configuration.html#constants-vs-configuration-options
+     */
+    const NUM_ITEMS = 100;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -27,6 +35,25 @@ class Taxref
      * @ORM\Column(name="phylum_type", type="string", length=255)
      */
     protected $phylumType;
+
+    /**
+     * @ORM\Column(name="nomVern_type", type="string", length=255)
+     */
+    protected $nomVernType;
+
+    /**
+     * @ORM\Column(name="nomValide_type", type="string", length=255)
+     */
+    protected $nomValideType;
+
+    /**
+     * Unidirectionnal - One Taxref has One Picture . (OWNED SIDE)
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist"})
+     * @Assert\Valid()
+     *
+     */
+    private $picture;
 
     /**
      * @ORM\Column(name="class_type", type="string", length=255)
@@ -96,6 +123,46 @@ class Taxref
     /**
      * @return mixed
      */
+    public function getNomValideType()
+    {
+        return $this->nomValideType;
+    }
+
+    /**
+     * @param mixed $nomValideType
+     *
+     * @return self
+     */
+    public function setNomValideType($nomValideType)
+    {
+        $this->nomValideType = $nomValideType;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNomVernType()
+    {
+        return $this->nomVernType;
+    }
+
+    /**
+     * @param mixed $nomVernType
+     *
+     * @return self
+     */
+    public function setNomVernType($nomVernType)
+    {
+        $this->nomVernType = $nomVernType;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getClassType()
     {
         return $this->classType;
@@ -112,4 +179,20 @@ class Taxref
 
         return $this;
     }
+
+    public function getPicture()
+    {
+      return $this->picture;
+    }
+
+    /**
+     * @param object $picture
+     *
+     * @return self
+     */
+    public function setPicture(Picture $picture = null)
+    {
+      $this->picture = $picture;
+    }
+
 }

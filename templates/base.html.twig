@@ -20,11 +20,11 @@
                 {{ include('partials/verticalNav.html.twig') }}
                 <main role="main" class="main">
                     <div class="container-fluid">
-                        <div class="row" style="min-height:calc(100vh - 56px);">
-                            <div class="col-sm-3 align-self-center">
+                        <div class="row" >
+                            <div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">
                                 {% block mainTitle %}{% endblock %}
                             </div>
-                            <div class="col">
+                            <div class="col offset-md-4 offset-lg-3">
                                 {% block mainContent %}{% endblock %}
                             </div>
                         </div>
@@ -32,7 +32,10 @@
                 </main>
             </div>
         </div>
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script src="{{ asset('build/js/manifest.js')}}"></script>
+        <script src="{{ asset('build/js/common.js')}}"></script>
         <script src="{{ asset('build/js/app.js')}}"></script>
+        {% endblock %}
     </body>
 </html>

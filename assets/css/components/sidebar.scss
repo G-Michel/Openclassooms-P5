@@ -1,0 +1,35 @@
+/*
+ * Sidebar
+ */
+
+ .sidebar {
+  flex: 0 0 56px;
+  width: 56px;
+  position: fixed;
+  top: 56px;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  padding:0;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+
+  .nav {
+    margin-bottom: 20px;
+  }
+
+  .nav-item {
+    width: 100%;
+    height: 56px;
+  }
+
+  .nav-item + .nav-item {
+    margin-left: 0;
+  }
+
+  .nav-link {
+    border-radius: 0;
+    line-height: calc(56px - 16px);
+    text-align: center;
+  }
+}

@@ -20,13 +20,32 @@ class Location
 
     /**
      * @ORM\Column(name="gps_x", type="integer")
+     * @Assert\NotBlank(message="Vous devez saisir une longitude")
+     * @Assert\Type(
+     *      type    = "float",
+     *      message = "Vous devez saisir une longitude valide"
+     * )
      */
     private $gpsX;
 
     /**
      * @ORM\Column(name="gps_y", type="integer")
+     * @Assert\NotBlank(message="Vous devez saisir une latitude")
+     * @Assert\Type(
+     *      type    = "float",
+     *      message = "Vous devez saisir une latitude valide"
+     * )
      */
     private $gpsY;
+
+    /**
+     * @ORM\Column(name="address", type="string", length=255)
+     * @Assert\Type(
+     *      type    = "string",
+     *      message = "Vous devez saisir une chaine de caractère"
+     * )
+     */
+    private $address;
 
     /**
      * @ORM\Column(name="country", type="string", length=255)
@@ -99,6 +118,26 @@ class Location
     public function setGpsY($gpsY)
     {
         $this->gpsY = $gpsY;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     *
+     * @return self
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
 
         return $this;
     }

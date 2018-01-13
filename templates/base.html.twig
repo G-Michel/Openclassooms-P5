@@ -6,6 +6,12 @@
         {% block stylesheets %}{% endblock %}
         <link rel="stylesheet" href="{{ asset('build/css/app.css')}}">
     </head>
+    <style>
+        svg.logo {
+            fill:#fff;
+            color:#fff;
+        }
+    </style>
     <body>
 
         {{ include('partials/horizontalNav.html.twig') }}
@@ -13,14 +19,23 @@
             <div class="row">
                 {{ include('partials/verticalNav.html.twig') }}
                 <main role="main" class="main">
-                    {# <svg><use xlink:href="{{ asset('social.svg#ic_person_24px')}}"></svg> #}
                     <div class="container-fluid">
-                        {% block body %}{% endblock %}
+                        <div class="row" >
+                            <div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">
+                                {% block mainTitle %}{% endblock %}
+                            </div>
+                            <div class="col offset-md-4 offset-lg-3">
+                                {% block mainContent %}{% endblock %}
+                            </div>
+                        </div>
                     </div>
                 </main>
             </div>
         </div>
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script src="{{ asset('build/js/manifest.js')}}"></script>
+        <script src="{{ asset('build/js/common.js')}}"></script>
         <script src="{{ asset('build/js/app.js')}}"></script>
+        {% endblock %}
     </body>
 </html>

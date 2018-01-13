@@ -13,6 +13,37 @@ class TaxrefRepository extends ServiceEntityRepository
         parent::__construct($registry, Taxref::class);
     }
 
+    /**
+     * @return Taxref[]
+     */
+    public function findBySearchQuery(array $searchTerms, int $limit = Taxref::NUM_ITEMS): array
+    {
+
+        if (0 === count($searchTerms)) {
+            return [];
+        }
+
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        foreach ($searchTerms as $key => $term) {
+            $queryBuilder
+                // ->add('where', $queryBuilder->expr()->orX(
+                //     // $queryBuilder->expr()->eq('t.nomVernType', ':t_'.$key),
+                //     $queryBuilder->expr()->like('t.nomVernType', ':t_'.$key)
+                // ))
+                ->orWhere('t.nomVernType LIKE :t_'.$key)
+                ->setParameter('t_'.$key, '%'.$term.'%')
+            ;
+        }
+
+        return $queryBuilder
+            // ->orderBy('p.publishedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+
     /*
     public function findBySomething($value)
     {

@@ -25,3 +25,9 @@ fro_contact:
 fro_login:
     path: /login
     controller: App\Controller\FrontController::login
+
+login_check:
+    path:   /login_check
+
+logout:
+    path:   /logout

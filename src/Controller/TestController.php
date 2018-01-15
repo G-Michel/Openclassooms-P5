@@ -46,7 +46,7 @@ class TestController extends Controller
         ]);
     }
     /**
-     * @Route("/test/form/signIn")
+     * @Route("/test/form/signIn", name="login")
      */
     public function signIn(Request $request)
     {
@@ -58,7 +58,7 @@ class TestController extends Controller
             # code...
         }
 
-        return $this->render('test/form.html.twig', [
+        return $this->render('test/login.html.twig', [
             'form' => $form->createView(),
         ]);
     }

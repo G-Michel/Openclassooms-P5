@@ -13,7 +13,7 @@
         }
     </style>
     <body>
-
+        {%set route = app.request.attributes.get('_route') %}
         {{ include('partials/horizontalNav.html.twig') }}
         <div class="container-fluid">
             <div class="row">

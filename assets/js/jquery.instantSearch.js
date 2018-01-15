@@ -22,6 +22,11 @@
       this.$preview = $('<div id="resultsTaxref" class="card-columns p-3">').replaceAll($('#resultsTaxref'));
       this.options = $.extend({}, InstantSearch.DEFAULTS, this.$input.data(), options);
 
+      this.$input.on('keydown', function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+        }
+      });
       this.$input.keyup(this.debounce());
   };
 

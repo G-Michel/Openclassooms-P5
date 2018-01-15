@@ -46,7 +46,7 @@ class TestController extends Controller
         ]);
     }
     /**
-     * @Route("/test/form/signIn")
+     * @Route("/test/form/signIn", name="login")
      */
     public function signIn(Request $request)
     {
@@ -58,30 +58,14 @@ class TestController extends Controller
             # code...
         }
 
-        return $this->render('test/form.html.twig', [
+        return $this->render('test/login.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/test/form/contact")
-     */
-    public function contact(Request $request)
-    {
-        $form = $this->createForm(ContactType::class);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            # code...
-        }
-
-        return $this->render('test/form.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
 
     /**
-     * @Route("/test/form/stepOne")
+     * @Route("/test/observe/stepOne", name="observe_first_step")
      */
     public function stepOne(Request $request, SessionInterface $session)
     {
@@ -95,7 +79,7 @@ class TestController extends Controller
             // return $this->forward('App\Contrtest\TestController::stepTwo', compact('observation'));
         }
 
-        return $this->render('test/form.html.twig', [
+        return $this->render('test/observe.html.twig', [
             'form' => $form->createView(),
             ]);
         }
@@ -160,13 +144,77 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/listing",defaults={"page": "1", "_format"="html"}, name="listing")
-     * @Route("/", defaults={"page": "1", "_format"="html"}, name="blog_index")
-     * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="listing_paginated")
+     * @Route("/test/", name="home")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-    public function listing(Request $request, int $page, string $_format, TaxrefRepository $taxref): Response
+	public function homePage()
+	{
+        return $this->render('test/home.html.twig');
+    }
+
+    /**
+     * @Route("/test/contact", name="contact")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+	public function contact(Request $request)
+	{
+        $form = $this->createForm(ContactType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            # code...
+        }
+
+        return $this->render('test/contact.html.twig', [
+            'form' => $form->createView(),
+        ]);
+	}
+
+
+    /**
+     * @Route("/test/listing/taxref",defaults={"page": "1", "_format"="html"}, name="listingTaxref")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+    public function listingTaxref(Request $request, int $page, string $_format, TaxrefRepository $taxref): Response
+    {
+        if (!$request->isXmlHttpRequest()) {
+
+            $result = $taxref->findBy([],['picture' => 'DESC'],100);
+            return $this->render('test/list.html.twig', ['posts' => $result]);
+        }
+
+        $rawQuery = $request->query->get('q', '');
+        $query = $this->sanitizeSearchQuery($rawQuery);
+        $searchTerms = $this->extractSearchTerms($query);
+        $termsLighting = $this->lightingSearchTerms($searchTerms);
+        $limit = $request->query->get('l', 30);
+        $foundPosts = $taxref->findBySearchQuery($searchTerms, $limit);
+
+
+        $results = [];
+        foreach ($foundPosts as $post) {
+            // dump($post);die();
+            $results[] = [
+                'nomVernType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getNomVernType())),
+                'phylumType' => htmlspecialchars($post->getPhylumType()),
+                'classType' => htmlspecialchars($post->getClassType()),
+                'url' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getUrl()):'',
+                'alt' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getAlt()):''
+            ];
+        }
+
+        return $this->json($results);
+    }
+
+    /**
+     * @Route("/test/listing/mes-observations",defaults={"page": "1", "_format"="html"}, name="listingObservations")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+    public function listingObservation(Request $request, int $page, string $_format, TaxrefRepository $taxref): Response
     {
         if (!$request->isXmlHttpRequest()) {
 

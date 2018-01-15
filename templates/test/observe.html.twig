@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Test Observer - {{parent()}}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+{% block mainTitle %}
+<div class="container mt-auto mb-auto">
+    <h1 class="text-white display-3">Nouvelle observation</h1>
+    <p class="text-primary lead">Etape 1 - Le lieu</p>
+</div>
+{% endblock %}
+
+{% block mainContent %}
+{{ include('test/form.html.twig') }}
+{% endblock %}

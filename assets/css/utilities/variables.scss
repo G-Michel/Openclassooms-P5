@@ -10,23 +10,27 @@
 
 // stylelint-disable
 $gray-primary: #272832;
+$gray-secondary: #222329;
 
 $grays: (
   "gray-primary": $gray-primary
 );
 
-$yellow:    #ffac00;
+$turquoise:    #00cccc;
+$yellow:    #ffaa00;
+$rose:    #ff6764;
+$red:    #ff0000;
 
 $colors: (
   "gray-dark":  $gray-primary
 );
 
-$primary:       $yellow;
-// $secondary:     $gray-600 !default;
+$primary:       $turquoise;
+$secondary:     $rose ;
 // $success:       $green !default;
 // $info:          $cyan !default;
-// $warning:       $yellow !default;
-// $danger:        $red !default;
+$warning:       $yellow;
+$danger:        $red;
 // $light:         $gray-100 !default;
 $dark:          $gray-primary;
 
@@ -40,7 +44,7 @@ $theme-colors: (
 //
 // Settings for the `<body>` element.
 
-$body-bg: $gray-700;
+$body-bg: $gray-secondary;
 
 // Links
 //

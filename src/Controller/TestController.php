@@ -3,28 +3,29 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Taxref;
 use App\Entity\Article;
 use App\Entity\Location;
-use App\Form\SignInType;
 use App\Form\SignUpType;
+use App\Form\SignInType;
 use App\Form\ContactType;
 use App\Form\ArticleType;
 use App\Entity\Observation;
 use App\Form\ObservationType;
-use App\Form\ObserveBirdMomentType;
 use App\Form\ObserveBirdDetailType;
+use App\Form\ObserveBirdMomentType;
 use App\Repository\TaxrefRepository;
+
 use App\Form\ObserveBirdLocationType;
 
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class TestController extends Controller
 {
@@ -45,6 +46,7 @@ class TestController extends Controller
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/test/form/signIn", name="login")
      */
@@ -62,7 +64,6 @@ class TestController extends Controller
             'form' => $form->createView(),
         ]);
     }
-
 
     /**
      * @Route("/test/observe/stepOne", name="observe_first_step")
@@ -174,7 +175,7 @@ class TestController extends Controller
 
 
     /**
-     * @Route("/test/listing/taxref",defaults={"page": "1", "_format"="html"}, name="listingTaxref")
+     * @Route("/test/taxref",defaults={"page": "1", "_format"="html"}, name="listingTaxref")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
@@ -182,7 +183,7 @@ class TestController extends Controller
     {
         if (!$request->isXmlHttpRequest()) {
 
-            $result = $taxref->findBy([],['picture' => 'DESC'],100);
+            $result = $taxref->findBy([],[],100);//'picture' => 'DESC' pour avec photo en premier
             return $this->render('test/list.html.twig', ['posts' => $result]);
         }
 
@@ -210,7 +211,16 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/listing/mes-observations",defaults={"page": "1", "_format"="html"}, name="listingObservations")
+     * @Route("/test/taxref/{slug}",name="showTaxref")
+     * @Method("GET")
+     */
+    public function showTaxref(Taxref $taxref): Response
+    {
+        return $this->render('test/detail.html.twig', ['post' => $taxref]);
+    }
+
+    /**
+     * @Route("/test/mes-observations",defaults={"page": "1", "_format"="html"}, name="listingObservations")
      * @Method("GET")
      * @Cache(smaxage="10")
      */

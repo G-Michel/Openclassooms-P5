@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Taxref;
+use App\Utils\Slugger;
 use App\Entity\Picture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -18,8 +19,6 @@ class AppFixtures extends Fixture
         },array_map('trim', file(__DIR__.'/GALERIEINPN.csv', FILE_SKIP_EMPTY_LINES)));
         $arrayGalerie = $this->unique_multidim_array($arrayGalerie,1);
 
-        // var_dump($arrayGalerie,1);die();
-
         foreach ($arrayAves as $rowAves) {
 
           list(
@@ -31,6 +30,9 @@ class AppFixtures extends Fixture
             $taxref->setReignType($regne);
             $taxref->setPhylumType($phylum);
             $taxref->setClassType($classe);
+            $taxref->setslug(Slugger::slugify($lbNom));
+            $taxref->setlbNomType($lbNom);
+            $taxref->setlbAuteurType($lbAuteur);
             $taxref->setNomValideType($nomValide);
             $taxref->setNomVernType($nomVern);
             // $taxref->setOrdre($ordre);

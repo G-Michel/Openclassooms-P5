@@ -27,6 +27,11 @@ class Taxref
     private $id;
 
     /**
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    protected $slug;
+
+    /**
      * @ORM\Column(name="reign_type", type="string", length=255)
      */
     protected $reignType;
@@ -40,6 +45,16 @@ class Taxref
      * @ORM\Column(name="nomVern_type", type="string", length=255)
      */
     protected $nomVernType;
+
+    /**
+     * @ORM\Column(name="lbNom_type", type="string", length=255)
+     */
+    protected $lbNomType;
+
+    /**
+     * @ORM\Column(name="lbAuteur_type", type="string", length=255)
+     */
+    protected $lbAuteurType;
 
     /**
      * @ORM\Column(name="nomValide_type", type="string", length=255)
@@ -69,13 +84,21 @@ class Taxref
     }
 
     /**
-     * @param mixed $id
+     * @return mixed
+     */
+    public function getslug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
      *
      * @return self
      */
-    public function setId($id)
+    public function setslug($slug)
     {
-        $this->id = $id;
+        $this->slug = $slug;
 
         return $this;
     }
@@ -116,6 +139,46 @@ class Taxref
     public function setPhylumType($phylumType)
     {
         $this->phylumType = $phylumType;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLbNomType()
+    {
+        return $this->lbNomType;
+    }
+
+    /**
+     * @param mixed $lbNomType
+     *
+     * @return self
+     */
+    public function setLbNomType($lbNomType)
+    {
+        $this->lbNomType = $lbNomType;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLbAuteurType()
+    {
+        return $this->lbAuteurType;
+    }
+
+    /**
+     * @param mixed $lbAuteurType
+     *
+     * @return self
+     */
+    public function setLbAuteurType($lbAuteurType)
+    {
+        $this->lbAuteurType = $lbAuteurType;
 
         return $this;
     }
@@ -180,6 +243,9 @@ class Taxref
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPicture()
     {
       return $this->picture;

@@ -1,13 +1,33 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User:
+            algorithm:   bcrypt
+            cost:        12
+    role_hierarchy:
+        ROLE_NATURALIST:    ROLE_USER
+        ROLE_ADMIN:    [ROLE_USER, ROLE_NATURALIST]
     providers:
-        in_memory: { memory: ~ }
+        main:
+            entity:
+                class: App\Entity\User
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: ~
+            pattern:   ^/
+            anonymous: true
+            provider: main
+            form_login:
+                login_path: login
+                check_path: login_check
+            logout:
+                path:    logout
+                target:  login
+
+
 
             # activate different ways to authenticate
 

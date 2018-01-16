@@ -42,7 +42,8 @@ class TestController extends Controller
             # code...
         }
 
-        return $this->render('test/form.html.twig', [
+
+        return $this->render('test/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -52,6 +53,14 @@ class TestController extends Controller
      */
     public function signIn(Request $request)
     {
+         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+      return $this->redirectToRoute('home');
+        }
+
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+
+
         $user = new User();
         $form = $this->createForm(SignInType::class);
 
@@ -60,9 +69,14 @@ class TestController extends Controller
             # code...
         }
 
-        return $this->render('test/login.html.twig', [
+        /*return $this->render('test/login.html.twig', [
             'form' => $form->createView(),
-        ]);
+        ]);*/
+
+        return $this->render('test/login.html.twig', array(
+            'last_username' => $authenticationUtils->getLastUsername(),
+            'error'         => $authenticationUtils->getLastAuthenticationError(),
+        ));
     }
 
     /**

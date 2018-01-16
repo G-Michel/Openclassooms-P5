@@ -22,7 +22,7 @@ class SignUpType extends AbstractType
     {
         $builder
             ->add('mail', EmailType::class)
-            ->add('userName', TextType::class)
+            ->add('username', TextType::class)
             ->add('password', PasswordType::class)
             ->add('newsletter',CheckboxType::class, [
                 'required' => false

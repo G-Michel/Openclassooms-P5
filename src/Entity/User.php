@@ -4,13 +4,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -20,17 +21,17 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(name="surname", type="string", length=255)
+     * @ORM\Column(name="surname", type="string", length=255, nullable=true)
      */
     private $surname;
 
     /**
-     * @ORM\Column(name="user_name", type="string", length=255)
+     * @ORM\Column(name="user_name", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un nom d’utilisateur")
      * @Assert\Type(
      *      type    = "string",
@@ -43,12 +44,12 @@ class User
      *      maxMessage ="Vous devez entrer moins de {{ limit }} caractères"
      * )
      */
-    private $userName;
+    private $username;
 
     /**
-     * @ORM\Column(name="role", type="string", length=255)
+     * @ORM\Column(name="role", type="array")
      */
-    private $role;
+    private $roles;
 
     /**
      * @ORM\Column(name="mail", type="string", length=255)
@@ -77,11 +78,22 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(name="newsletter", type="boolean")
+     * @ORM\Column(name="newsletter", type="boolean", nullable=true)
      * @Assert\Type(type = "bool")
      */
     private $newsletter;
 
+
+    /**
+     * @ORM\Column(name="salt", type="string", length=255)
+    */
+    private $salt;
+
+    public function eraseCredentials()
+    {
+    }
+
+    //GETTERS SETTERS
     /**
      * @return mixed
      */
@@ -145,19 +157,19 @@ class User
     /**
      * @return mixed
      */
-    public function getUserName()
+    public function getUsername()
     {
-        return $this->userName;
+        return $this->username;
     }
 
     /**
-     * @param mixed $userName
+     * @param mixed $username
      *
      * @return self
      */
-    public function setUserName($userName)
+    public function setUsername($username)
     {
-        $this->userName = $userName;
+        $this->username = $username;
 
         return $this;
     }
@@ -165,19 +177,19 @@ class User
     /**
      * @return mixed
      */
-    public function getRole()
+    public function getRoles()
     {
-        return $this->role;
+        return $this->roles;
     }
 
     /**
-     * @param mixed $role
+     * @param mixed $roles
      *
      * @return self
      */
-    public function setRole($role)
+    public function setRoles($roles)
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
@@ -223,7 +235,15 @@ class User
     }
 
     /**
-     * @param boolean $newsletter
+     * @return mixed
+     */
+    public function getNewsletter()
+    {
+        return $this->newsletter;
+    }
+
+    /**
+     * @param mixed $newsletter
      *
      * @return self
      */
@@ -235,12 +255,22 @@ class User
     }
 
     /**
-     * @return boolean
+     * @return mixed
      */
-    public function isNewsletter()
+    public function getSalt()
     {
-        return $this->newsletter;
+        return $this->salt;
     }
 
+    /**
+     * @param mixed $salt
+     *
+     * @return self
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
 
+        return $this;
+    }
 }

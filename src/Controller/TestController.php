@@ -41,7 +41,8 @@ class TestController extends Controller
             # code...
         }
 
-        return $this->render('test/form.html.twig', [
+
+        return $this->render('test/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }

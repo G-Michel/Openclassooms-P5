@@ -1,17 +1,17 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        App\Entity\User:
+            algorithm:   bcrypt
+            cost:        12
     role_hierarchy:
         ROLE_NATURALIST:    ROLE_USER
         ROLE_ADMIN:    [ROLE_USER, ROLE_NATURALIST]
     providers:
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER'] }
-                    naturalist:  { password: naturalistpass, roles: [ 'ROLE_NATURALIST'] }
-                    admin:  { password: adminpass, roles: [ 'ROLE_ADMIN'] }
+        main:
+            entity:
+                class: App\Entity\User
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -19,6 +19,7 @@ security:
         main:
             pattern:   ^/
             anonymous: true
+            provider: main
             form_login:
                 login_path: login
                 check_path: login_check

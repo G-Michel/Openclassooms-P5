@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -62,7 +62,7 @@ class User implements UserInterface
     private $mail;
 
     /**
-     * @ORM\Column(name="password", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un mot de passe")
      * @Assert\Type(
      *      type    = "string",
@@ -76,6 +76,12 @@ class User implements UserInterface
      * )
      */
     private $password;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @ORM\Column(name="newsletter", type="boolean", nullable=true)
@@ -93,7 +99,25 @@ class User implements UserInterface
     {
     }
 
+    public function serialize()
+    {
+        return serialize(array(
+            $this->getId(),
+            $this->getUsername(),
+            $this->getPassword()));
+    }
+
+    public function unserialize($serialized)
+    {
+           list (
+            $this->id,
+            $this->username,
+            $this->password,
+        ) = unserialize($serialized);
+    }
+
     //GETTERS SETTERS
+    
     /**
      * @return mixed
      */
@@ -230,6 +254,26 @@ class User implements UserInterface
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     *
+     * @return self
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

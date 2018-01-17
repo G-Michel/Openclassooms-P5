@@ -2,18 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\SignUp;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
-//use pour les champs de formulaire
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-//use pour les validations du formulaire
-use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
 class SignUpType extends AbstractType
@@ -23,29 +20,19 @@ class SignUpType extends AbstractType
         $builder
             ->add('mail', EmailType::class)
             ->add('username', TextType::class)
-            ->add('password', PasswordType::class)
-            ->add('newsletter',CheckboxType::class, [
-                'required' => false
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped'   => false,
-                'constraints' => [
-                    new Type([
-                        'type' => "bool"
-                    ]),
-                    new IsTrue([
-                        'message' => "Les conditions doivent être acceptées"
-                    ])
-                ]
-            ]);
-        ;
+            ->add('acceptTerms', CheckboxType::class, array(
+                'mapped' => false,
+                'constraints' => new IsTrue(),))
+            ->add('plainPassword', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options'  => array('label' => 'Password'),
+                'second_options' => array('label' => 'Repeat Password'),));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            // uncomment if you want to bind to a class
-            //'data_class' => SignUp::class,
-        ]);
+        $resolver->setDefaults(array(
+            'data_class' => User::class,
+        ));
     }
 }

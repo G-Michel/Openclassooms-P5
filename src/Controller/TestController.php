@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Auth;
 use App\Entity\Article;
 use App\Entity\Location;
 use App\Form\SignInType;
@@ -26,19 +27,54 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+
+
 class TestController extends Controller
 {
     /**
      * @Route("/test/form/signUp")
      */
-    public function signUp(Request $request)
+    public function signUp(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
+        $auth = new Auth();
         $form = $this->createForm(SignUpType::class, $user);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            # code...
+
+        //Handles signup 
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+
+            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+            $user->setRoles(array('ROLE_USER'));
+            $user->setAuth($auth);
+            $user->setIsActive(false);
+            $user->getAuth()->setComfirmedToken(uniqid('NAO_'));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+
+            // Email 
+            $message = (new \Swift_Message("Merci pour votre inscription"))
+                ->setFrom('Openclassroom5pteam@smtp.openclass-cours.ovh')
+                ->setTo($user->getMail())
+                ->setBody(
+                    $this->renderView(
+                    'mails/comfirmMail.html.twig',
+                array('user' => $user)
+            ),'text/html');
+
+            $this->get('mailer')->send($message);
+
+            return $this->render('test/resgisterComfirm.html.twig',array(
+                'message' => array('inscription complétée',
+                    'vous allez recevoir un mail pour confirmer votre inscription ')));
         }
 
 
@@ -47,16 +83,50 @@ class TestController extends Controller
         ]);
     }
     /**
+     * @Route("/test/form/comfirmMail")
+     */
+    public function comfirmMail(Request $request)
+    {
+        $username = $request->query->get('username');
+        $token = $request->query->get('token');
+        // find the user with the token put on parameters
+        $user = $this->getDoctrine()->getRepository(User::class)->tokenComfirm($username,$token);
+
+        if($user== null)
+        {
+            return $this->render('test/resgisterComfirm.html.twig',array(
+                'message' => array('problème confirmation mail',
+                    'la fin du monde')));
+
+        }
+        else
+        {
+            $user->setIsActive(1);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->render('test/resgisterComfirm.html.twig',array(
+                'message' => array('Addresse Mail confirmée',
+                    'Vous pouvez maintenant vous connecter')));
+
+        }
+        
+
+    }
+
+
+    /**
      * @Route("/test/form/signIn", name="login")
      */
-    public function signIn(Request $request)
+    public function signIn(Request $request, AuthenticationUtils $authUtils)
     {
          if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
       return $this->redirectToRoute('home');
         }
 
-        $authenticationUtils = $this->get('security.authentication_utils');
-
+        $error = $authUtils->getLastAuthenticationError();
+        $lastUsername = $authUtils->getLastUsername();
 
 
         $user = new User();
@@ -64,16 +134,14 @@ class TestController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            # code...
+            
+
         }
 
-        /*return $this->render('test/login.html.twig', [
-            'form' => $form->createView(),
-        ]);*/
 
         return $this->render('test/login.html.twig', array(
-            'last_username' => $authenticationUtils->getLastUsername(),
-            'error'         => $authenticationUtils->getLastAuthenticationError(),
+            'last_username' => $lastUsername,
+            'error'         => $error,
         ));
     }
 

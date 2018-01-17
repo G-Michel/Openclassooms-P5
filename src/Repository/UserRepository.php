@@ -3,24 +3,34 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Auth;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends EntityRepository implements UserLoaderInterface
 {
-    public function __construct(RegistryInterface $registry)
+
+      public function loadUserByUsername($username)
     {
-        parent::__construct($registry, User::class);
+        return $this->createQueryBuilder('u')
+            ->where('u.username = :username OR u.mail = :mail')
+            ->setParameter('username', $username)
+            ->setParameter('mail', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
-    public function loadByUsername($username)
+    public function tokenComfirm($username,$token)
     {
-        $query = $this->createQueryBuilder('u')
-                ->where('u.username = :username OR u.email = :email')
-                ->setParameter('username', $username)
-                ->setParameter('email', $username)
-                ->getQuery()
-                ->getOneOrNullResult();
+        return $this->createQueryBuilder('u')
+            ->innerJoin(Auth::class,'a')
+            ->where('u.username = :username AND a.comfirmedToken = :token')
+            ->setParameter('username',$username)
+            ->setParameter('token',$token)
+            ->getQuery()
+            ->getOneOrNullResult();
+
     }
 
     /*

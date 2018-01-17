@@ -6,29 +6,31 @@
 
 {% block javascripts %}{% endblock %}
 
-{% block mainTitle %}
-<div class="container mt-auto mb-auto">
-    <h1 class="text-white display-3">Login</h1>
-    <p class="text-primary lead">Connectez vous</p>
-</div>
+{% block mainLeft %}
+  <div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">
+    <div class="container mt-auto mb-auto" >
+        <h1 class="text-white display-3">Login</h1>
+        <p class="text-primary lead">Connectez vous</p>
+    </div>
+  </div>
 {% endblock %}
 
-{% block mainContent %}
+{% block mainRight %}
+  <div class="col offset-md-4 offset-lg-3">
 
+    {% if error %}
+      <div class="alert alert-danger">{{ error.message }}</div>
+    {% endif %}
 
-  {% if error %}
-    <div class="alert alert-danger">{{ error.message }}</div>
-  {% endif %}
+    <form action="{{ path('login_check') }}" method="post">
+      <label for="username">Login :</label>
+      <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
- 
-  <form action="{{ path('login_check') }}" method="post">
-    <label for="username">Login :</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" name="_password" />
+      <br />
+      <input type="submit" value="Connexion" />
+    </form>
 
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" name="_password" />
-    <br />
-    <input type="submit" value="Connexion" />
-  </form>
-
+  </div>
 {% endblock %}

@@ -3,24 +3,27 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Bird;
 use App\Entity\Taxref;
 use App\Entity\Article;
+use App\Form\SignInType;
 use App\Entity\Location;
 use App\Form\SignUpType;
-use App\Form\SignInType;
-use App\Form\ContactType;
 use App\Form\ArticleType;
+use App\Form\ContactType;
 use App\Entity\Observation;
 use App\Form\ObservationType;
 use App\Form\ObserveBirdDetailType;
 use App\Form\ObserveBirdMomentType;
+
 use App\Repository\TaxrefRepository;
 
 use App\Form\ObserveBirdLocationType;
+use App\Repository\LocationRepository;
 
+use App\Repository\ObservationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -197,8 +200,8 @@ class TestController extends Controller
     {
         if (!$request->isXmlHttpRequest()) {
 
-            $result = $taxref->findBy([],[],100);//'picture' => 'DESC' pour avec photo en premier
-            return $this->render('test/list.html.twig', ['posts' => $result]);
+            $results = $taxref->findByFrType();
+            return $this->render('test/listing.html.twig', ['posts' => $results]);
         }
 
         $rawQuery = $request->query->get('q', '');
@@ -234,39 +237,30 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/mes-observations",defaults={"page": "1", "_format"="html"}, name="listingObservations")
+     * @Route("/test/les-observations", name="listingObservations")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-    public function listingObservation(Request $request, int $page, string $_format, TaxrefRepository $taxref): Response
+    public function listingObservations(Request $request, ObservationRepository $observation): Response
     {
         if (!$request->isXmlHttpRequest()) {
-
-            $result = $taxref->findBy([],['picture' => 'DESC'],100);
-            return $this->render('test/list.html.twig', ['posts' => $result]);
+            $results = $observation->findByStatus(100);
+            return $this->render('test/listing.html.twig', ['posts' => $results]);
         }
+    }
 
-        $rawQuery = $request->query->get('q', '');
-        $query = $this->sanitizeSearchQuery($rawQuery);
-        $searchTerms = $this->extractSearchTerms($query);
-        $termsLighting = $this->lightingSearchTerms($searchTerms);
-        $limit = $request->query->get('l', 30);
-        $foundPosts = $taxref->findBySearchQuery($searchTerms, $limit);
-
-
-        $results = [];
-        foreach ($foundPosts as $post) {
-            // dump($post);die();
-            $results[] = [
-                'nomVernType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getNomVernType())),
-                'phylumType' => htmlspecialchars($post->getPhylumType()),
-                'classType' => htmlspecialchars($post->getClassType()),
-                'url' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getUrl()):'',
-                'alt' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getAlt()):''
-            ];
-        }
-
-        return $this->json($results);
+    /**
+     * @Route("/test/observation/{id}",name="showObservation")
+     * @Method("GET")
+     */
+    public function showObservation(Observation $observation): Response
+    {
+        $bird = $observation->getBird();
+        $taxref = $bird->getTaxref();
+        return $this->render('test/detail_obs.html.twig', [
+            'post' => $taxref,
+            'observation' => $observation,
+        ]);
     }
 
 
@@ -303,7 +297,4 @@ class TestController extends Controller
         }, $searchTerms,$bgs);
 
     }
-
-
-
 }

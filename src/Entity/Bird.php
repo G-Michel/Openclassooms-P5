@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Taxref;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -19,24 +20,32 @@ class Bird
     private $id;
 
     /**
-     * @ORM\Column(name="reference_id", type="integer")
+     * @ORM\Column(name="slug", type="string", length=255)
      */
-    private $referenceId;
-
-    /**
-     * @ORM\Column(name="reference_name", type="string", length=255)
-     */
-    private $referenceName;
-
-    /**
-     * @ORM\Column(name="vernicular_name", type="string", length=255)
-     */
-    private $vernicularName;
+    protected $slug;
 
     /**
      * @ORM\Column(name="inpn_link", type="string", length=255)
      */
     private $inpnLink;
+
+    /**
+     * Unidirectionnal - Many Bird has One Taxref . (OWNED SIDE)
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Taxref", cascade={"persist"})
+     * @Assert\Valid()
+     *
+     */
+    private $taxref;
+
+    /**
+     * Bidirectionnal - One Bird has One Observation . (INVERSE SIDE)
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Observation", mappedBy="bird")
+     *
+     */
+    private $observation;
+
 
 
 
@@ -49,73 +58,21 @@ class Bird
     }
 
     /**
-     * @param mixed $id
-     *
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * @return mixed
      */
-    public function getReferenceId()
+    public function getslug()
     {
-        return $this->referenceId;
+        return $this->slug;
     }
 
     /**
-     * @param mixed $referenceId
+     * @param mixed $slug
      *
      * @return self
      */
-    public function setReferenceId($referenceId)
+    public function setslug($slug)
     {
-        $this->referenceId = $referenceId;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getReferenceName()
-    {
-        return $this->referenceName;
-    }
-
-    /**
-     * @param mixed $referenceName
-     *
-     * @return self
-     */
-    public function setReferenceName($referenceName)
-    {
-        $this->referenceName = $referenceName;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVernicularName()
-    {
-        return $this->vernicularName;
-    }
-
-    /**
-     * @param mixed $vernicularName
-     *
-     * @return self
-     */
-    public function setVernicularName($vernicularName)
-    {
-        $this->vernicularName = $vernicularName;
+        $this->slug = $slug;
 
         return $this;
     }
@@ -139,4 +96,45 @@ class Bird
 
         return $this;
     }
+
+    /**
+     * @return object
+     */
+    public function getTaxref()
+    {
+        return $this->taxref;
+    }
+
+    /**
+     * @param object Taxref
+     *
+     * @return self
+     */
+    public function setTaxref(Taxref $taxref = null)
+    {
+        $this->taxref = $taxref;
+
+        return $this;
+    }
+
+    /**
+     * @return object
+     */
+    public function getObservation()
+    {
+        return $this->observation;
+    }
+
+    /**
+     * @param object Observation
+     *
+     * @return self
+     */
+    public function setObservation(Taxref $observation = null)
+    {
+        $this->observation = $observation;
+
+        return $this;
+    }
+
 }

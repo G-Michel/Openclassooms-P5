@@ -7,46 +7,29 @@
 {% block javascripts %}
   {{parent()}}
   <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
-</script>
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
+  </script>
 {% endblock %}
 
 {% block mainLeft %}
-<div class="col-sm-5 pl-4 pr-4" >
-      <div class="card card-detail">
-        {% if post.picture and post.picture.url  %}
-          <div class="card-image">
-            <a href="#"> <img class="img" src="{{ post.picture.url }}" alt="{{ post.picture.alt }}"></a>
-          </div>
-        {% endif %}
-          <div class="table">
-              <h6 class="category text-rose">{{ post.nomVernType }}</h6>
-              <p class="card-description">
-                {{ post.lbNomType }}<br>
-                {{ post.lbAuteurType }}
-              </p>
-
-            </div>
-            <div class="ftr">
-              <a href="#" class="btn btn-just-icon btn-link"><i class="material-icons">link</i></a>
-            </div>
-      </div>
+  <div class="col-sm-5 pl-4 pr-4" >
+    {{ include('components/card-detail.html.twig') }}
   </div>
   {% endblock %}
 
 
   {% block mainRight %}
     <div class="col-sm-7 p-0" >
-      <img class="h-100 w-100" src="{{ asset('images/map.png') }}" alt="">
-      <div id="map" style="height:100%;"></div>
+      <!-- <img class="h-100 w-100" src="{{ asset('images/map.png') }}" alt=""> -->
+      <div id="map" style="height: calc(100% + 56px);margin-top:-56px;"></div>
     </div>
 
     <script>
       var map;
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-          zoom:5,
-          center: new google.maps.LatLng(48.866667,2.333333),
+          zoom:6,
+          center: new google.maps.LatLng(46.86667,2.21375),
           styles:[
             {"elementType": "geometry","stylers": [{"color": "#1d1e23"}]},
             {"elementType": "labels.icon","stylers": [{"visibility": "off"}]},
@@ -119,38 +102,11 @@
           ]
         });
 
-        // Create a <script> tag and set the USGS URL as the source.
-        var script = document.createElement('script');
-        // This example uses a local copy of the GeoJSON stored at
-        // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
-        script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
-        document.getElementsByTagName('head')[0].appendChild(script);
-      }
+        map.data.loadGeoJson("{{ path('jsonLocations',{'taxref': post.id}) }}");
+        map.data.setStyle({
+          icon: "{{ asset('images/marker.svg') }}",
+        });
 
-      // Loop through the results array and place a marker for each
-      // set of coordinates.
-      window.eqfeed_callback = function(results) {
-        for (var i = 0; i < results.features.length; i++) {
-          var coords = results.features[i].geometry.coordinates;
-          var latLng = new google.maps.LatLng(coords[1],coords[0]);
-          var image = "{{ asset('images/marker.svg') }}";
-          var marker = new google.maps.Marker({
-            position: latLng,
-            map: map,
-            icon: image,
-            strokeWeight: 2,
-          });
-          //var markerCircle = new google.maps.Circle({
-          //  strokeColor: '#00cccc',
-          //  strokeOpacity: 0.8,
-          //  strokeWeight: 2,
-          //  fillColor: '#00cccc',
-          //  fillOpacity: 0.35,
-          //  map: map,
-          //  center: latLng,
-          //  radius: 20
-          //});
-        }
       }
     </script>
 {% endblock %}

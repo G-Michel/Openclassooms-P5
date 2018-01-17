@@ -19,7 +19,7 @@ class Location
     private $id;
 
     /**
-     * @ORM\Column(name="gps_x", type="integer")
+     * @ORM\Column(name="gps_x", type="decimal",precision=7, scale=5)
      * @Assert\NotBlank(message="Vous devez saisir une longitude")
      * @Assert\Type(
      *      type    = "float",
@@ -29,7 +29,7 @@ class Location
     private $gpsX;
 
     /**
-     * @ORM\Column(name="gps_y", type="integer")
+     * @ORM\Column(name="gps_y", type="decimal",precision=7, scale=5)
      * @Assert\NotBlank(message="Vous devez saisir une latitude")
      * @Assert\Type(
      *      type    = "float",

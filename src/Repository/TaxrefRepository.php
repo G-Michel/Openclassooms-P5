@@ -44,16 +44,28 @@ class TaxrefRepository extends ServiceEntityRepository
     }
 
 
-    /*
-    public function findBySomething($value)
+    public function findByFrType(int $limit = Taxref::NUM_ITEMS)
     {
-        return $this->createQueryBuilder('t')
-            ->where('t.something = :value')->setParameter('value', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        // ['B','D','P','I','J','X','W']
+        $em = $this->getEntityManager();
+        $query = $em->createQuery(
+            "SELECT t,
+            CASE
+                WHEN t.frType in ('X','W','A','M','') THEN 1
+                ELSE 2
+            END AS presence
+            FROM App\Entity\Taxref t
+            ORDER BY presence DESC
+            "
+        );
+
+        $findResults = $query->execute();
+
+        foreach ($findResults as $k => $result) {
+            if ($k < $limit) {
+                $results[] = $result[0];
+            }
+        }
+        return $results;
     }
-    */
 }

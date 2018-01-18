@@ -43,8 +43,9 @@ class Auth
      */
     private $resetToken;
 
-   
 
+   
+    //Getters setters
     /**
      * @return mixed
      */

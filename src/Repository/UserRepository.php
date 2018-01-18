@@ -21,17 +21,18 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->getOneOrNullResult();
     }
 
-    public function tokenComfirm($username,$token)
+    public function tokenComfirm($token)
     {
-        return $this->createQueryBuilder('u')
-            ->innerJoin(Auth::class,'a')
-            ->where('u.username = :username AND a.comfirmedToken = :token')
-            ->setParameter('username',$username)
-            ->setParameter('token',$token)
+        return  $this->createQueryBuilder('u')
+            ->join('u.auth','a')
+            ->where('a.comfirmedToken = :comfirmToken OR a.resetToken = :resetToken ')
+            ->setParameter('comfirmToken',$token)
+            ->setParameter('resetToken',$token)
             ->getQuery()
             ->getOneOrNullResult();
-
     }
+
+    
 
     /*
     public function findBySomething($value)

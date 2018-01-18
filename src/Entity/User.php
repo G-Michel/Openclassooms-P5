@@ -114,6 +114,7 @@ class User implements UserInterface, AdvancedUserInterface
 
     public function eraseCredentials()
     {
+        unset($this->plainPassword);
     }
 
     public function isAccountNonExpired()

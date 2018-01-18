@@ -285,6 +285,10 @@ CARDS
     flex-direction: column;
     justify-content: space-between;
     padding: 0 20px;
+    .category {
+      line-height: 1;
+      margin: 0;
+    }
     .card-description {
       margin:0;
     }

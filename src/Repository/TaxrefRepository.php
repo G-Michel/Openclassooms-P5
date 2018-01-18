@@ -51,11 +51,12 @@ class TaxrefRepository extends ServiceEntityRepository
         $query = $em->createQuery(
             "SELECT t,
             CASE
-                WHEN t.frType in ('X','W','A','M','') THEN 1
+                WHEN t.frType in ('P') THEN 1
                 ELSE 2
             END AS presence
             FROM App\Entity\Taxref t
-            ORDER BY presence DESC
+            INNER JOIN App\Entity\Bird b WHERE t.id = b.taxref
+            ORDER BY presence ASC
             "
         );
 

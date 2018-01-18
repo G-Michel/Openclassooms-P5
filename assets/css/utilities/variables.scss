@@ -60,6 +60,13 @@ $link-hover-color:          darken($link-color, 15%);
 $component-active-color:      theme-color("primary");
 $component-active-bg:         none;
 
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+$border-width:                1px ;
+$hr-border-color:             rgba(white, .4);
+$hr-border-width:             $border-width ;
+
 
 // Navs
 

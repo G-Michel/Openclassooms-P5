@@ -6,11 +6,13 @@
     {% endif %}
       <div class="table d-flex">
           <h6 class="category text-rose">{{ post.nomVernType }}</h6>
+          <p class="card-description mb-auto">{{ post.lbNomType }} {{ post.lbAuteurType }}</p>
           <div class="d-inline-flex justify-content-between">
-            <p class="card-description">
-              {{ post.lbNomType }}<br>
-              {{ post.lbAuteurType }}
+            {% if route == "showObservation" %}
+            <p class="card-date align-self-end m-0">
+              observé le <br> {{ observation.dateObs|date('j M. Y')}}
             </p>
+            {% endif %}
             <div class="ftr">
               <a href="#" class="btn btn-just-icon btn-link"><i class="material-icons">link</i></a>
             </div>

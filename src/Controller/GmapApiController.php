@@ -40,7 +40,10 @@ class GmapApiController extends Controller
                         floatval($bird->getObservation()->getLocation()->getGpsY())]
                 ],
                 "properties" => [
-                    "name"        => "oiseau"
+                    "observation" => $bird->getObservation()->getId(),
+                    "picture"     => [
+                        "url" => $bird->getObservation()->getUser()->getPicture()->getUrl()
+                    ]
                 ],
 
             ];
@@ -70,8 +73,11 @@ class GmapApiController extends Controller
                     floatval($observation->getLocation()->getGpsY())]
             ],
             "properties" => [
-                "name"        => "oiseau"
-            ]
+                "observation" => $observation->getId(),
+                "picture"     => [
+                    "url" => $observation->getUser()->getPicture()->getUrl()
+                ]
+            ],
         ];
 
         return $this->json($result);

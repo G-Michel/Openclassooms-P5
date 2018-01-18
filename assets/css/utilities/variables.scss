@@ -31,11 +31,12 @@ $secondary:     $rose ;
 // $info:          $cyan !default;
 $warning:       $yellow;
 $danger:        $red;
-// $light:         $gray-100 !default;
+$light:         $gray-400;
 $dark:          $gray-primary;
 
 $theme-colors: (
   "primary":    $primary,
+  "light":      $light,
   "dark":       $dark
 );
 // stylelint-enable

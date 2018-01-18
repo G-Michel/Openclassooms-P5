@@ -14,12 +14,41 @@
         var markers = response.map(function(location, i) {
           var coordinates = location.getGeometry().get();
           var latLng = new google.maps.LatLng(coordinates.lat(),coordinates.lng());
-          return new google.maps.Marker({
+          var marker = new google.maps.Marker({
             map,
             position: latLng,
-            animation: google.maps.Animation.DROP,
+            //animation: google.maps.Animation.DROP,
             icon: "{{ asset('images/map/marker.svg') }}"
           });
+          var href = '{{ path("showObservation", {'id': 'obsId'}) }}';
+          href = href.replace("obsId", location.getProperty('observation'));
+          var content = '<a href="'+href+'"><img height="50px" width="50px" class="markerImg" src="'+location.getProperty('picture').url+'" alt="..." ></a>'
+          var infowindow = new google.maps.InfoWindow({
+            content:content
+          });
+          infowindow.open(map, marker);
+          google.maps.event.addListener(infowindow, 'domready', function() {
+
+            var iwOuters = document.querySelectorAll('.gm-style-iw')
+
+            for (var i = 0; i < iwOuters.length; i++) {
+
+              var iwOuter = iwOuters[i];
+              var iwBackground = iwOuter.previousElementSibling;
+              var iwCloseBtn = iwOuter.nextElementSibling;
+
+              iwOuter.style.top='35px';
+              iwOuter.style.left='27px';
+              iwOuter.style.width='50px';
+              // Removes background shadow DIV
+              iwBackground.children[1].style.display='none';
+              // Removes white background DIV
+              iwBackground.children[3].style.display='none';
+              // Removes close btn DIV
+              iwCloseBtn.style.display='none';
+            }
+          });
+          return marker
         });
 
       });

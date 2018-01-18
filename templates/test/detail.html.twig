@@ -15,6 +15,11 @@
 {% block mainLeft %}
   <div class="col-sm-5 pl-4 pr-4" >
     {{ include('components/card-detail.html.twig') }}
+    {% if route == "showTaxref" %}
+      {{ include('components/detail_txr-description.html.twig') }}
+    {% elseif route == "showObservation" %}
+      {{ include('components/detail_obs-description.html.twig') }}
+    {% endif %}
   </div>
 {% endblock %}
 

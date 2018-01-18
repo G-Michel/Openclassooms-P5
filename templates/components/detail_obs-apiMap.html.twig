@@ -1,0 +1,33 @@
+<script>
+    var map;
+    function initMap() {
+
+      {{ include('components/styled_map.html.twig') }}
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom:12,
+        center: new google.maps.LatLng("{{observation.location.gpsY}}","{{observation.location.gpsX}}"),
+      });
+
+      map.data.loadGeoJson("{{ path('jsonObservation',{'id': observation.id}) }}",null,function(response){
+
+        var markers = response.map(function(location, i) {
+          var coordinates = location.getGeometry().get();
+          var latLng = new google.maps.LatLng(coordinates.lat(),coordinates.lng());
+          return new google.maps.Marker({
+            map,
+            position: latLng,
+            animation: google.maps.Animation.DROP,
+            icon: "{{ asset('images/map/marker.svg') }}"
+          });
+        });
+
+      });
+
+      map.data.setStyle({visible: false});
+      //Associate the styled map with the MapTypeId and set it to display.
+      map.mapTypes.set('styled_map', styledMapType);
+      map.setMapTypeId('styled_map');
+
+    }
+  </script>

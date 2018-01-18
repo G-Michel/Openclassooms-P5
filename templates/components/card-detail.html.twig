@@ -4,15 +4,17 @@
         <a href="#"> <img class="img" src="{{ post.picture.url }}" alt="{{ post.picture.alt }}"></a>
       </div>
     {% endif %}
-      <div class="table">
+      <div class="table d-flex">
           <h6 class="category text-rose">{{ post.nomVernType }}</h6>
-          <p class="card-description">
-            {{ post.lbNomType }}<br>
-            {{ post.lbAuteurType }}
-          </p>
-
-        </div>
-        <div class="ftr">
-          <a href="#" class="btn btn-just-icon btn-link"><i class="material-icons">link</i></a>
+          <div class="d-inline-flex justify-content-between">
+            <p class="card-description">
+              {{ post.lbNomType }}<br>
+              {{ post.lbAuteurType }}
+            </p>
+            <div class="ftr">
+              <a href="#" class="btn btn-just-icon btn-link"><i class="material-icons">link</i></a>
+            </div>
+          </div>
         </div>
   </div>
+  <hr>

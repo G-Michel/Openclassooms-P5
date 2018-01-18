@@ -16,13 +16,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class GmapApiController extends Controller
 {
     /**
-     * @Route("/json/taxref/{taxref}", name="jsonLocations")
+     * @Route("/json/taxref/{taxref}", name="jsonTaxref")
      * @Method("GET")
      */
     public function jsonTaxref(Request $request, $taxref, BirdRepository $bird): Response
     {
         if (!$request->isXmlHttpRequest()) {
-
         }
 
         $foundBirds = $bird->findBy(["taxref"=>$taxref]);

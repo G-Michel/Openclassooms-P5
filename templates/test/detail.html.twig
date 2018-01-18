@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Test Detail - {{parent()}}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block javascripts %}
+  {{parent()}}
+  <script src="{{ asset('build/js/markerclusterer.js')}}"></script>
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
+  </script>
+{% endblock %}
+
+{% block mainLeft %}
+  <div class="col-sm-5 pl-4 pr-4" >
+    {{ include('components/card-detail.html.twig') }}
+  </div>
+{% endblock %}
+
+{% block mainRight %}
+    <div class="col-sm-7 p-0" >
+      <!-- <img class="h-100 w-100" src="{{ asset('images/map.png') }}" alt=""> -->
+      <div id="map" style="height: calc(100%);"></div>
+    </div>
+    {% if route == "showTaxref" %}
+      {{ include('components/detail_txr-apiMap.html.twig') }}
+    {% elseif route == "showObservation" %}
+      {{ include('components/detail_obs-apiMap.html.twig') }}
+    {% endif %}
+{% endblock %}
+

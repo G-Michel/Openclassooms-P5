@@ -211,7 +211,6 @@ class TestController extends Controller
         $limit = $request->query->get('l', 30);
         $foundPosts = $taxref->findBySearchQuery($searchTerms, $limit);
 
-
         $results = [];
         foreach ($foundPosts as $post) {
             // dump($post);die();
@@ -257,7 +256,7 @@ class TestController extends Controller
     {
         $bird = $observation->getBird();
         $taxref = $bird->getTaxref();
-        return $this->render('test/detail_obs.html.twig', [
+        return $this->render('test/detail.html.twig', [
             'post' => $taxref,
             'observation' => $observation,
         ]);

@@ -4,7 +4,7 @@
         <a href="#"> <img class="img" src="{{ post.picture.url }}" alt="{{ post.picture.alt }}"></a>
       </div>
     {% endif %}
-      <div class="table d-flex">
+      <div class="table d-flex pr-0">
           <h6 class="category text-rose">{{ post.nomVernType }}</h6>
           <p class="card-description mb-auto">{{ post.lbNomType }} {{ post.lbAuteurType }}</p>
           <div class="d-inline-flex justify-content-between">
@@ -13,7 +13,7 @@
               observé le <br> {{ observation.dateObs|date('j M. Y')}}
             </p>
             {% endif %}
-            <div class="ftr">
+            <div class="ftr ml-auto">
               <a href="#" class="btn btn-just-icon btn-link"><i class="material-icons">link</i></a>
             </div>
           </div>

@@ -8,7 +8,6 @@ use App\Entity\Picture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use App\Entity\User;
 use App\Entity\Auth;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -125,11 +124,13 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $user->setRoles('ROLE_ADMIN');
             $user->setName($listAdmin[$i]['name']);
             $user->setSurname($listAdmin[$i]['surname']);
+            $user->setIsActive(1);
             $user->setUsername(strtolower($user->getName()));
             $user->setMail(Slugger::slugify($user->getName().' '.$user->getSurname()).'@'.$mail);
           } else {
             $user->setName($faker->firstname);
             $user->setSurname($faker->lastname);
+            $user->setIsActive(1);
             $user->setUsername(Slugger::slugify($user->getName().' '.($i+1)));
             $user->setMail(Slugger::slugify($user->getName().' '.$user->getSurname().' '.($i+1)).'@'.$mail);
             // NATURALIST

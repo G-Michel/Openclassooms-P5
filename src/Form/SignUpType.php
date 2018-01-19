@@ -18,15 +18,19 @@ class SignUpType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('mail', EmailType::class)
-            ->add('username', TextType::class)
-            ->add('acceptTerms', CheckboxType::class, array(
-                'mapped' => false,
-                'constraints' => new IsTrue(),))
+            ->add('mail', EmailType::class,
+                array('label' =>'Adresse email',))
+            ->add('username', TextType::class,
+                array('label' =>'Pseudo'))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),));
+                'first_options'  => array('label' => 'Mot de passe'),
+                'second_options' => array('label' => 'Repetez le mot de passe'),))
+            ->add('acceptTerms', CheckboxType::class, array(
+                'label' => 'Acceptez vous les conditions d\'utilisation ?' ,
+                'mapped' => false,
+                'constraints' => new IsTrue(
+                    array('message' =>'Vous devez accepter les conditions d\'utilisation')),));
     }
 
     public function configureOptions(OptionsResolver $resolver)

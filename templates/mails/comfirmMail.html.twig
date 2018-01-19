@@ -6,6 +6,6 @@
 Vous recevez cet e-mail car vous venez de vous inscrire sur <a href="www.openclass-p5.ovh">www.nos_amis_les_animaux.org</a><p>
 
 
-<p>Pour valider votre inscription, nous vous invitons à cliquer sur le lien ci-dessous : <a href="{{ app.request.getUri }}/test/form/comfirmMail?token={{ user.getAuth().getComfirmedToken() }}">{{ app.request.getUri }}/test/form/comfirmMail?token={{ user.getAuth().getComfirmedToken() }}</a>Si vous avez des difficultés pour activer ce lien, copier le et coller le directement dans la barre d'adresse de votre navigateur.</p>
+<p>Pour valider votre inscription, nous vous invitons à cliquer sur le lien ci-dessous : <a href="{{ url('comfirmMail') }}?token={{ user.getAuth().getComfirmedToken() }}">{{ url('comfirmMail') }}?token={{ user.getAuth().getComfirmedToken() }}</a><br/>Si vous avez des difficultés pour activer ce lien, copier le et coller le directement dans la barre d'adresse de votre navigateur.</p>
 
 <h3>nos amis les animaux <a href="http://www.openclass-p5.ovh/">www.nos_amis_les_animaux.org</a></h3>

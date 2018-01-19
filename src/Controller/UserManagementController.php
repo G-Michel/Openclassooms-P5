@@ -21,7 +21,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class UserManagementController extends Controller
 {
     /**
-     * @Route("/test/form/signUp")
+     * @Route("/test/form/signUp", name="signUp")
      */
     public function signUp(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -57,17 +57,20 @@ class UserManagementController extends Controller
             $this->get('mailer')->send($message);
 
             return $this->render('test/registerComfirm.html.twig',array(
-                'message' => array('inscription complétée',
+                'message' => array(
+                    'inscription complétée',
                     'vous allez recevoir un mail pour confirmer votre inscription')));
         }
 
         return $this->render('test/register.html.twig', [
             'form' => $form->createView(),
-        ]);
+            'message' => array(
+                'Inscription',
+                'Veuillez remplir les champs pour vous inscrire')]);
     }
 
     /**
-     * @Route("/test/form/comfirmMail")
+     * @Route("/test/form/comfirmMail", name="comfirmMail")
      */
     public function comfirmMail(Request $request)
     {
@@ -131,7 +134,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/test/form/lostPassword")
+     * @Route("/test/form/lostPassword", name="lostPassword")
      */
     public function lostPassword(Request $request)
     {
@@ -180,11 +183,13 @@ class UserManagementController extends Controller
         }
         return $this->render('test/register.html.twig', [
             'form' => $form->createView(),
-        ]);
+            'message' => array(
+                'Perte de mot de passe',
+                'Veuillez entrer votre addresse mail')]);
     }
 
     /**
-     * @Route("/test/form/resetPassword")
+     * @Route("/test/form/resetPassword", name="resetPassword")
      */
     public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -226,7 +231,9 @@ class UserManagementController extends Controller
 
             return $this->render('test/register.html.twig', [
             'form' => $form->createView(),
-            ]);
+            'message' => array(
+                'Réinitialisation du mot de passe',
+                'Veuillez entrer le nouveau mot de passe')]);
         }
         else
         {

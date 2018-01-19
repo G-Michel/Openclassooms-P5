@@ -1,3 +1,5 @@
+
+
 {% extends "base.html.twig" %}
 
 {% block title %}Test Login - {{parent()}}{% endblock %}
@@ -6,19 +8,26 @@
 
 {% block javascripts %}{% endblock %}
 
-{% block mainTitle %}
-<div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">
-    <div class="container mt-auto mb-auto">
-        <h1 class="text-white display-3">Inscription</h1>
-        <p class="text-primary lead">Veuillez remplir les champs pour vous inscrire</p>
-    </div>
+{% block mainLeft %}
+<div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">    
+	<div class="container mt-auto mb-auto">
+    	<h1 class="text-white display-3">{{message[0]}}</h1>
+    	<p class="text-primary lead">{{message[1]}}</p>
+	</div>
 </div>
 {% endblock %}
 
-{% block mainContent %}
- {% include 'test/form.html.twig' %}
-
-
-
-
+{% block mainRight %}
+	{% form_theme form 'bootstrap_4_layout.html.twig' %}
+  	<div class="col col-md-6 offset-md-4 offset-lg-5">
+    	<div class="login-form">
+        	<div class="form">
+        		{{ form_start(form) }} 
+				{{ form_widget(form) }}
+				<button type="submit" class="btn btn-primary">S'inscrire</button>
+				{{ form_end(form) }}
+    		</div>
+  		</div>
+	</div>
+ 
 {% endblock %}

@@ -106,6 +106,7 @@ class User implements UserInterface, AdvancedUserInterface
      */
     private $picture;
 
+    /**
      * 
      * @ORM\Column(name="is_active", type="boolean")
      */

@@ -29,6 +29,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -37,9 +38,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class TestController extends Controller
 {
- 
+
     /**
      * @Route("/test/observe/stepOne", name="observe_first_step")
+     * @IsGranted("ROLE_USER")
      */
     public function stepOne(Request $request, SessionInterface $session)
     {
@@ -79,6 +81,7 @@ class TestController extends Controller
 
     /**
      * @Route("/test/form/stepThree", name="step_three")
+     * @IsGranted("ROLE_USER")
      */
     public function stepThree(Request $request, SessionInterface $session)
     {
@@ -99,6 +102,7 @@ class TestController extends Controller
 
     /**
      * @Route("/test/form/observation")
+     * @IsGranted("ROLE_USER")
      */
     public function observation(Request $request)
     {
@@ -146,7 +150,6 @@ class TestController extends Controller
         ]);
 	}
 
-
     /**
      * @Route("/test/taxref",defaults={"page": "1", "_format"="html"}, name="listingTaxref")
      * @Method("GET")
@@ -156,8 +159,13 @@ class TestController extends Controller
     {
         if (!$request->isXmlHttpRequest()) {
 
-            $results = $taxref->findByFrType();
-            return $this->render('test/listing.html.twig', ['posts' => $results]);
+            $posts = $taxref->findByFrType();
+            $page = [
+                'title' => 'Taxref',
+                'subtitle' => 'Le référentiel taxonomique taxref'
+            ];
+            return $this->render('test/listing.html.twig', compact('posts', 'page'));
+
         }
 
         $rawQuery = $request->query->get('q', '');
@@ -199,8 +207,12 @@ class TestController extends Controller
     public function listingObservations(Request $request, ObservationRepository $observation): Response
     {
         if (!$request->isXmlHttpRequest()) {
-            $results = $observation->findByStatus(100);
-            return $this->render('test/listing.html.twig', ['posts' => $results]);
+            $posts = $observation->findByStatus(100);
+            $page = [
+                'title' => 'Observations',
+                'subtitle' => 'Les observations de tous les membres'
+            ];
+            return $this->render('test/listing.html.twig', compact('posts', 'page'));
         }
     }
 

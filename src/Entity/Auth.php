@@ -19,32 +19,33 @@ class Auth
     private $id;
 
     /**
-     * @ORM\Column(name="remember_token", type="string", length=255)
+     * @ORM\Column(name="remember_token", type="string", length=255, nullable=true)
      */
     private $rememberToken;
     
     /**
-     * @ORM\Column(name="reset_at", type="datetime")
+     * @ORM\Column(name="reset_at", type="datetime", nullable=true)
      */
     private $resetAt;
 
     /**
-     * @ORM\Column(name="comfirmed_at", type="datetime")
+     * @ORM\Column(name="comfirmed_at", type="datetime", nullable=true)
      */
     private $comfirmedAt;
 
     /**
-     * @ORM\Column(name="comfirmed_token", type="string", length=255)
+     * @ORM\Column(name="comfirmed_token", type="string", length=255, nullable=true)
      */
     private $comfirmedToken;
 
     /**
-     * @ORM\Column(name="reset_token", type="string", length=255)
+     * @ORM\Column(name="reset_token", type="string", length=255, nullable=true)
      */
     private $resetToken;
 
-   
 
+   
+    //Getters setters
     /**
      * @return mixed
      */

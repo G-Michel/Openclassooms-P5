@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\User;
+use App\Entity\Auth;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
@@ -27,7 +28,10 @@ class UserFixtures extends Fixture
 
 			$key>2?$i=0:$i=$key;
 			$user = new User();
+			$auth = new Auth();
 			$user->setUsername($username);
+			$user->setIsActive(true);
+			$user->setAuth($auth);
 			$encodedPassword= $this->encoder->encodePassword($user,$username."password");
 			$user->setPassword($encodedPassword);
 			$user->setMail($username.'@gmail.com');

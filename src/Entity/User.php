@@ -5,13 +5,17 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("mail")
+ * @UniqueEntity("username")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, AdvancedUserInterface
 {
     /**
      * @ORM\Id
@@ -52,7 +56,7 @@ class User implements UserInterface, \Serializable
     private $roles;
 
     /**
-     * @ORM\Column(name="mail", type="string", length=255)
+     * @ORM\Column(name="mail", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir votre mail")
      * @Assert\Email(
      *      message = "L’email {{ value }} n’est pas un mail valide",
@@ -62,8 +66,12 @@ class User implements UserInterface, \Serializable
     private $mail;
 
     /**
-     * @ORM\Column(name="password", type="string", length=255, unique=true)
-     * @Assert\NotBlank(message="Vous devez saisir un mot de passe")
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @Assert\NotBlank()
      * @Assert\Type(
      *      type    = "string",
      *      message = "Vous devez saisir une chaine de caractère"
@@ -75,12 +83,6 @@ class User implements UserInterface, \Serializable
      *      maxMessage ="Vous devez entrer moins de {{ limit }} caractères"
      * )
      */
-    private $password;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
-     */
     private $plainPassword;
 
     /**
@@ -91,30 +93,50 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * @ORM\Column(name="salt", type="string", length=255)
+     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
     */
     private $salt;
 
+    /**
+     * 
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * Unidirectionnal - One User has One Auth . (OWNED SIDE)
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Auth", cascade={"persist"})
+     * @Assert\Valid()
+     *
+     */
+    private $auth;
+
     public function eraseCredentials()
     {
+        unset($this->plainPassword);
     }
 
-    public function serialize()
+    public function isAccountNonExpired()
     {
-        return serialize(array(
-            $this->getId(),
-            $this->getUsername(),
-            $this->getPassword()));
+        return true;
     }
 
-    public function unserialize($serialized)
+    public function isAccountNonLocked()
     {
-           list (
-            $this->id,
-            $this->username,
-            $this->password,
-        ) = unserialize($serialized);
+        return true;
     }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
 
     //GETTERS SETTERS
     
@@ -154,6 +176,26 @@ class User implements UserInterface, \Serializable
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+        /**
+     * @return mixed
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param mixed $isActive
+     *
+     * @return self
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
@@ -316,5 +358,20 @@ class User implements UserInterface, \Serializable
         $this->salt = $salt;
 
         return $this;
+    }
+
+        public function getAuth()
+    {
+      return $this->auth;
+    }
+
+    /**
+     * @param object $auth
+     *
+     * @return self
+     */
+        public function setAuth(Auth $auth = null)
+    {
+      $this->auth= $auth;
     }
 }

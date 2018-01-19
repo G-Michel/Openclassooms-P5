@@ -38,16 +38,16 @@ body {
   }
 }
 
-#main-left > div {
+#home #main-left > div,
+#contact #main-left > div,
+#listingTaxref #main-left > div,
+#listingObservations #main-left > div
+{
   @include media-breakpoint-up(lg) {
     position:fixed;
     top: 56px;
     bottom: 0;
   }
-}
-#showObservation #main-left > div {
-    position: relative;;
-    bottom: none;
 }
 // MAP
 //

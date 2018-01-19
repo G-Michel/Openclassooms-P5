@@ -18,9 +18,9 @@
         <div class="container-fluid">
             <div class="row">
                 {{ include('partials/verticalNav.html.twig') }}
-                <main role="main" class="main">
+                <main id="{{route}}" role="main" class="main">
                     <div class="container-fluid">
-                        <div class="row" style="min-height:calc(100vh - 56px);">
+                        <div class="row main-row">
                             {% block mainLeft %}{% endblock %}
                             {% block mainRight %}{% endblock %}
                         </div>

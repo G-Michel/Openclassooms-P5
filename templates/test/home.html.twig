@@ -7,8 +7,52 @@
 {% block javascripts %}{% endblock %}
 
 {% block mainLeft %}
-<div class="container mt-auto mb-auto">
-    <h1 class="text-white display-3">Bienvenue</h1>
-    <p class="text-primary lead">sur la page d'accueil</p>
+<div id="main-left" class="col-lg-8 col-xl-9">
+    <div class="d-flex">
+        <div class="container mt-auto mb-auto">
+            <h1 class="text-white display-3">Bienvenue</h1>
+            <p class="text-primary lead">sur la page d'accueil</p>
+        </div>
+    </div>
 </div>
+{% endblock %}
+
+{% block mainRight %}
+    <div id="main-right" class="col-lg-4 col-xl-3 mt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-12">
+                    <div class="card card-background"
+                        style="background-image: url('http://adamthemes.com/demo/code/cards/images/blog07.jpeg')">
+                        <div class="table">
+                            <h6 class="category text-info">Taxref</h6>
+                            <a href="#">
+                                <h3 class="card-caption">Le référentiel taxonomique taxref</h3>
+                            </a>
+                            <p class="card-description"> Découvrez l'ensemble des oiseaux référencé par la taxref</p>
+                            <!-- <a href="#" class="btn btn-white btn-simple"> <i class="fa fa-align-left"></i> Read Article </a> -->
+                            <a href="#pablo" class="btn btn-warning btn-round"> <i class="fa fa-cogs"></i> Accéder
+                                <div class="ripple-container"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-12">
+                    <div class="card card-background"
+                        style="background-image: url('http://adamthemes.com/demo/code/cards/images/blog07.jpeg')">
+                        <div class="table">
+                            <h6 class="category text-info">Observations</h6>
+                            <a href="#">
+                                <h3 class="card-caption">Les observations de tous les membres</h3>
+                            </a>                                <p class="card-description"> Découvrez l'ensemble des oiseaux observé par notre communauté</p>
+                            <!-- <a href="#" class="btn btn-white btn-simple"> <i class="fa fa-align-left"></i> Read Article </a> -->
+                            <a href="#pablo" class="btn btn-warning btn-round"> <i class="fa fa-cogs"></i> Accéder
+                                <div class="ripple-container"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

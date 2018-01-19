@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Bird;
+use App\Entity\User;
 use App\Entity\Picture;
 use App\Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
@@ -89,7 +90,7 @@ class Observation
     /**
      * Unidirectionnal - One Observation has One Bird . (OWNED SIDE)
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Bird", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Bird", cascade={"persist"}, inversedBy="observation")
      * @Assert\NotBlank(
      *     groups = {"step3"},
      *     message = "Vous devez sélectionner un oiseau"
@@ -107,6 +108,15 @@ class Observation
      *
      */
     private $picture;
+
+    /**
+     * Unidirectionnal - Many Observation has One User . (OWNED SIDE)
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist"})
+     * @Assert\Valid()
+     *
+     */
+    private $user;
 
     /**
      * @return mixed
@@ -280,5 +290,52 @@ class Observation
     public function setPicture(Picture $picture = null)
     {
       $this->picture = $picture;
+    }
+
+    /**
+     * @return object
+     */
+    public function getUser()
+    {
+      return $this->user;
+    }
+
+    /**
+     * @param object $user
+     *
+     * @return self
+     */
+    public function setUser(User $user = null)
+    {
+      $this->user = $user;
+    }
+
+    public function getAgo($datetime, $full = false) {
+        $now = new \DateTime;
+        $ago = new \DateTime($datetime);
+        $diff = $now->diff($ago);
+
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+
+        $string = array(
+            'y' => 'an',
+            'm' => 'mois',
+            'w' => 'sem',
+            'd' => 'jr',
+            'h' => 'hr',
+            'i' => 'min',
+            's' => 'sec',
+        );
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 && !in_array($k,['m','w','i','s']) ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+
+        if (!$full) $string = array_slice($string, 0, 1);
+        return $string ? ' il y a ' . implode(', ', $string) : 'maintenant';
     }
 }

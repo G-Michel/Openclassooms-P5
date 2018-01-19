@@ -91,13 +91,21 @@ class User implements UserInterface, AdvancedUserInterface
      */
     private $newsletter;
 
-
     /**
      * @ORM\Column(name="salt", type="string", length=255, nullable=true)
     */
     private $salt;
 
     /**
+
+     * Unidirectionnal - One User has One Picture . (OWNED SIDE)
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist"})
+     * @Assert\Valid()
+     *
+     */
+    private $picture;
+
      * 
      * @ORM\Column(name="is_active", type="boolean")
      */
@@ -111,6 +119,7 @@ class User implements UserInterface, AdvancedUserInterface
      *
      */
     private $auth;
+
 
     public function eraseCredentials()
     {
@@ -360,6 +369,25 @@ class User implements UserInterface, AdvancedUserInterface
         return $this;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getPicture()
+    {
+      return $this->picture;
+    }
+
+    /**
+     * @param object $picture
+     *
+     * @return self
+     */
+    public function setPicture(Picture $picture = null)
+    {
+      $this->picture = $picture;
+    }
+
         public function getAuth()
     {
       return $this->auth;
@@ -375,3 +403,4 @@ class User implements UserInterface, AdvancedUserInterface
       $this->auth= $auth;
     }
 }
+

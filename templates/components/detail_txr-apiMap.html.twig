@@ -1,0 +1,103 @@
+<script>
+    var map;
+    function initMap() {
+
+      {{ include('components/styled_map.html.twig') }}
+
+
+
+      var france = {lat: 46.86667, lng: 2.21375};
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom:6,
+        center: france,
+        mapTypeControlOptions: {
+          mapTypeIds: []// Ex : ['roadmap', 'satellite', 'hybrid', 'terrain','styled_map']
+        }
+      });
+
+      map.data.loadGeoJson("{{ path('jsonTaxref',{'taxref': post.id}) }}",null,function(response){
+
+        var markers = response.map(function(location, i) {
+          var coordinates = location.getGeometry().get();
+          var latLng = new google.maps.LatLng(coordinates.lat(),coordinates.lng());
+          var marker = new google.maps.Marker({
+            position: latLng,
+            clickable: false,
+            //animation: google.maps.Animation.DROP,
+            icon: "{{ asset('images/map/marker.svg') }}"
+          });
+          var href = '{{ path("showObservation", {'id': 'obsId'}) }}';
+          href = href.replace("obsId", location.getProperty('observation'));
+          var content = '<a href="'+href+'"><img height="50px" width="50px" class="markerImg" src="'+location.getProperty('picture').url+'" alt="avatar" ></a>'
+          var infowindow = new google.maps.InfoWindow({
+            content:content
+          });
+          infowindow.open(map, marker);
+          google.maps.event.addListener(infowindow, 'domready', function() {
+
+            var iwOuters = document.querySelectorAll('.gm-style-iw')
+
+            for (var i = 0; i < iwOuters.length; i++) {
+
+              var iwOuter = iwOuters[i];
+              var iwBackground = iwOuter.previousElementSibling;
+              var iwCloseBtn = iwOuter.nextElementSibling;
+
+              iwOuter.style.top='35px';
+              iwOuter.style.left='27px';
+              iwOuter.style.width='50px';
+              // Removes background shadow DIV
+              iwBackground.children[1].style.display='none';
+              // Removes white background DIV
+              iwBackground.children[3].style.display='none';
+              // Removes close btn DIV
+              iwCloseBtn.style.display='none';
+            }
+          });
+          return marker
+        });
+
+
+        var markerCluster = new MarkerClusterer(
+          map,
+          markers,
+          {
+            imagePath: "{{ asset('images/map/m') }}"
+          }
+        );
+
+      });
+
+      map.data.setStyle({visible: false});
+      //Associate the styled map with the MapTypeId and set it to display.
+      map.mapTypes.set('styled_map', styledMapType);
+      map.setMapTypeId('styled_map');
+
+
+    }
+
+  </script>
+  {#
+
+  Ex pour ajout marqueurs avec décalage (ne fonctionne pas avec les groupe de marqueurs)
+
+  var markers = [];
+
+  for (var i = 0; i < response.length; i++) {
+    var coordinates = response[i].getGeometry().get();
+    var latLng = new google.maps.LatLng(coordinates.lat(),coordinates.lng());
+    addMarkerWithTimeout(latLng, i * 200);
+  }
+
+  function addMarkerWithTimeout(position, timeout) {
+    window.setTimeout(function() {
+      markers.push(new google.maps.Marker({
+        position: position,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        icon: "{{ asset('images/map/marker.svg') }}"
+      }));
+    }, timeout);
+  }
+  #}

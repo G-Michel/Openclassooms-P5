@@ -1,0 +1,22 @@
+<div class="card card-detail">
+    {% if post.picture and post.picture.url  %}
+      <div class="card-image">
+        <a href="#"> <img class="img" src="{{ post.picture.url }}" alt="{{ post.picture.alt }}"></a>
+      </div>
+    {% endif %}
+      <div class="table d-flex">
+          <h6 class="category text-rose">{{ post.nomVernType }}</h6>
+          <p class="card-description mb-auto">{{ post.lbNomType }} {{ post.lbAuteurType }}</p>
+          <div class="d-inline-flex justify-content-between">
+            {% if route == "showObservation" %}
+            <p class="card-date align-self-end m-0">
+              observé le <br> {{ observation.dateObs|date('j M. Y')}}
+            </p>
+            {% endif %}
+            <div class="ftr">
+              <a href="#" class="btn btn-just-icon btn-link"><i class="material-icons">link</i></a>
+            </div>
+          </div>
+        </div>
+  </div>
+  <hr>

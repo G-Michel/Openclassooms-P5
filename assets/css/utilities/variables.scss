@@ -10,28 +10,33 @@
 
 // stylelint-disable
 $gray-primary: #272832;
+$gray-secondary: #222329;
 
 $grays: (
   "gray-primary": $gray-primary
 );
 
-$yellow:    #ffac00;
+$turquoise:    #00cccc;
+$yellow:    #ffaa00;
+$rose:    #ff6764;
+$red:    #ff0000;
 
 $colors: (
   "gray-dark":  $gray-primary
 );
 
-$primary:       $yellow;
-// $secondary:     $gray-600 !default;
+$primary:       $turquoise;
+$secondary:     $rose ;
 // $success:       $green !default;
 // $info:          $cyan !default;
-// $warning:       $yellow !default;
-// $danger:        $red !default;
-// $light:         $gray-100 !default;
+$warning:       $yellow;
+$danger:        $red;
+$light:         $gray-400;
 $dark:          $gray-primary;
 
 $theme-colors: (
   "primary":    $primary,
+  "light":      $light,
   "dark":       $dark
 );
 // stylelint-enable
@@ -40,7 +45,7 @@ $theme-colors: (
 //
 // Settings for the `<body>` element.
 
-$body-bg: $gray-700;
+$body-bg: $gray-secondary;
 
 // Links
 //
@@ -55,6 +60,13 @@ $link-hover-color:          darken($link-color, 15%);
 
 $component-active-color:      theme-color("primary");
 $component-active-bg:         none;
+
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+$border-width:                1px ;
+$hr-border-color:             rgba(white, .4);
+$hr-border-width:             $border-width ;
 
 
 // Navs

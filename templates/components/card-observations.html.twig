@@ -1,0 +1,36 @@
+
+
+<div class="card card-blog">
+  {% if post.bird.taxref.picture and post.bird.taxref.picture.url  %}
+  {% set backgroundTable = '' %}
+  {% set btnColor = 'btn-secondary' %}
+    <div class="card-image">
+      <a href="{{ path('showObservation', {id: post.id}) }}"> <img class="img" src="{{ post.bird.taxref.picture.url }}" alt="{{ post.bird.taxref.picture.alt }}"> </a>
+    </div>
+  {% else %}
+    {% set backgroundTable = random(['table-info', 'table-danger','','','','','']) %}
+    {% if backgroundTable == '' %}
+      {% set btnColor = 'btn-secondary' %}
+    {% else %}
+      {% set btnColor = 'btn-white' %}
+    {% endif %}
+  {% endif %}
+  <div class="table {{ backgroundTable }}">
+    <h6 class="category text-secondary">{{ post.bird.taxref.reignType }} {{ post.bird.taxref.frType }} {{ post.status }}</h6>
+    <h4 class="card-caption">
+      <a href="{{ path('showObservation', {id: post.id}) }}">{{ post.bird.taxref.nomValideType }}</a>
+    </h4>
+    <div class="card-description">
+      {{ post.bird.taxref.nomVernType }}
+      <div class="ftr">
+          <div class="author">
+              <a href="#">
+                <img src="{{ post.user.picture.url }}" alt="{{ post.user.picture.alt }}" class="avatar img-raised">
+                <span>{{ post.user.name }} {{ post.user.surname }}</span>
+              </a>
+          </div>
+          <div class="stats d-inline-flex align-items-center"> <i class="material-icons">access_time</i>{{ post.ago(post.dateObs|date())}}</div>
+      </div>
+    </div>
+  </div>
+</div>

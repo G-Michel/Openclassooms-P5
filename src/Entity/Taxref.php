@@ -37,14 +37,44 @@ class Taxref
     protected $phylumType;
 
     /**
-     * @ORM\Column(name="nomVern_type", type="string", length=255)
+     * @ORM\Column(name="class_type", type="string", length=255)
      */
-    protected $nomVernType;
+    protected $classType;
+
+    /**
+     * @ORM\Column(name="cdNom_type", type="integer")
+     */
+    protected $cdNomType;
+
+    /**
+     * @ORM\Column(name="lbNom_type", type="string", length=255)
+     */
+    protected $lbNomType;
+
+    /**
+     * @ORM\Column(name="lbAuteur_type", type="string", length=255)
+     */
+    protected $lbAuteurType;
 
     /**
      * @ORM\Column(name="nomValide_type", type="string", length=255)
      */
     protected $nomValideType;
+
+    /**
+     * @ORM\Column(name="nomVern_type", type="string", length=255)
+     */
+    protected $nomVernType;
+
+    /**
+     * @ORM\Column(name="fr_type", type="string", length=255)
+     */
+    protected $frType;
+
+    /**
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    protected $slug;
 
     /**
      * Unidirectionnal - One Taxref has One Picture . (OWNED SIDE)
@@ -56,28 +86,11 @@ class Taxref
     private $picture;
 
     /**
-     * @ORM\Column(name="class_type", type="string", length=255)
-     */
-    protected $classType;
-
-    /**
      * @return mixed
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     *
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -116,6 +129,86 @@ class Taxref
     public function setPhylumType($phylumType)
     {
         $this->phylumType = $phylumType;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClassType()
+    {
+        return $this->classType;
+    }
+
+    /**
+     * @param mixed $classType
+     *
+     * @return self
+     */
+    public function setClassType($classType)
+    {
+        $this->classType = $classType;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCdNomType()
+    {
+        return $this->cdNomType;
+    }
+
+    /**
+     * @param mixed $cdNomType
+     *
+     * @return self
+     */
+    public function setCdNomType($cdNomType)
+    {
+        $this->cdNomType = $cdNomType;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLbNomType()
+    {
+        return $this->lbNomType;
+    }
+
+    /**
+     * @param mixed $lbNomType
+     *
+     * @return self
+     */
+    public function setLbNomType($lbNomType)
+    {
+        $this->lbNomType = $lbNomType;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLbAuteurType()
+    {
+        return $this->lbAuteurType;
+    }
+
+    /**
+     * @param mixed $lbAuteurType
+     *
+     * @return self
+     */
+    public function setLbAuteurType($lbAuteurType)
+    {
+        $this->lbAuteurType = $lbAuteurType;
 
         return $this;
     }
@@ -163,23 +256,46 @@ class Taxref
     /**
      * @return mixed
      */
-    public function getClassType()
+    public function getFrType()
     {
-        return $this->classType;
+        return $this->frType;
     }
 
     /**
-     * @param mixed $classType
+     * @param mixed $frType
      *
      * @return self
      */
-    public function setClassType($classType)
+    public function setFrType($frType)
     {
-        $this->classType = $classType;
+        $this->frType = $frType;
 
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     *
+     * @return self
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getPicture()
     {
       return $this->picture;

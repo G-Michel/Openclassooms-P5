@@ -13,16 +13,24 @@ class ObservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Observation::class);
     }
 
-    /*
-    public function findBySomething($value)
+    public function findByStatus($limit)
     {
         return $this->createQueryBuilder('o')
-            ->where('o.something = :value')->setParameter('value', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
+            ->leftJoin('o.user', 'o_u')
+            ->addSelect('o_u')
+            ->leftJoin('o_u.picture', 'o_u_p')
+            ->addSelect('o_u_p')
+            ->leftJoin('o.bird', 'o_b')
+            ->addSelect('o_b')
+            ->leftJoin('o_b.taxref', 'o_b_t')
+            ->addSelect('o_b_t')
+            ->leftJoin('o_b_t.picture', 'o_b_t_p')
+            ->addSelect('o_b_t_p')
+            ->where('o.status = 1')
+            ->orderBy('o.dateObs', 'DESC')
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 }

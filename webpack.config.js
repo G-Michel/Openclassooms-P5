@@ -16,10 +16,12 @@ Encore
 
     // uncomment to define the assets of the project
     // .createSharedEntry('js/common', ['jquery'])
+    .addEntry('js/markerclusterer', './assets/js/markerclusterer.js')
     .addEntry('js/manifest', './assets/js/manifest.js')
     .addEntry('js/common', './assets/js/common.js')
     .addEntry('js/app', './assets/js/app.js')
     .addEntry('js/search', './assets/js/search.js')
+    .addEntry('js/mapShowDetail', './assets/js/mapShowDetail.js')
     .addStyleEntry('css/app', './assets/css/app.scss')
 
     // uncomment if you use Sass/SCSS files

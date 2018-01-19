@@ -1,0 +1,19 @@
+.detail-description {
+  color:$light;
+  .title {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color:$gray-500;
+    margin-top: 0.5rem;
+  }
+  .subtitle {
+    margin: 0;
+    font-size: .8rem;
+    line-height: 1.5;
+    color:$gray-600;
+  }
+  p {
+    font-size: .8rem;
+    color:$gray-700;
+  }
+}

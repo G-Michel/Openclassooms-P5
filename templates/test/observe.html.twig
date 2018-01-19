@@ -6,13 +6,35 @@
 
 {% block javascripts %}{% endblock %}
 
-{% block mainTitle %}
-<div class="container mt-auto mb-auto">
-    <h1 class="text-white display-3">Nouvelle observation</h1>
-    <p class="text-primary lead">Etape 1 - Le lieu</p>
-</div>
+{% block mainLeft %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    <div  class="col-lg-5 col-xl-4">
+        <div class="d-flex">
+            <div class="container mt-auto mb-auto">
+                <h1 class="text-white display-3">Nouvelle observation</h1>
+                <p class="text-primary lead">étape 1 - Le lieu</p>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="login-form">
+                    <div class="form">
+                        {{ include('test/form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
-{% block mainContent %}
-{{ include('test/form.html.twig') }}
+{% block mainRight %}
+    <div class="col-lg-7 col-xl-8 p-0">
+      <div id="map"></div>
+    </div>
+    {% if route == "showTaxref" %}
+      {{ include('components/detail_txr-apiMap.html.twig') }}
+    {% elseif route == "showObservation" %}
+      {{ include('components/detail_obs-apiMap.html.twig') }}
+    {% endif %}
 {% endblock %}
+

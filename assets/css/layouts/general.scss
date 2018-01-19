@@ -11,3 +11,48 @@ body {
 .markerImg {
   border-radius:25px;
 }
+// Background
+//
+// Custom background img
+
+#home:before {
+  content: '';
+  background: url('../images/home.jpeg') no-repeat fixed 0 0;
+  background-size: cover;
+  -webkit-filter: brightness(50%);
+     -moz-filter: brightness(50%);
+      -ms-filter: brightness(50%);
+       -o-filter: brightness(50%);
+          filter: brightness(50%);
+  position: fixed;
+  top: 0;
+  bottom:0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.main-row {
+  @include media-breakpoint-up(lg) {
+    min-height:calc(100vh - 56px);
+  }
+}
+
+#main-left > div {
+  @include media-breakpoint-up(lg) {
+    position:fixed;
+    top: 56px;
+    bottom: 0;
+  }
+}
+#showObservation #main-left > div {
+    position: relative;;
+    bottom: none;
+}
+// MAP
+//
+// Custom map api
+#map {
+  height: calc(100%);
+  min-height: 600px;
+}

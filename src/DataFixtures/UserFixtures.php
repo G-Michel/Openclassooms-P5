@@ -121,7 +121,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
           $user = new User();
           // ADMIN
           if ($i < 4) {
-            $user->setRoles('ROLE_ADMIN');
+            $user->setRoles(['ROLE_ADMIN']);
             $user->setName($listAdmin[$i]['name']);
             $user->setSurname($listAdmin[$i]['surname']);
             $user->setIsActive(1);
@@ -135,10 +135,10 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $user->setMail(Slugger::slugify($user->getName().' '.$user->getSurname().' '.($i+1)).'@'.$mail);
             // NATURALIST
             if (3 < $i && $i < 14) {
-              $user->setRoles('ROLE_NATURALIST');
+              $user->setRoles(['ROLE_NATURALIST']);
             // USER
             } else {
-              $user->setRoles('ROLE_USER');
+              $user->setRoles(['ROLE_USER']);
             }
           }
           $encodedPassword= $this->encoder->encodePassword($user,strtolower($user->getName())."password");

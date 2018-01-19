@@ -13,7 +13,9 @@
 {% endblock %}
 
 {% block mainLeft %}
-  <div class="col-sm-5 pl-4 pr-4" >
+  <div id="main-left" class="col-lg-5 col-xl-4">
+    <div class="container">
+        <div class="row">
     {{ include('components/card-detail.html.twig') }}
     {% if route == "showTaxref" %}
       {{ include('components/detail_txr-description.html.twig') }}
@@ -21,12 +23,14 @@
       {{ include('components/detail_obs-description.html.twig') }}
     {% endif %}
   </div>
+</div>
+
+  </div>
 {% endblock %}
 
 {% block mainRight %}
-    <div class="col-sm-7 p-0" >
-      <!-- <img class="h-100 w-100" src="{{ asset('images/map.png') }}" alt=""> -->
-      <div id="map" style="height: calc(100%);"></div>
+    <div class="col-lg-7 col-xl-8 p-0">
+      <div id="map"></div>
     </div>
     {% if route == "showTaxref" %}
       {{ include('components/detail_txr-apiMap.html.twig') }}

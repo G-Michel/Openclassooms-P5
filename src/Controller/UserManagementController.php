@@ -21,7 +21,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class UserManagementController extends Controller
 {
     /**
-     * @Route("/test/form/signUp", name="signUp")
+     * @Route("/signUp", name="signUp")
      */
     public function signUp(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -70,7 +70,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/test/form/comfirmMail", name="comfirmMail")
+     * @Route("/comfirmMail", name="comfirmMail")
      */
     public function comfirmMail(Request $request)
     {
@@ -106,7 +106,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/test/form/signIn", name="login")
+     * @Route("/signIn", name="login")
      */
     public function signIn(Request $request, AuthenticationUtils $authUtils)
     {
@@ -134,7 +134,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/test/form/lostPassword", name="lostPassword")
+     * @Route("/lostPassword", name="lostPassword")
      */
     public function lostPassword(Request $request)
     {
@@ -189,7 +189,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * @Route("/test/form/resetPassword", name="resetPassword")
+     * @Route("/resetPassword", name="resetPassword")
      */
     public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {

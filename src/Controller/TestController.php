@@ -40,7 +40,7 @@ class TestController extends Controller
 {
 
     /**
-     * @Route("/test/observe/stepOne", name="observe_first_step")
+     * @Route("/observe/stepOne", name="observe_first_step")
      * @IsGranted("ROLE_USER")
      */
     public function stepOne(Request $request, SessionInterface $session)
@@ -60,7 +60,7 @@ class TestController extends Controller
             ]);
         }
         /**
-         * @Route("/test/form/stepTwo", name="step_two")
+         * @Route("/observe/stepTwo", name="step_two")
          */
         public function stepTwo(Request $request, SessionInterface $session)
         {
@@ -80,7 +80,7 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/form/stepThree", name="step_three")
+     * @Route("/observe/stepThree", name="step_three")
      * @IsGranted("ROLE_USER")
      */
     public function stepThree(Request $request, SessionInterface $session)
@@ -101,7 +101,7 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/form/observation")
+     * @Route("/observation")
      * @IsGranted("ROLE_USER")
      */
     public function observation(Request $request)
@@ -122,7 +122,7 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/", name="home")
+     * @Route("/", name="home")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
@@ -132,7 +132,7 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/contact", name="contact")
+     * @Route("/contact", name="contact")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
@@ -151,7 +151,7 @@ class TestController extends Controller
 	}
 
     /**
-     * @Route("/test/taxref",defaults={"page": "1", "_format"="html"}, name="listingTaxref")
+     * @Route("/taxref",defaults={"page": "1", "_format"="html"}, name="listingTaxref")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
@@ -191,7 +191,7 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/taxref/{slug}",name="showTaxref")
+     * @Route("/taxref/{slug}",name="showTaxref")
      * @Method("GET")
      */
     public function showTaxref(Taxref $taxref): Response
@@ -200,7 +200,7 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/les-observations", name="listingObservations")
+     * @Route("/les-observations", name="listingObservations")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
@@ -217,7 +217,7 @@ class TestController extends Controller
     }
 
     /**
-     * @Route("/test/observation/{id}",name="showObservation")
+     * @Route("/observation/{id}",name="showObservation")
      * @Method("GET")
      */
     public function showObservation(Observation $observation): Response

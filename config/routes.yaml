@@ -2,16 +2,11 @@
 #    path: /
 #    defaults: { _controller: 'App\Controller\DefaultController::index' }
 
-frontRoute:
-    resource: './routes/front/routes.yaml'
-    type:     yaml
-    prefix:   /
+login_check:
+    path:   /login_check
 
-backRoute:
-    resource: './routes/back/routes.yaml'
-    type:     yaml
-    prefix:   /admin/
-
+logout:
+    path:   /logout
 
 
 

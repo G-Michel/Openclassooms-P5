@@ -8,25 +8,27 @@
 
 
 {% block mainLeft %}
-<div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">    
-	<div class="container mt-auto mb-auto">
-    	<h1 class="text-white display-3">Contact</h1>
-    	<p class="text-primary lead">Ecrivez nous</p>
-	</div>
+<div id="main-left" class="col-lg-4 col-xl-3">
+    <div class="d-flex">
+        <div class="container mt-auto mb-auto">
+            <h1 class="text-white display-3">Contact</h1>
+            <p class="text-primary lead">écrivez nous</p>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block mainRight %}
 	{% form_theme form 'bootstrap_4_layout.html.twig' %}
-  	<div class="col col-md-6 offset-md-4 offset-lg-5">
+    <div id="main-right" class=" col-sm-6 col-xl-5 offset-sm-3 offset-lg-1 offset-xl-2 mt-3">
     	<div class="login-form">
         	<div class="form">
-        		{{ form_start(form) }} 
+        		{{ form_start(form) }}
 				{{ form_widget(form) }}
 				<button type="submit" class="btn btn-primary">S'inscrire</button>
 				{{ form_end(form) }}
     		</div>
   		</div>
 	</div>
- 
+
 {% endblock %}

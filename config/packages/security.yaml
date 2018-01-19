@@ -3,7 +3,6 @@ security:
     encoders:
         App\Entity\User:
             algorithm:   bcrypt
-            cost:        12
     role_hierarchy:
         ROLE_NATURALIST:    ROLE_USER
         ROLE_ADMIN:    [ROLE_USER, ROLE_NATURALIST]
@@ -11,7 +10,6 @@ security:
         main:
             entity:
                 class: App\Entity\User
-                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

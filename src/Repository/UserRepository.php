@@ -3,15 +3,36 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Auth;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends EntityRepository implements UserLoaderInterface
 {
-    public function __construct(RegistryInterface $registry)
+
+      public function loadUserByUsername($username)
     {
-        parent::__construct($registry, User::class);
+        return $this->createQueryBuilder('u')
+            ->where('u.username = :username OR u.mail = :mail')
+            ->setParameter('username', $username)
+            ->setParameter('mail', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
+
+    public function tokenComfirm($token)
+    {
+        return  $this->createQueryBuilder('u')
+            ->join('u.auth','a')
+            ->where('a.comfirmedToken = :comfirmToken OR a.resetToken = :resetToken ')
+            ->setParameter('comfirmToken',$token)
+            ->setParameter('resetToken',$token)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    
 
     /*
     public function findBySomething($value)

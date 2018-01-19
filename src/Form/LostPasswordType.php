@@ -13,26 +13,23 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
-class SignUpType extends AbstractType
+
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email;
+
+class LostPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('mail', EmailType::class)
-            ->add('username', TextType::class)
-            ->add('acceptTerms', CheckboxType::class, array(
-                'mapped' => false,
-                'constraints' => new IsTrue(),))
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),));
+            ->add('email', EmailType::class, array(
+                          'constraints' => array(
+                                new NotBlank(),
+                                new Email(),),));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => User::class,
-        ));
+
     }
 }

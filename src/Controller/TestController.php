@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Bird;
 use App\Entity\Taxref;
+use App\Entity\Auth;
 use App\Entity\Article;
 use App\Form\SignInType;
 use App\Entity\Location;
@@ -30,58 +31,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+
 class TestController extends Controller
 {
-    /**
-     * @Route("/test/form/signUp")
-     */
-    public function signUp(Request $request)
-    {
-        $user = new User();
-        $form = $this->createForm(SignUpType::class, $user);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            # code...
-        }
-
-
-        return $this->render('test/register.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/test/form/signIn", name="login")
-     */
-    public function signIn(Request $request)
-    {
-         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-      return $this->redirectToRoute('home');
-        }
-
-        $authenticationUtils = $this->get('security.authentication_utils');
-
-
-
-        $user = new User();
-        $form = $this->createForm(SignInType::class);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            # code...
-        }
-
-        /*return $this->render('test/login.html.twig', [
-            'form' => $form->createView(),
-        ]);*/
-
-        return $this->render('test/login.html.twig', array(
-            'last_username' => $authenticationUtils->getLastUsername(),
-            'error'         => $authenticationUtils->getLastAuthenticationError(),
-        ));
-    }
-
+ 
     /**
      * @Route("/test/observe/stepOne", name="observe_first_step")
      */

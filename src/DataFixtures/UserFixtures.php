@@ -8,6 +8,8 @@ use App\Entity\Picture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use App\Entity\User;
+use App\Entity\Auth;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture implements OrderedFixtureInterface
@@ -20,6 +22,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 	}
 	public function load(ObjectManager $manager)
 	{
+
         // Objet Faker pour données fictive loacal FR
         $faker = \Faker\Factory::create('fr_FR');
 
@@ -154,6 +157,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 				}
         // On enregistre en BDD;
         $manager->flush();
+
 	}
     /**
      * Get the order of this fixture

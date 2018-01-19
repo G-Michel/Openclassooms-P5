@@ -5,13 +5,17 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("mail")
+ * @UniqueEntity("username")
  */
-class User implements UserInterface
+class User implements UserInterface, AdvancedUserInterface
 {
     /**
      * @ORM\Id
@@ -52,7 +56,7 @@ class User implements UserInterface
     private $roles;
 
     /**
-     * @ORM\Column(name="mail", type="string", length=255)
+     * @ORM\Column(name="mail", type="string", length=255, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir votre mail")
      * @Assert\Email(
      *      message = "L’email {{ value }} n’est pas un mail valide",
@@ -63,7 +67,11 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="password", type="string", length=255)
-     * @Assert\NotBlank(message="Vous devez saisir un mot de passe")
+     */
+    private $password;
+
+    /**
+     * @Assert\NotBlank()
      * @Assert\Type(
      *      type    = "string",
      *      message = "Vous devez saisir une chaine de caractère"
@@ -75,7 +83,7 @@ class User implements UserInterface
      *      maxMessage ="Vous devez entrer moins de {{ limit }} caractères"
      * )
      */
-    private $password;
+    private $plainPassword;
 
     /**
      * @ORM\Column(name="newsletter", type="boolean", nullable=true)
@@ -84,11 +92,12 @@ class User implements UserInterface
     private $newsletter;
 
     /**
-     * @ORM\Column(name="salt", type="string", length=255)
+     * @ORM\Column(name="salt", type="string", length=255, nullable=true)
     */
     private $salt;
 
     /**
+
      * Unidirectionnal - One User has One Picture . (OWNED SIDE)
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist"})
@@ -97,11 +106,49 @@ class User implements UserInterface
      */
     private $picture;
 
+     * 
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * Unidirectionnal - One User has One Auth . (OWNED SIDE)
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\Auth", cascade={"persist"})
+     * @Assert\Valid()
+     *
+     */
+    private $auth;
+
+
     public function eraseCredentials()
     {
+        unset($this->plainPassword);
     }
 
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+
     //GETTERS SETTERS
+    
     /**
      * @return mixed
      */
@@ -138,6 +185,26 @@ class User implements UserInterface
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+        /**
+     * @return mixed
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param mixed $isActive
+     *
+     * @return self
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
@@ -245,6 +312,26 @@ class User implements UserInterface
     /**
      * @return mixed
      */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     *
+     * @return self
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getNewsletter()
     {
         return $this->newsletter;
@@ -282,6 +369,7 @@ class User implements UserInterface
         return $this;
     }
 
+
     /**
      * @return mixed
      */
@@ -299,4 +387,20 @@ class User implements UserInterface
     {
       $this->picture = $picture;
     }
+
+        public function getAuth()
+    {
+      return $this->auth;
+    }
+
+    /**
+     * @param object $auth
+     *
+     * @return self
+     */
+        public function setAuth(Auth $auth = null)
+    {
+      $this->auth= $auth;
+    }
 }
+

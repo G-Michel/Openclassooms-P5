@@ -8,6 +8,7 @@ use App\Form\SignInType;
 use App\Form\SignUpType;
 use App\Form\ResetPasswordType;
 use App\Form\LostPasswordType;
+use App\Service\LoginFacebook;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,7 @@ class UserManagementController extends Controller
         $auth = new Auth();
         $form = $this->createForm(SignUpType::class, $user);
         $form->handleRequest($request);
+
 
         //Handles signup 
         if ($form->isSubmitted() && $form->isValid()) 
@@ -63,7 +65,7 @@ class UserManagementController extends Controller
             'form' => $form->createView(),
         ]);
     }
-    
+
     /**
      * @Route("/test/form/comfirmMail")
      */
@@ -105,9 +107,15 @@ class UserManagementController extends Controller
      */
     public function signIn(Request $request, AuthenticationUtils $authUtils)
     {
-         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-      return $this->redirectToRoute('home');
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) 
+        {
+            return $this->redirectToRoute('home');
         }
+
+        //Facebook Login tests
+        //$facebook = new LoginFacebook();
+        //$facebookLink = $facebook->getLoginLink($this->generateUrl('login'));
+        
 
         $error = $authUtils->getLastAuthenticationError();
         $lastUsername = $authUtils->getLastUsername();
@@ -117,8 +125,9 @@ class UserManagementController extends Controller
 
         return $this->render('test/login.html.twig', array(
             'last_username' => $lastUsername,
-            'error'         => $error,
+            'error'         => $error
         ));
+
     }
 
     /**

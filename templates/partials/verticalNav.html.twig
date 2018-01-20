@@ -7,12 +7,12 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if route == 'listingTaxref' %}active{% endif %}" href="{{ path('listingTaxref') }}">
+            <a class="nav-link {% if route == 'listingTaxref' or route == 'showTaxref' %}active{% endif %}" href="{{ path('listingTaxref') }}">
                 <i class="material-icons">view_list</i>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if route == 'listingObservations' %}active{% endif %}" href="{{ path('listingObservations') }}">
+            <a class="nav-link {% if route == 'listingObservations' or route == 'showObservation' %}active{% endif %}" href="{{ path('listingObservations') }}">
                 <i class="material-icons">person</i>
             </a>
         </li>

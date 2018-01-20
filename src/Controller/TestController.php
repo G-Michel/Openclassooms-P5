@@ -45,36 +45,51 @@ class TestController extends Controller
      */
     public function stepOne(Request $request, SessionInterface $session)
     {
+        $session->set('step', [
+            'name'   => 'one',
+        ]);
         $observation = new Observation();
         $form = $this->createForm(ObserveBirdLocationType::class, $observation);
+        $step = [
+            "title" => "étape 1 - lieu de l'observation"
+        ];
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $session->set('observation', $observation);
-            return $this->redirectToRoute('step_two');
+            return $this->redirectToRoute('observe_step_two');
             // return $this->forward('App\Contrtest\TestController::stepTwo', compact('observation'));
         }
 
         return $this->render('test/observe.html.twig', [
+            'step' => $step,
             'form' => $form->createView(),
-            ]);
-        }
-        /**
-         * @Route("/observe/stepTwo", name="step_two")
-         */
-        public function stepTwo(Request $request, SessionInterface $session)
-        {
-            $observation = $session->get('observation');;
-            $form = $this->createForm(ObserveBirdMomentType::class, $observation);
+        ]);
+    }
 
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $session->set('observation', $observation);
-                return $this->redirectToRoute('step_three');
-            # code...
+    /**
+     * @Route("/test/form/stepTwo", name="observe_step_two")
+     */
+    public function stepTwo(Request $request, SessionInterface $session)
+    {
+        $session->set('step', [
+            'name'   => 'two',
+        ]);
+        $observation = $session->get('observation');;
+        $form = $this->createForm(ObserveBirdMomentType::class, $observation);
+        $step = [
+            "title" => "étape 2 - moment de l'observation"
+        ];
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $session->set('observation', $observation);
+            return $this->redirectToRoute('step_three');
+        # code...
         }
 
-        return $this->render('test/form.html.twig', [
+        return $this->render('test/observe.html.twig', [
+            'step' => $step,
             'form' => $form->createView(),
         ]);
     }

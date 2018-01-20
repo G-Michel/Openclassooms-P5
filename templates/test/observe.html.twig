@@ -4,7 +4,12 @@
 
 {% block stylesheets %}{% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
+</script>
+{% endblock %}
 
 {% block mainLeft %}
     {% form_theme form 'bootstrap_4_layout.html.twig' %}
@@ -12,7 +17,8 @@
         <div class="d-flex flex-column">
             <div class="container mt-auto mb-auto">
                 <h1 class="text-white display-3">Nouvelle observation</h1>
-                <p class="text-primary lead">étape 1 - Le lieu</p>
+                <p class="text-primary lead">{{ step.title }}</p>
+                {{ app.session.get('observation').location.gpsY }}
             </div>
             <div class="login-form">
                 <div class="form">
@@ -25,13 +31,8 @@
 
 {% block mainRight %}
     <div class="col-lg-7 col-xl-8 p-0">
-      <img class="h-100 w-100" src="{{ asset('images/map.png') }}" alt="">
-      <!-- <div id="map"></div> -->
+      <!-- <img class="h-100 w-100" src="{{ asset('images/map.png') }}" alt=""> -->
+      <div id="map"></div>
     </div>
-    {% if route == "showTaxref" %}
-      {{ include('components/detail_txr-apiMap.html.twig') }}
-    {% elseif route == "showObservation" %}
-      {{ include('components/detail_obs-apiMap.html.twig') }}
-    {% endif %}
+    {{ include('components/observe_steps-apiMap.html.twig') }}
 {% endblock %}
-

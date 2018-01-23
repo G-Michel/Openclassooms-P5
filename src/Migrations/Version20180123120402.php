@@ -8,14 +8,15 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180116095119 extends AbstractMigration
+class Version20180123120402 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE location CHANGE gps_x gps_x NUMERIC(10, 5) NOT NULL, CHANGE gps_y gps_y NUMERIC(10, 5) NOT NULL');
+        $this->addSql('ALTER TABLE observation DROP bird_number');
+        $this->addSql('ALTER TABLE bird ADD bird_number INT NOT NULL, ADD bird_size INT NOT NULL, ADD bird_colors LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', DROP slug');
     }
 
     public function down(Schema $schema)
@@ -23,6 +24,7 @@ class Version20180116095119 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE location CHANGE gps_x gps_x INT NOT NULL, CHANGE gps_y gps_y INT NOT NULL');
+        $this->addSql('ALTER TABLE bird ADD slug VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, DROP bird_number, DROP bird_size, DROP bird_colors');
+        $this->addSql('ALTER TABLE observation ADD bird_number INT NOT NULL');
     }
 }

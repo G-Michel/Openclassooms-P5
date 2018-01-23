@@ -4,14 +4,6 @@
 
 {% block stylesheets %}{% endblock %}
 
-{% block javascripts %}
-  {{parent()}}
-  <script src="{{ asset('build/js/markerclusterer.js')}}"></script>
-  <script async defer
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
-  </script>
-{% endblock %}
-
 {% block mainLeft %}
   <div id="main-left" class="col-lg-5 col-xl-4">
     <div class="container">
@@ -37,5 +29,13 @@
     {% elseif route == "showObservation" %}
       {{ include('components/detail_obs-apiMap.html.twig') }}
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+  {{parent()}}
+  <script src="{{ asset('build/js/markerclusterer.js')}}"></script>
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
+  </script>
 {% endblock %}
 

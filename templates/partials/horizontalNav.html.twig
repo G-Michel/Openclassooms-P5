@@ -4,64 +4,62 @@
         <svg class="logo" height="46" width="75" ><use xlink:href="{{ asset('images/logo.svg#symbol')}}"></svg>
     </a>
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <form class="form-inline mt-2 mt-md-0 mr-auto navbar-search">
-        {# <button class="btn btn-link my-2 my-sm-0" type="submit">
-          <i class="material-icons">search</i>
-        </button>
-        <input  class="form-control mr-sm-2 nav-search search-field"
-                type="text"
-                placeholder="Rechercher"
-                aria-label="Search"
-                name="q"
-                autocomplete="off"
-                autofocus
-                data-no-results-message="Aucun résultat"
-        > #}
-      </form>
       {% if is_granted('ROLE_USER') %}
-        <div class="user-action" id="accordion" role="tablist" aria-multiselectable="true">
-            <div role="tab" id="">
-              <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
-                <div class="media">
-                  <div class="media-left">
-                    <img src="http://anwar.im/appdash/images/thumbnails/user.jpg" alt="user" class="mCS_img_loaded">
-                  </div>
-                  <div class="media-body">
-                    <p class="name">Nicolas Scuiller <i class="material-icons">keyboard_arrow_down</i></p>
-                    <p class="account-name">Naturaliste</p>
-                  </div>
+        <div class="user-action dropdown show ml-auto">
+            <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="media">
+                <div class="media-left">
+                  <img src="{{ app.user.picture.url }}" alt="user" class="mCS_img_loaded">
                 </div>
-              </a>
-            </div>
-            <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="userAction" aria-expanded="false" style="height: 0px;">
-              <a href="#" class="go-live">Request for Going Live <i class="fa fa-angle-right"></i></a>
-              <p class="account-title">Accounts</p>
-              <ul class="account-management">
-                <li>
-                  <ul class="account-list">
-                    <li class="active"><a href=""><i class="fa fa-briefcase"></i> ABC Company Ltd.</a></li>
-                    <li><a href=""><i class="fa fa-briefcase"></i> DEF LLC</a></li>
-                    <li><a href=""><i class="fa fa-briefcase"></i> XYZ Company Ltd.</a></li>
-                  </ul>
-                </li>
-                <li><a href="" class="text-success"><i class="fa fa-plus-circle"></i> Add Account</a></li>
-                <li><a href=""><i class="fa fa-cog"></i> Settings</a></li>
-                <li><a href="" class="text-danger"><i class="fa fa-sign-out"></i> Signout</a></li>
-              </ul>
+                <div class="media-body">
+                  <p class="name">{{ app.user.name }} {{ app.user.surname }} <i class="material-icons">keyboard_arrow_down</i></p>
+                  <p class="account-name">{{ app.user.function }}</p>
+                </div>
+              </div>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
+                <a href="{{ path('logout') }}" class="text-danger dropdown-item">Déconnection</a>
             </div>
         </div>
       {% endif %}
-      <ul class="navbar-nav p-0 m-0">
+      <ul class="navbar-nav p-0 m-0 {% if not is_granted('ROLE_USER') %} ml-auto {% endif %}">
         {# <li class="nav-item active">
           <a class="nav-link" href="#"><i class="material-icons">keyboard_arrow_left</i><span class="sr-only">(current)</span></a>
         </li> #}
         {% if is_granted('ROLE_USER') %}
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="material-icons">notifications</i></a>
+          <li class="nav-item nav-notification">
+            <a class="nav-link dropdown" href="#" id="dropdownMenuNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">notifications</i>
+              {% if route != "observe_step_1" and
+                    route != "observe_step_2" and
+                    route != "observe_step_3" and
+                    route != "observe_step_4" and
+                    app.session.get('step')
+              %}
+                <span class="badge badge-notify">1</span>
+              {% endif %}
+            </a>
+            {% if route != "observe_step_1" and
+                  route != "observe_step_2" and
+                  route != "observe_step_3" and
+                  route != "observe_step_4" and
+                  app.session.get('step')
+            %}
+            {% set pathStep = "observe_step_"~app.session.get('step') %}
+              <div class="dropdown-menu dropdown-notification dropdown-menu-right" aria-labelledby="dropdownMenuNotification" >
+                <h6 class="dropdown-header">Une nouvelle observation est en cours</h6>
+                <a href="{{ path(pathStep) }}" class="dropdown-item">Retourner à la saisie</a>
+                <div class="dropdown-divider"></div>
+                <a href="{{ path('observe_action', {'action':'above'}) }}" class="text-danger dropdown-item">
+                  Annuler l'observation
+                </a>
+
+              </div>
+            {% endif %}
           </li>
         {% endif %}
         <li class="nav-item">
-          <a class="nav-link {% if route == 'observe_first_step' %}active{% endif %}" href="{{ path('observe_first_step') }}"><i class="material-icons">add_box</i></a>
+          <a class="nav-link {% if route == 'observe_first_step' %}active{% endif %}" href="{{ path('observe_step_1') }}"><i class="material-icons">add_box</i></a>
         </li>
         {% if not is_granted('ROLE_USER') %}
           <li class="nav-item">

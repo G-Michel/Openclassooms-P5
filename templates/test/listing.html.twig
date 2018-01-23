@@ -4,12 +4,6 @@
 
 {% block stylesheets %}{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('build/js/search.js') }}"></script>
-{% endblock %}
-
-
 {% block mainLeft %}
   <div id="main-left" class="col-lg-4 col-xl-3">
       <div class="d-flex">
@@ -60,4 +54,9 @@
       {{ pagerfanta(posts, 'twitter_bootstrap3_translated', {routeName: 'blog_index_paginated'}) }}
   </div>
   {% endif %} #}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/search.js') }}"></script>
 {% endblock %}

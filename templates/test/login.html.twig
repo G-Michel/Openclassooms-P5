@@ -4,8 +4,6 @@
 
 {% block stylesheets %}{% endblock %}
 
-{% block javascripts %}{% endblock %}
-
 {% block mainLeft %}
   <div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">
     <div class="container mt-auto mb-auto" >
@@ -21,7 +19,7 @@
 
       {% if error %}
         <div class="alert alert-danger">{{ error.message }}</div>
-      {% endif %}   
+      {% endif %}
       <form  action="{{ path('login_check') }}" method="post">
         <div class="form-group">
           <label for="username">Utilisateur :</label>
@@ -34,7 +32,7 @@
         </div>
       </form>
       <p>
-        <a href="{{ path('lostPassword') }}">Mot de passe perdu ?</a><br/> 
+        <a href="{{ path('lostPassword') }}">Mot de passe perdu ?</a><br/>
         <a href="{{ path('signUp') }}">Inscription</a>
       </p>
   </div>

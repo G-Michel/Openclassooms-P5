@@ -31,8 +31,8 @@ class UserManagementController extends Controller
         $form->handleRequest($request);
 
 
-        //Handles signup 
-        if ($form->isSubmitted() && $form->isValid()) 
+        //Handles signup
+        if ($form->isSubmitted() && $form->isValid())
         {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->eraseCredentials();
@@ -45,7 +45,7 @@ class UserManagementController extends Controller
             $em->persist($user);
             $em->flush();
 
-            // Email comfirm with token 
+            // Email comfirm with token
             $message = (new \Swift_Message("Merci pour votre inscription"))
                 ->setFrom('Openclassroom5pteam@smtp.openclass-cours.ovh')
                 ->setTo($user->getMail())
@@ -110,15 +110,15 @@ class UserManagementController extends Controller
      */
     public function signIn(Request $request, AuthenticationUtils $authUtils)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) 
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('admin_home');
         }
 
         //Facebook Login tests
         //$facebook = new LoginFacebook();
         //$facebookLink = $facebook->getLoginLink($this->generateUrl('login'));
-        
+
 
         $error = $authUtils->getLastAuthenticationError();
         $lastUsername = $authUtils->getLastUsername();
@@ -138,7 +138,7 @@ class UserManagementController extends Controller
      */
     public function lostPassword(Request $request)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) 
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
             return $this->redirectToRoute('home');
         }
@@ -159,7 +159,7 @@ class UserManagementController extends Controller
                     $em->persist($user);
                     $em->flush();
 
-                    // Email with token 
+                    // Email with token
                     $message = (new \Swift_Message("Réinitialisation de votre mot de passe"))
                         ->setFrom('Openclassroom5pteam@smtp.openclass-cours.ovh')
                         ->setTo($user->getMail())
@@ -179,7 +179,7 @@ class UserManagementController extends Controller
                 return $this->render('test/registerComfirm.html.twig',array(
                         'message' => array('Erreur',
                         'Aucune addresse mail trouvée')));
-            }  
+            }
         }
         return $this->render('test/register.html.twig', [
             'form' => $form->createView(),
@@ -193,7 +193,7 @@ class UserManagementController extends Controller
      */
     public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) 
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
             return $this->redirectToRoute('home');
         }
@@ -213,8 +213,8 @@ class UserManagementController extends Controller
         {
             $form = $this->createForm(ResetPasswordType::class);
             $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) 
-            { 
+            if ($form->isSubmitted() && $form->isValid())
+            {
                 $plainPassword = $form->getData();
                 $password = $passwordEncoder->encodePassword($user, $plainPassword['plainPassword']);
                 unset($plainPassword);
@@ -222,7 +222,7 @@ class UserManagementController extends Controller
                 $user->getAuth()->setResetToken(NULL);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
-                $em->flush(); 
+                $em->flush();
 
                 return $this->render('test/registerComfirm.html.twig',array(
                 'message' => array('mot de passe changé',

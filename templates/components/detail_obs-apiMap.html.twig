@@ -7,6 +7,10 @@
       map = new google.maps.Map(document.getElementById('map'), {
         zoom:12,
         center: new google.maps.LatLng("{{observation.location.gpsY}}","{{observation.location.gpsX}}"),
+        draggable:false,
+        zoomControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
         mapTypeControlOptions: {
           mapTypeIds: []// Ex : ['roadmap', 'satellite', 'hybrid', 'terrain','styled_map']
         }

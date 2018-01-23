@@ -40,110 +40,181 @@ class TestController extends Controller
 {
 
     /**
-     * @Route("/observe/stepOne", name="observe_first_step")
-     * @IsGranted("ROLE_USER")
-     */
-    public function stepOne(Request $request, SessionInterface $session)
-    {
-        $session->set('step', [
-            'name'   => 'one',
-        ]);
-        $observation = new Observation();
-        $form = $this->createForm(ObserveBirdLocationType::class, $observation);
-        $step = [
-            "title" => "étape 1 - lieu de l'observation"
-        ];
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $session->set('observation', $observation);
-            return $this->redirectToRoute('observe_step_two');
-            // return $this->forward('App\Contrtest\TestController::stepTwo', compact('observation'));
-        }
-
-        return $this->render('test/observe.html.twig', [
-            'step' => $step,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/test/form/stepTwo", name="observe_step_two")
-     */
-    public function stepTwo(Request $request, SessionInterface $session)
-    {
-        $session->set('step', [
-            'name'   => 'two',
-        ]);
-        $observation = $session->get('observation');;
-        $form = $this->createForm(ObserveBirdMomentType::class, $observation);
-        $step = [
-            "title" => "étape 2 - moment de l'observation"
-        ];
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $session->set('observation', $observation);
-            return $this->redirectToRoute('step_three');
-        # code...
-        }
-
-        return $this->render('test/observe.html.twig', [
-            'step' => $step,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/observe/stepThree", name="step_three")
-     * @IsGranted("ROLE_USER")
-     */
-    public function stepThree(Request $request, SessionInterface $session)
-    {
-        $observation = new Observation();
-        $observation->setDateObs(new \DateTime('21-12-2017 14:04'));
-        $observation->setComment('un petit commentaire');
-        $form = $this->createForm(ObserveBirdDetailType::class, $observation);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            # code...
-        }
-
-        return $this->render('test/form.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/observation")
-     * @IsGranted("ROLE_USER")
-     */
-    public function observation(Request $request)
-    {
-        $observation = new Observation();
-        $location = new Location();
-        $observation->setLocation($location);
-        $form = $this->createForm(ObservationType::class, $observation);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            # code...
-        }
-
-        return $this->render('test/form.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
      * @Route("/", name="home")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
 	public function homePage()
 	{
+        if ($this->getUser()) {
+            # code...
+            return $this->redirectToRoute('admin_home');
+        }
         return $this->render('test/home.html.twig');
+    }
+
+    /**
+     * @Route("/observe", name="observe")
+     * @Route("{action}/observe/{redirect}", name="observe_action")
+     * @IsGranted("ROLE_USER")
+     */
+    public function observation(SessionInterface $session, $action = null, $redirect = 'home')
+    {
+        if ($action && $action == "above") {
+            $session->remove('observation');
+            $session->remove('step');
+            return $this->redirectToRoute($redirect);
+        }
+        return $this->redirectToRoute('observe_step_1');
+    }
+
+    /**
+     * @Route("/observe/lieu", name="observe_step_1")
+     * @IsGranted("ROLE_USER")
+     */
+    public function stepOne(Request $request, SessionInterface $session)
+    {
+        $session->set('step','1');
+        $observation = new Observation();
+        $form = $this->createForm(ObserveBirdLocationType::class, $observation);
+        $options = [
+            'page' => [
+                "title" => "étape 1 - lieu de l'observation"
+            ],
+            'form' => [
+                "include_back_btn" => false,
+                "back_btn_path"    => null
+            ]
+        ];
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $session->set('observation', $observation);
+            return $this->redirectToRoute('observe_step_2');
+        }
+
+        return $this->render('test/observe.html.twig', [
+            'options' => $options,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/observe/moment", name="observe_step_2")
+     */
+    public function stepTwo(Request $request, SessionInterface $session)
+    {
+        $session->set('step','2');
+        $observation = $session->get('observation');;
+        $form = $this->createForm(ObserveBirdMomentType::class, $observation);
+        $options = [
+            'page' => [
+                "title" => "étape 2 - moment de l'observation",
+            ],
+            'form' => [
+                "include_back_btn" => true,
+                "back_btn_path"    => "observe_step_1"
+            ],
+            'map' => [
+                "address" => $observation->getLocation()->getAddress()
+            ]
+        ];
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('observe_step_3');
+        }
+
+        return $this->render('test/observe.html.twig', [
+            'options' => $options,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/observe/oiseau", name="observe_step_3")
+     * @IsGranted("ROLE_USER")
+     */
+    public function stepThree(Request $request, SessionInterface $session)
+    {
+
+        $session->set('step','3');
+        $observation = $session->get('observation');
+        $form = $this->createForm(ObserveBirdDetailType::class, $observation);
+        $options = [
+            'page' => [
+                "title" => "étape 3 - détail de l'observation"
+            ],
+            'form' => [
+                "include_back_btn" => true,
+                "back_btn_path"    => "observe_step_2"
+            ],
+            'map' => [
+                "address" => $observation->getLocation()->getAddress()
+            ]
+        ];
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($observation);
+            $em->flush();
+            $session->set('obsId', $observation->getId());
+            $session->remove('observation');
+
+            return $this->forward('App\Controller\TestController::stepFor');
+        }
+
+        return $this->render('test/observe.html.twig', [
+            'options' => $options,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/observe/liste", name="observe_step_4")
+     * @Route("/observe/liste/{id}", requirements={"id": "[1-9]\d*"}, name="observe_step_4_id")
+     * @IsGranted("ROLE_USER")
+     */
+    public function stepFor(
+        Request $request,
+        SessionInterface $session,
+        TaxrefRepository $taxref,
+        ObservationRepository $observation,
+        int $id = null)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            $session->set('step', '4');
+            $observation = $observation->find($session->get('obsId'));
+
+            if ($id) {
+                $observation->getBird()->setTaxref($taxref->find($id));
+                $observation->setUser($this->getUser());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($observation);
+                $em->flush();
+                return $this->redirectToRoute('showObservation', ['id' => $observation->getId()]);
+            }
+
+            $posts = $taxref->findByFrType();
+            $options = [
+                'page' => [
+                    "title" => "étape 4 - choix de l'oiseau"
+                ],
+                'form' => [
+                    "include_back_btn" => true,
+                    "back_btn_path"    => "observe_step_3"
+                ],
+                'map' => [
+                    "address" => $observation->getLocation()->getAddress()
+                ]
+            ];
+            return $this->render('test/observe.html.twig', compact('posts', 'options'));
+
+        }
+
     }
 
     /**
@@ -235,13 +306,24 @@ class TestController extends Controller
      * @Route("/observation/{id}",name="showObservation")
      * @Method("GET")
      */
-    public function showObservation(Observation $observation): Response
+    public function showObservation(Observation $observation,SessionInterface $session): Response
     {
+        $options = [];
+        if ($session->get('obsId')) {
+            $session->remove('obsId');
+            $session->remove('step');
+            $options = [
+                'page' => [
+                    "include_newId_btn" => true
+                ],
+            ];
+        }
         $bird = $observation->getBird();
         $taxref = $bird->getTaxref();
         return $this->render('test/detail.html.twig', [
             'post' => $taxref,
             'observation' => $observation,
+            'options' => $options,
         ]);
     }
 

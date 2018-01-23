@@ -12,22 +12,34 @@
 {% endblock %}
 
 {% block mainLeft %}
-    {% form_theme form 'bootstrap_4_layout.html.twig' %}
-    <div  class="col-lg-5 col-xl-4">
+    <div id="main-left" class="col-lg-5 col-xl-4">
         <div class="d-flex flex-column">
-            <div class="container mt-auto mb-auto">
+            <div class=" mt-auto mb-auto">
                 <h1 class="text-white display-3">Nouvelle observation</h1>
-                <p class="text-primary lead">{{ step.title }}</p>
-                {{ app.session.get('observation').location.gpsY }}
+                <p class="text-primary lead">{{ options.page.title }}</p>
             </div>
-            <div class="login-form">
-                <div class="form">
-                    {{ include('test/form.html.twig') }}
-                </div>
+            {% if app.session.get('step') != 4 %}
+                {{ include('test/_form.html.twig', {
+                    form: form,
+                    button_label: 'étape suivante',
+                    include_back_btn: options.form.include_back_btn,
+                    back_btn_label: 'étape précédente',
+                    back_btn_path: options.form.back_btn_path,
+                }, with_context = false) }}
+            {% else %}
+            <div class="wrapper" style="height:60vh;overflow-y:scroll;">
+                {% for post in posts %}
+                {{ include('components/card-taxref.html.twig', {
+                    include_id_btn: true,
+                }) }}
+                {% endfor %}
             </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
+
+
 
 {% block mainRight %}
     <div class="col-lg-7 col-xl-8 p-0">

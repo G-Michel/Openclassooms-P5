@@ -6,6 +6,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "facebook/graph-sdk": "^5.6",
         "fzaninotto/faker": "^1.7",
+        "intervention/image": "^2.4",
         "knpuniversity/oauth2-client-bundle": "^1.16",
         "league/oauth2-facebook": "^2.0",
         "sensio/framework-extra-bundle": "^5.1",

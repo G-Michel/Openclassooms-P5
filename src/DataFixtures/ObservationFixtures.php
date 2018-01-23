@@ -33,6 +33,11 @@ class ObservationFixtures extends Fixture implements OrderedFixtureInterface
           $frType  = $taxref->getFrType();
           $numFile = rand(0,36);
           $nbBird = rand(1,20);
+          $sizeBird = rand(1,4);
+          $colorsBird = $faker->randomElements(
+            $array = ['noir','marron','blanc','brun','rouge','bleu','jaune'],
+            $count = rand(1,3)
+          );
           $nbObs = rand(10,50);
 
           for ($i=0; $i < $nbObs ; $i++) {
@@ -50,7 +55,7 @@ class ObservationFixtures extends Fixture implements OrderedFixtureInterface
             $observation->setDateObs($dateObs);
             $observation->setDateAdd($observation->getDateObs()->add(new \DateInterval('P5D')));
             $observation->setStatus($status);
-            $observation->setBirdNumber($nbBird);
+
             $observation->setComment('');
             $observation->setUser($user);
             // Ajout d'une location pour l'observation
@@ -58,16 +63,14 @@ class ObservationFixtures extends Fixture implements OrderedFixtureInterface
             $location->setGpsX($arrayLocations[$numRow][19]);
             $location->setGpsY($arrayLocations[$numRow][20]);
             $location->setAddress($faker->address);
-            $location->setCountry('');
-            $location->setState('');
-            $location->setCity('');
             $observation->setLocation($location);
             // On sauvegarde $location;
             $manager->persist($location);
             // Ajout d'un oiseau pour l'observation
             $bird = new Bird();
-            $bird->setSlug($slug);
-            $bird->setInpnLink('');
+            $bird->setBirdNumber($nbBird);
+            $bird->setBirdColors($colorsBird);
+            $bird->setBirdSize($sizeBird);
             $bird->setTaxref($taxref);
             $observation->setBird($bird);
             // On sauvegarde $bird;

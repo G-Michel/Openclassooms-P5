@@ -18,6 +18,12 @@
 {% block mainRight %}
 
   <div class="col col-md-6 offset-md-4 offset-lg-5 login-form">
+      <p>
+        <a href="{{ flink|raw}}">Login with facebook</a><br/>
+      </p>
+      <div>
+      <a href="{{glink}}"><img src="images/glogin.png" alt=""/>google</a>
+      </div>
 
       {% if error %}
         <div class="alert alert-danger">{{ error.message }}</div>

@@ -77,8 +77,26 @@
     "facebook/graph-sdk": {
         "version": "5.6.1"
     },
+    "firebase/php-jwt": {
+        "version": "v5.0.0"
+    },
     "fzaninotto/faker": {
         "version": "v1.7.1"
+    },
+    "google/apiclient": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "1021f2f2b20ae032c6d07624ba4531e247f1b659"
+        }
+    },
+    "google/apiclient-services": {
+        "version": "v0.42"
+    },
+    "google/auth": {
+        "version": "v1.2.0"
     },
     "guzzlehttp/guzzle": {
         "version": "6.3.0"
@@ -101,6 +119,9 @@
     "league/oauth2-facebook": {
         "version": "2.0.1"
     },
+    "monolog/monolog": {
+        "version": "1.23.0"
+    },
     "ocramius/package-versions": {
         "version": "1.2.0"
     },
@@ -109,6 +130,9 @@
     },
     "paragonie/random_compat": {
         "version": "v2.0.11"
+    },
+    "phpseclib/phpseclib": {
+        "version": "2.0.9"
     },
     "psr/cache": {
         "version": "1.0.1"

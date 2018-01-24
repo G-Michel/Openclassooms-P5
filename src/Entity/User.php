@@ -8,8 +8,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
-
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("mail")
@@ -121,6 +119,37 @@ class User implements UserInterface, AdvancedUserInterface
      */
     private $auth;
 
+    /**
+    *
+    * @ORM\Column(name="o_auth_provider", type="boolean", nullable=true)
+    */
+    private $oAuthProvider;
+
+    /**
+    *
+    * @ORM\Column(name="o_auth_user_id", type="string", nullable=true)
+    */
+    private $oAuthUserId;
+
+    public function setOAuthProvider($value)
+    {
+        $this->oAuthProvider = $value;
+    }
+
+    public function getOAuthProvider()
+    {
+        return $this->oAuthProvider;
+    }
+
+    public function setOAuthUserId($value)
+    {
+        $this->oAuthUserId = $value;
+    }
+
+    public function getOAuthUserId()
+    {
+        return $this->oAuthUserId;
+    }
 
     public function eraseCredentials()
     {

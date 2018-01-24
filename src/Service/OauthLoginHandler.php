@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use App\Entity\User;
 use App\Entity\Picture;
 use App\Entity\Auth;
+use App\Service\MyPersistentDataHandler;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\Pbkdf2PasswordEncoder;
@@ -56,12 +57,19 @@ class OauthLoginHandler
 	*/
 	private $token;
 
+	/**
+	*
+	*
+	*/
+	private $fbPersistDataHandler;
 
-	public function __construct(RequestStack $requestStack, Container $container, UserPasswordEncoderInterface $userPasswordEncoder)
+
+	public function __construct(RequestStack $requestStack, Container $container, UserPasswordEncoderInterface $userPasswordEncoder,MyPersistentDataHandler $datahandler)
 	{
 		$this->requestStack = $requestStack;
 		$this->container = $container;
 		$this->userPasswordEncoder = $userPasswordEncoder;
+		$this->fbPersistDataHandler = $datahandler;
 	}
 
 	/**
@@ -79,12 +87,15 @@ class OauthLoginHandler
 			//Get oauth keys
 			$this->clientKey= $this->container->getParameter('appId');
 			$this->secretKey= $this->container->getParameter('appSecret');
+			
+			
 
 			//init facebook object
 			$this->oauthObject =  new \Facebook\Facebook(array(
 				'app_id' => $this->clientKey,
 				'app_secret' => $this->secretKey,
 				'default_graph_version' => 'v2.11',
+				'persistent_data_handler' => $this->fbPersistDataHandler
 			));
 
 		}

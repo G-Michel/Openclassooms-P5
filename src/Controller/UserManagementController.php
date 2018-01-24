@@ -160,7 +160,6 @@ class UserManagementController extends Controller
             return $this->redirectToRoute('admin_home');
         }
 
-
         //LOGIN WITH OAUTH SERVICES
         $pbkdPasswordEncoder = new Pbkdf2PasswordEncoder();
 

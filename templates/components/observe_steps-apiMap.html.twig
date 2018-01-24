@@ -1,0 +1,152 @@
+<script>
+    var map;
+    function initMap() {
+      // TODO Geolocalisation
+      //if (navigator.geolocation)
+      //alert("Bravo ! Votre navigateur prend en compte la géolocalisation HTML5");
+      //else
+      //alert("Dommage... Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+
+      // include style map
+      {{ include('components/styled_map.html.twig') }}
+
+      // define some values
+      {% if app.session.get('observation') %}
+        var position = {
+          lat: parseFloat("{{ app.session.get('observation').location.gpsY }}"),
+          lng: parseFloat("{{ app.session.get('observation').location.gpsX }}"),
+        };
+        var zoom = 15
+      {% else %}
+        var position = {lat: 46.86667, lng: 2.21375}; // France
+        var zoom = 6
+      {% endif %}
+
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom:zoom,
+        center: position,
+        streetViewControl: false,
+        mapTypeControlOptions: {
+          mapTypeIds: []// Ex : ['roadmap', 'satellite', 'hybrid', 'terrain','styled_map']
+        }
+      });
+
+      // Geocoder
+      var geocoder = new google.maps.Geocoder();
+      // InfoWindow
+      var infowindow = new google.maps.InfoWindow;
+
+      // Ad new marker
+      var marker = new google.maps.Marker({
+        map,
+        position: position,
+        clickable: false,
+        draggable:true,
+        animation: google.maps.Animation.DROP,
+        icon: "{{ asset('images/map/marker.svg') }}"
+      });
+
+      //Associate the styled map with the MapTypeId and set it to display.
+      map.mapTypes.set('styled_map', styledMapType);
+      map.setMapTypeId('styled_map');
+
+      {% if app.session.get('step') != 1 %}
+        map.setOptions({
+          draggable:false
+        })
+        marker.setOptions({
+          draggable:false,
+          animation:false,
+
+        })
+        infowindow.setContent("{{ options.map.address }}");
+        infowindow.open(map, marker);
+      {% endif %}
+
+      {% if app.session.get('observation') and app.session.get('step') == 1 %}
+        setPosition(marker);
+        geocodeLatLng(geocoder, map, marker);
+      {% endif %}
+
+      /**
+       * List of Event
+       **/
+
+      // Listen drag Event for update coordinate gps
+      google.maps.event.addListener(marker,'drag',function() {
+        setPosition(marker);
+      })
+
+      // Listen End of drag Event for update adress
+      google.maps.event.addListener(marker,'dragend',function() {
+        geocodeLatLng(geocoder, map, marker);
+      })
+      {% if app.session.get('step') == 1 %}
+      // Listen when user whrite address and press on key Enter (keyCode 13)
+      document.getElementById('observe_bird_location_location_address').addEventListener('keypress', function(e) {
+        if(e.keyCode == '13') {
+          e.preventDefault()
+          geocodeAddress(geocoder, map, marker);
+        }
+      });
+      {% endif %}
+
+    }
+
+    /*
+    * List of Function
+    */
+
+    // Geocode => Search Lat and Lng with only address
+    function geocodeAddress(geocoder, resultsMap, resultMarker) {
+      var address = document.getElementById('observe_bird_location_location_address').value;
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          resultsMap.setZoom(11);
+          resultsMap.setCenter(results[0].geometry.location);
+          resultMarker.setPosition(results[0].geometry.location)
+          setPosition(resultMarker)
+        } else {
+          alert('Geocode n\'a pas réussi pour la raison suivante:: ' + status);
+        }
+      });
+    }
+
+    // Geocode => Search Address with only lat and lng
+    function geocodeLatLng(geocoder, resultsMap, resultMarker) {
+      var lng = document.getElementById('observe_bird_location_location_gpsX').value;
+      var lat = document.getElementById('observe_bird_location_location_gpsY').value;
+      var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
+      geocoder.geocode({'location': latlng}, function(results, status) {
+        if (status === 'OK') {
+          if (results[1]) {
+            resultsMap.getZoom()<7?resultsMap.setZoom(11):resultsMap.setZoom(resultsMap.getZoom());
+            resultsMap.setCenter(latlng);
+            resultMarker.setPosition(latlng)
+            setAddress(results[0].formatted_address)
+          } else {
+            window.alert('Aucun résultat trouvé');
+          }
+        } else {
+          window.alert('Le géocodeur a échoué en raison de: ' + status);
+        }
+      });
+    }
+
+    // Update lat and lng in form input
+    function setPosition(marker) {
+      var position = marker.getPosition();
+      document.getElementById('observe_bird_location_location_gpsX').value = position.lng()
+      document.getElementById('observe_bird_location_location_gpsY').value = position.lat()
+    }
+
+    // Update address in form input
+    function setAddress(address) {
+      var address = address;
+      document.getElementById('observe_bird_location_location_address').value = address
+    }
+
+
+
+  </script>

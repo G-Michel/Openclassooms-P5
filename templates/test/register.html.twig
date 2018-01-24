@@ -6,10 +6,8 @@
 
 {% block stylesheets %}{% endblock %}
 
-{% block javascripts %}{% endblock %}
-
 {% block mainLeft %}
-<div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">    
+<div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">
 	<div class="container mt-auto mb-auto">
     	<h1 class="text-white display-3">{{message[0]}}</h1>
     	<p class="text-primary lead">{{message[1]}}</p>
@@ -24,6 +22,7 @@
   	<div class="col col-md-6 offset-md-4 offset-lg-5">
     	<div class="login-form">
         	<div class="form">
+
           {% if googleRegister is defined %}
             <p><a href="{{googleRegister}}">S'inscrire avec Google plouche</a></p>
           {% endif %}
@@ -31,11 +30,12 @@
             <p><a href="{{facebookRegister|raw }}">S'inscrire avec fessbouk</a></p>
           {% endif %}
         		{{ form_start(form) }} 
+
 				{{ form_widget(form) }}
 				<button type="submit" class="btn btn-primary">S'inscrire</button>
 				{{ form_end(form) }}
     		</div>
   		</div>
 	</div>
- 
+
 {% endblock %}

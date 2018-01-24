@@ -105,7 +105,7 @@ class User implements UserInterface, AdvancedUserInterface
     private $picture;
 
     /**
-     * 
+     *
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
@@ -178,7 +178,7 @@ class User implements UserInterface, AdvancedUserInterface
 
 
     //GETTERS SETTERS
-    
+
     /**
      * @return mixed
      */
@@ -297,6 +297,27 @@ class User implements UserInterface, AdvancedUserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFunction()
+    {
+
+        $function = array_map(function($role) {
+            if (in_array($role, ['ROLE_ADMIN'])) {
+                return 'Administrateur';
+            }
+            if (in_array($role, ['ROLE_NATURALIST'])) {
+                return 'Naturaliste';
+            }
+            if (in_array($role, ['ROLE_USER'])) {
+                return 'Membre';
+            }
+        },$this->roles);
+
+        return $function[0];
     }
 
     /**

@@ -14,14 +14,14 @@ class LocationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('gpsX', NumberType::class, [
-            'invalid_message' => "Vous devez saisir une longitude valide"
-        ])
-        ->add('gpsY', NumberType::class, [
-            'invalid_message' => "Vous devez saisir une latitude valide"
-        ])
-        ->add('address', TextType::class)
-    ;
+            ->add('gpsX', NumberType::class, [
+                'invalid_message' => "Vous devez saisir une longitude valide"
+            ])
+            ->add('gpsY', NumberType::class, [
+                'invalid_message' => "Vous devez saisir une latitude valide"
+            ])
+            ->add('address', TextType::class)
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,0 +1,61 @@
+{% extends 'form/layout.html.twig' %}
+{#
+   Each field type is rendered by a template fragment, which is determined
+   by the name of your form type class (DateTimePickerType -> date_time_picker)
+   and the suffix "_widget". This can be controlled by overriding getBlockPrefix()
+   in DateTimePickerType.
+
+   See https://symfony.com/doc/current/cookbook/form/create_custom_field_type.html#creating-a-template-for-the-field
+#}
+
+{%- block form_row -%}
+    <div class="d-flex flex-column text-light mb-4">
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{% block date_time_picker_widget %}
+    <label class="sr-only" for="observe_bird_moment_dateObs">Username</label>
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <div class="input-group-text"><i class="material-icons" style="line-height:1.5;" aria-hidden="true">access_time</i></div>
+      </div>
+      {{ block('datetime_widget') }}
+    </div>
+{% endblock %}
+
+{% block checkbox_widget %}
+    {% set parent_label_class = parent_label_class|default(label_attr.class|default('')) %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-check-input')|trim}) %}
+    {% if 'checkbox-inline' in parent_label_class %}
+        {{- form_label(form, null, { widget: parent() }) -}}
+    {% elseif 'form-check-inline' in parent_label_class %}
+        <div class="form-check{{ not valid ? ' form-control is-invalid' }} form-check-inline">
+            {{- form_label(form, null, { widget: parent() }) -}}
+        </div>
+    {% else %}
+        <div class="form-check{{ not valid ? ' form-control is-invalid' }}">
+            {% set type = type|default('checkbox') %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' form-check-label text-primary')|trim}) %}
+            {{ block('form_widget_simple') }}
+            {{ block('form_label') }}
+        </div>
+    {% endif %}
+{% endblock checkbox_widget %}
+
+{% block file_widget %}
+    <div class="form-group">
+        {{ block('form_widget_simple') }}
+        <div class="input-group input-file" name="observe_bird_detail[picture][file]">
+            <input type="text" class="form-control" placeholder='Choisissez une image...' />
+                <span class="input-group-btn">
+                <button class="btn-choose" type="button">Choisissez</button>
+            </span>
+        </div>
+    </div>
+{% endblock file_widget %}
+
+
+

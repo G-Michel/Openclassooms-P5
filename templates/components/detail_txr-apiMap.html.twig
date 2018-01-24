@@ -11,6 +11,8 @@
       map = new google.maps.Map(document.getElementById('map'), {
         zoom:6,
         center: france,
+        streetViewControl: false,
+        fullscreenControl: false,
         mapTypeControlOptions: {
           mapTypeIds: []// Ex : ['roadmap', 'satellite', 'hybrid', 'terrain','styled_map']
         }
@@ -19,6 +21,7 @@
       map.data.loadGeoJson("{{ path('jsonTaxref',{'taxref': post.id}) }}",null,function(response){
 
         var markers = response.map(function(location, i) {
+
           var coordinates = location.getGeometry().get();
           var latLng = new google.maps.LatLng(coordinates.lat(),coordinates.lng());
           var marker = new google.maps.Marker({
@@ -27,6 +30,7 @@
             //animation: google.maps.Animation.DROP,
             icon: "{{ asset('images/map/marker.svg') }}"
           });
+
           var href = '{{ path("showObservation", {'id': 'obsId'}) }}';
           href = href.replace("obsId", location.getProperty('observation'));
           var content = '<a href="'+href+'"><img height="50px" width="50px" class="markerImg" src="'+location.getProperty('picture').url+'" alt="avatar" ></a>'
@@ -34,6 +38,8 @@
             content:content
           });
           infowindow.open(map, marker);
+
+
           google.maps.event.addListener(infowindow, 'domready', function() {
 
             var iwOuters = document.querySelectorAll('.gm-style-iw')

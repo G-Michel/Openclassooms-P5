@@ -1,0 +1,56 @@
+// app.js
+
+// JS is equivalent to the normal "bootstrap" package
+// no need to set this to a variable, just require it
+import 'bootstrap';
+import './datepicker';
+
+$(function() {
+
+  // Datepicker date obs
+  $('#observe_bird_moment_dateObs').datetimepicker();
+
+  // Choose file picture
+  bs_input_file();
+
+  // Slider number birds
+  if (document.getElementById("observe_bird_detail_bird_birdNumber")) {
+    var slider = document.getElementById("observe_bird_detail_bird_birdNumber");
+    var output = document.getElementById("birdNumber");
+    output.innerHTML = 'Nombre d\'oiseaux : ' + slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function() {
+        output.innerHTML = 'Nombre d\'oiseaux : ' + this.value;
+    }
+  }
+
+});
+
+// Function Choose file picture
+function bs_input_file() {
+  $(".input-file").before(
+    function() {
+      if ( $(this).prev().hasClass('form-control-file') ) {
+        var element = $("#observe_bird_detail_picture_file");
+        element.addClass('d-none')
+        element.change(function(){
+          element.next(element).find('input').val((element.val()).split('\\').pop());
+        });
+        $(this).find("button.btn-choose").click(function(){
+          element.click();
+        });
+        // $(this).find("button.btn-reset").click(function(){
+        //   element.val(null);
+        //   $(this).parents(".input-file").find('input').val('');
+        // });
+        $(this).find('input').css("cursor","pointer");
+        $(this).find('input').mousedown(function() {
+          $(this).parents('.input-file').prev().click();
+          return false;
+        });
+        return element;
+      }
+    }
+  );
+}

@@ -48,21 +48,6 @@ class Location
     private $address;
 
     /**
-     * @ORM\Column(name="country", type="string", length=255)
-     */
-    private $country;
-
-    /**
-     * @ORM\Column(name="state", type="string", length=255)
-     */
-    private $state;
-
-    /**
-     * @ORM\Column(name="city", type="string", length=255)
-     */
-    private $city;
-
-    /**
      * @return mixed
      */
     public function getId()
@@ -138,66 +123,6 @@ class Location
     public function setAddress($address)
     {
         $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * @param mixed $country
-     *
-     * @return self
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param mixed $state
-     *
-     * @return self
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param mixed $city
-     *
-     * @return self
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
 
         return $this;
     }

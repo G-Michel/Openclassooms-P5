@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ObservationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Observation
 {
@@ -36,38 +37,17 @@ class Observation
     private $dateObs;
 
     /**
-     * @ORM\Column(name="date_add", type="datetime")
+     * @ORM\Column(name="date_add", type="datetime", nullable=true)
      */
     private $dateAdd;
 
     /**
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     private $status;
 
     /**
-     * @ORM\Column(name="bird_number", type="integer")
-     * @Assert\NotBlank(
-     *     groups = {"step3"},
-     *     message = "Vous devez saisir un nombre"
-     * )
-     * @Assert\Type(
-     *     type    = "int",
-     *     message = "Vous devez saisir un nombre entier"
-     * )
-     * @Assert\GreaterThanOrEqual(
-     *     value   = 1,
-     *     message = "Le nombre d’oiseau doit être supérieur ou égale à {{ compared_value }}"
-     * )
-     * @Assert\LessThanOrEqual(
-     *     value   = 20,
-     *     message = "Le nombre d’oiseau doit être inférieur ou égale à {{ compared_value }}"
-     * )
-     */
-    private $birdNumber;
-
-    /**
-     * @ORM\Column(name="comment", type="string", length=255)
+     * @ORM\Column(name="comment", type="string", length=255, nullable=true)
      * @Assert\Type(
      *      type    = "string",
      *      message = "Vous devez saisir une chaine de caractère"
@@ -103,8 +83,7 @@ class Observation
     /**
      * Unidirectionnal - One Observation has One Picture . (OWNED SIDE)
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist"})
-     * @Assert\Valid()
+     * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist", "remove"})
      *
      */
     private $picture;
@@ -112,11 +91,38 @@ class Observation
     /**
      * Unidirectionnal - Many Observation has One User . (OWNED SIDE)
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @Assert\Valid()
      *
      */
     private $user;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDateAddValue()
+    {
+        $this->dateAdd = new \DateTime();
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function setStatusValue()
+    {
+        if ($this->status === null) {
+            $this->status = 0;
+        }
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function hasPicture()
+    {
+        if ($this->getPicture() && $this->getPicture()->getFile() === null) {
+            # code...
+            $this->setPicture(null);
+        }
+    }
 
     /**
      * @return mixed
@@ -124,18 +130,6 @@ class Observation
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     *
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -194,26 +188,6 @@ class Observation
     public function setStatus($status)
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBirdNumber()
-    {
-        return $this->birdNumber;
-    }
-
-    /**
-     * @param mixed $birdNumber
-     *
-     * @return self
-     */
-    public function setBirdNumber($birdNumber)
-    {
-        $this->birdNumber = $birdNumber;
 
         return $this;
     }
@@ -289,7 +263,7 @@ class Observation
      */
     public function setPicture(Picture $picture = null)
     {
-      $this->picture = $picture;
+        $this->picture = $picture;
     }
 
     /**

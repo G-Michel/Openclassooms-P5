@@ -56,3 +56,11 @@ body {
   height: calc(100%);
   min-height: 600px;
 }
+
+/* CSS used here will be applied after bootstrap.css */
+.badge-notify{
+  background:$danger;
+  position: relative;
+  top: -50px;
+  left: 10px;
+ }

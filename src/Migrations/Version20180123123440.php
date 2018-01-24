@@ -8,14 +8,14 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180115155300 extends AbstractMigration
+class Version20180123123440 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE taxref ADD lbNom_type VARCHAR(255) NOT NULL, ADD lbAuteur_type VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE picture CHANGE alt alt VARCHAR(255) NOT NULL, CHANGE url url VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema)
@@ -23,6 +23,6 @@ class Version20180115155300 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE taxref DROP lbNom_type, DROP lbAuteur_type');
+        $this->addSql('ALTER TABLE picture CHANGE alt alt VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci, CHANGE url url VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci');
     }
 }

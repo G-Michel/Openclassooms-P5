@@ -18,3 +18,8 @@
     color:$gray-700;
   }
 }
+
+#showObservation #main-left {
+  max-height: calc(100vh - 56px);
+  overflow-y:scroll;
+}

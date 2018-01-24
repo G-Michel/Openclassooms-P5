@@ -20,7 +20,10 @@
     </h4>
     <div class="card-description">{{ post.nomVernType }}</div>
     <div class="ftr text-center">
-      <a href="{{ path('showTaxref', {slug: post.slug}) }}" class="btn {{ btnColor }} btn-round">Détail</a>
+      {% if include_id_btn|default(false) %}
+        <a href="{{ path('observe_step_4_id', {id: post.id|round}) }}" class="btn {{ btnColor }} btn-round">c'est mon oiseau</a>
+      {% endif %}
+      <a href="{{ path('showTaxref', {slug: post.slug}) }}" class="btn {{ btnColor }} btn-round">Détails</a>
       {# <button type="button" rel="tooltip" title="" class="btn btn-just-icon btn-simple btn-rose" data-original-title="Saved to Wishlist"><i class="material-icons">search</i></button> #}
     </div>
   </div>

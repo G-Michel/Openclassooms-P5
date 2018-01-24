@@ -24,7 +24,8 @@ security:
             logout:
                 path:    logout
                 target:  home
-
+    access_control:
+        - { path: ^/admin, roles: ROLE_USER }
 
 
             # activate different ways to authenticate

@@ -16,50 +16,42 @@ use Symfony\Component\Security\Core\Encoder\Pbkdf2PasswordEncoder;
 class OauthLoginHandler
 {	
 	/**
-	*
-	*
+	* @var object get __POST and __GET datas
 	*/
 	private $requestStack;
 
 	/**
-	*
-	*
+	* @var object .env keys
 	*/
 	private $container;
 
 	/**
-	*
-	*
+	* @var string client key for oauth authorisation
 	*/
 	private $clientKey;
 
 	/**
-	*
-	*
+	* @var string secret key for oauth authorisation
 	*/
 	private $secretKey;
 
 	/**
-	*
-	*
+	* @var string provider name like google or facebook
 	*/
 	private $providerName;
 
 	/**
-	*
-	*
+	* @var object object of Oauthprovider class
 	*/
 	private $oauthObject;
 
 	/**
-	*
-	*
+	* @var mixed access token to get userinfos
 	*/
 	private $token;
 
 	/**
-	*
-	*
+	* @var object needed by facebook oauth to adapt itself to symfony request structure
 	*/
 	private $fbPersistDataHandler;
 
@@ -73,8 +65,10 @@ class OauthLoginHandler
 	}
 
 	/**
-	*
-	*
+	* initialise and setup the service to support a specific provider 
+	* (facebook or Google)
+	* @return boolean false if nothing has beed initialisated
+	* @param string the oauth provider (google or facebook)
 	*/
 	public function initOauthProvider($providerName)
 	{
@@ -88,8 +82,6 @@ class OauthLoginHandler
 			$this->clientKey= $this->container->getParameter('appId');
 			$this->secretKey= $this->container->getParameter('appSecret');
 			
-			
-
 			//init facebook object
 			$this->oauthObject =  new \Facebook\Facebook(array(
 				'app_id' => $this->clientKey,
@@ -116,22 +108,23 @@ class OauthLoginHandler
 			$this->oauthObject->addScope("https://www.googleapis.com/auth/userinfo.profile");
 			$this->oauthObject->addScope("https://www.googleapis.com/auth/userinfo.email");
 			//$this->googleServiceObject = new \Google_Service_Plus($this->google);
-
 		}
 		else
 		{
-			return "Error: provider not available";
+			return false;
 		}
 	}
 
 	/**
-	*
+	* Get a valid login link generated with Oauth provider
+	* (facebook or Google)
+	* @return string a valid url
+	* @param string redirectURL needed by Oauth providers
 	*/
 	public function getAuthLink($url)//GET login link
 	{
 		if ($this->providerName == 'facebook')
 		{
-
 			$helper = $this->oauthObject->getRedirectLoginHelper();
 			$permissions = ['email','public_profile'];
 			$loginUrl = $helper->getLoginUrl($url, $permissions);
@@ -152,7 +145,14 @@ class OauthLoginHandler
 		}
 	}
 
-	public function grantAuthorisation()//WAY TO GET THE ACCESS TOKEN
+	/**
+	* ask for and generate a access token 
+	* if the access token is granted you can access to datas 
+	* the access token is stored into attribute token
+	* @return boolean true if granted false  
+	* @param none
+	*/
+	public function grantAuthorisation()
 	{
 		if ($this->providerName == "facebook")
 		{
@@ -205,6 +205,12 @@ class OauthLoginHandler
 		else return false;
 	}
 
+	/**
+	* access to data if the token is granted
+	* 
+	* @return array with choosen datas
+	* @param none
+	*/
 	public function getUserInfos()
 	{
 		if ($this->providerName == 'google')
@@ -243,7 +249,13 @@ class OauthLoginHandler
 		}
 	}
 
-	public function hydrateWithUserInfos($user)
+	/**
+	* hydrate an user object in order to put it on a database
+	* 
+	* @return none
+	* @param object an alias of a symfony user object
+	*/
+	public function hydrateWithUserInfos(User $user)
 	{
 				$userInfo = $this->getUserInfos();
         		$pbkdPasswordEncoder = new Pbkdf2PasswordEncoder();

@@ -16,12 +16,15 @@
 {% endblock %}
 
 {% block mainRight %}
-  
-
-	{% form_theme form 'bootstrap_4_layout.html.twig' %}
+	
   	<div class="col col-md-6 offset-md-4 offset-lg-5">
     	<div class="login-form">
         	<div class="form">
+          {% for message in app.flashes('flashError') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+          {% endfor %}
 
           {% if googleRegister is defined %}
             <p><a href="{{googleRegister}}">S'inscrire avec Google plouche</a></p>
@@ -29,11 +32,10 @@
           {% if facebookRegister is defined %}
             <p><a href="{{facebookRegister|raw }}">S'inscrire avec fessbouk</a></p>
           {% endif %}
-        		{{ form_start(form) }} 
-
-				{{ form_widget(form) }}
-				<button type="submit" class="btn btn-primary">S'inscrire</button>
-				{{ form_end(form) }}
+        	{{ form_start(form) }} 
+    				{{ form_widget(form) }}
+    				<button type="submit" class="btn btn-primary">S'inscrire</button>
+  				{{ form_end(form) }}
     		</div>
   		</div>
 	</div>

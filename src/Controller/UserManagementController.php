@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Oauth;
+use App\Entity\Picture;
 use App\Entity\Auth;
 use App\Form\SignInType;
 use App\Form\SignUpType;
 use App\Form\ResetPasswordType;
 use App\Form\LostPasswordType;
-use App\Service\LoginFacebook;
+
+use App\Service\OauthLoginHandler;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,23 +19,61 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\Pbkdf2PasswordEncoder;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 
 class UserManagementController extends Controller
 {
     /**
      * @Route("/signUp", name="signUp")
      */
-    public function signUp(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function signUp(Request $request, UserPasswordEncoderInterface $passwordEncoder, OauthLoginHandler $oauthHandler)
     {
         $user = new User();
         $auth = new Auth();
         $form = $this->createForm(SignUpType::class, $user);
         $form->handleRequest($request);
 
+        //SignUp with Oauth services
+        $oauthHandler->initOauthProvider('google');
+        $glink= $oauthHandler->getAuthLink($this->generateUrl('signUp', array('service'=>"google"), UrlGeneratorInterface::ABSOLUTE_URL));
 
-        //Handles signup
-        if ($form->isSubmitted() && $form->isValid())
+        $serviceProvider = $request->query->get('service');
+        if($serviceProvider == 'google' || $serviceProvider == 'facebook')
+        {
+            if ($serviceProvider == 'facebook')
+            {
+                $oauthHandler->initOauthProvider('facebook');
+            }
+
+                if ($oauthHandler->grantAuthorisation())
+                {
+                    $oauthHandler->hydrateWithUserInfos($user);
+
+                    //Persist and flush
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($user);
+                    $em->flush();
+
+                     return $this->render('test/registerComfirm.html.twig',array(
+                    'message' => array(
+                        'inscription complétée',
+                        'Vous pouvez maintenant vous connecter')));
+                }      
+        }
+
+        $oauthHandler->initOauthProvider('facebook');
+        $flink= $oauthHandler->getAuthLink($this->generateUrl('signUp', array('service' =>"facebook"), UrlGeneratorInterface::ABSOLUTE_URL));
+
+
+        //Handles standard signup 
+        if ($form->isSubmitted() && $form->isValid()) 
+
         {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->eraseCredentials();
@@ -52,8 +93,7 @@ class UserManagementController extends Controller
                 ->setBody(
                     $this->renderView(
                     'mails/comfirmMail.html.twig',
-                array('user' => $user)
-            ),'text/html');
+                array('user' => $user)),'text/html');
             $this->get('mailer')->send($message);
 
             return $this->render('test/registerComfirm.html.twig',array(
@@ -62,7 +102,10 @@ class UserManagementController extends Controller
                     'vous allez recevoir un mail pour confirmer votre inscription')));
         }
 
+        // SIGNUP PAGE RENDERING
         return $this->render('test/register.html.twig', [
+            'googleRegister' => $glink,
+            'facebookRegister' => $flink,
             'form' => $form->createView(),
             'message' => array(
                 'Inscription',
@@ -105,21 +148,58 @@ class UserManagementController extends Controller
         }
     }
 
+
+
     /**
      * @Route("/signIn", name="login")
      */
-    public function signIn(Request $request, AuthenticationUtils $authUtils)
+    public function signIn(Request $request, AuthenticationUtils $authUtils, OauthLoginHandler $oauthHandler)
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
             return $this->redirectToRoute('admin_home');
         }
 
-        //Facebook Login tests
-        //$facebook = new LoginFacebook();
-        //$facebookLink = $facebook->getLoginLink($this->generateUrl('login'));
+
+        //LOGIN WITH OAUTH SERVICES
+        $pbkdPasswordEncoder = new Pbkdf2PasswordEncoder();
+
+        $oauthHandler->initOauthProvider('google');
+        $glink= $oauthHandler->getAuthLink($this->generateUrl('login', array('service'=>"google"), UrlGeneratorInterface::ABSOLUTE_URL));
+
+        $serviceProvider = $request->query->get('service');
+        if($serviceProvider == 'google' || $serviceProvider == 'facebook')
+        {
+            if ($serviceProvider == 'facebook')
+            {
+                $oauthHandler->initOauthProvider('facebook');
+            }
 
 
+            if ($oauthHandler->grantAuthorisation())
+            {
+                $userInfo = $oauthHandler->getUserinfos();
+                $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(array(
+                'mail' =>$userInfo['email']));
+
+                $encodedSub= $pbkdPasswordEncoder->encodePassword($userInfo['id'],"OPC-P5");
+
+                if ($user->getOAuthUserID() == $encodedSub )
+                {
+                    $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+                    $this->get('security.token_storage')->setToken($token);
+                    $this->get('session')->set('_security_main', serialize($token));
+                    $event = new InteractiveLoginEvent($request, $token);
+                    $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+                    return $this->redirectToRoute('home');
+                }    
+            }      
+        }
+
+        $oauthHandler->initOauthProvider('facebook');
+        $flink= $oauthHandler->getAuthLink($this->generateUrl('login', array('service' =>"facebook"), UrlGeneratorInterface::ABSOLUTE_URL));
+       
+        //FOR REGULAR LOGIN
         $error = $authUtils->getLastAuthenticationError();
         $lastUsername = $authUtils->getLastUsername();
 
@@ -128,9 +208,10 @@ class UserManagementController extends Controller
 
         return $this->render('test/login.html.twig', array(
             'last_username' => $lastUsername,
-            'error'         => $error
+            'error'         => $error,
+            'flink'        => $flink,
+            'glink'         => $glink
         ));
-
     }
 
     /**

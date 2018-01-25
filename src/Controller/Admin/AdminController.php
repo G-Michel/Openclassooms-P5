@@ -13,7 +13,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Repository\ObservationRepository;
 use App\Entity\Observation;	
 
-
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Form\UserPictureType;
+use App\Form\ResetPasswordType;
 
 class AdminController extends Controller
 {
@@ -36,6 +39,32 @@ class AdminController extends Controller
         ));
   	}
 
+  	/**
+  	* @Route("/admin/editProfil", name="edit_profil")
+  	* @Method("GET")
+  	*/
+  	public function editProfil()
+  	{
+  		$user = $this->get('security.token_storage')->getToken()->getUser();
+
+  		//Generating all forms 
+  		$forms= array("email"=>'',"name"=>"",'surname'=>"");
+  		foreach ($forms as &$form) $form=$this->createFormBuilder($user);
+  		$forms['email']->add('mail', EmailType::class,array('label'=>'Adresse email',));
+  		$forms['name']->add('name', TextType::class,array('label'=>'Nom',));
+  		$forms['surname']->add('surname',TextType::class,array(
+  			'label'=>'Nom de famille'));
+  		foreach ($forms as &$form) $form=$form->getForm();
+  		$forms['password']= $this->createForm(ResetPasswordType::class);
+  		$forms['picture'] = $this->createForm(UserPictureType::class);
+
+  		
+  		return $this->render('admin/editProfil.html.twig',array(
+  			'forms' => $forms
+  		));
+
+
+  	}
 
 
 }

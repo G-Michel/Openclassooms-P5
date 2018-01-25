@@ -56,7 +56,6 @@ class UserManagementController extends Controller
             {
                 $oauthHandler->initOauthProvider('facebook');
             }
-
                 if ($oauthHandler->grantAuthorisation())
                 {
                     $oauthHandler->hydrateWithUserInfos($user);
@@ -72,9 +71,9 @@ class UserManagementController extends Controller
                     }
 
                      return $this->render('test/registerComfirm.html.twig',array(
-                    'message' => array(
-                        'inscription complétée',
-                        'Vous pouvez maintenant vous connecter')));
+                        'message' => array(
+                            'inscription complétée',
+                            'Vous pouvez maintenant vous connecter')));
                 }
                 else
                 {

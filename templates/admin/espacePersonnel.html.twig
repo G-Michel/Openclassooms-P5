@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Test Home - {{parent()}}{% endblock %}
+{% block title %}NAO - Espace Personnel{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
@@ -14,7 +14,7 @@
             <div class="col-sm-12">
                 <div><a class="btn btn-block btn-primary text-muted" href="">Voir mes Observations</a></div>
                 <div><a class="btn btn-block btn-primary text-muted " href="">Ajouter une observation</a></div>
-                <div><a class="btn btn-block btn-primary text-muted " href="">Editer mon profil</a></div>
+                <div><a class="btn btn-block btn-primary text-muted " href="{{path('edit_profil')}}">Editer mon profil</a></div>
             </div>  
         </div>        
     </div>
@@ -64,7 +64,7 @@
                                 {% endif %}
 
                             </td>
-                            <th><a href="">voir</a></th>
+                            <th><a href="{{ path('showObservation', {id: observation.getId()}) }}">voir</a></th>
                             <th><a href="">supprimer</a></th>
                         </tr>
                     {% endfor %}

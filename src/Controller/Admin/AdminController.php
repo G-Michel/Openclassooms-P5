@@ -21,8 +21,9 @@ class AdminController extends Controller
      */
 	public function homePage()
 	{
+		
         return $this->render('test/home.html.twig');
-  }
+  	}
 
 
 

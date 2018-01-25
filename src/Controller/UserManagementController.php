@@ -23,6 +23,8 @@ use Symfony\Component\Security\Core\Encoder\Pbkdf2PasswordEncoder;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -34,6 +36,10 @@ class UserManagementController extends Controller
      */
     public function signUp(Request $request, UserPasswordEncoderInterface $passwordEncoder, OauthLoginHandler $oauthHandler)
     {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            return $this->redirectToRoute('admin_home');
+        }
         $user = new User();
         $auth = new Auth();
         $form = $this->createForm(SignUpType::class, $user);
@@ -58,13 +64,23 @@ class UserManagementController extends Controller
                     //Persist and flush
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($user);
-                    $em->flush();
+                    try {
+                       $em->flush(); 
+                    } catch (UniqueConstraintViolationException $e) {
+                        $this->addFlash('flashError',"Erreur lors de l'inscription dans la base de donnée");
+                        return $this->redirectToRoute('signUp');    
+                    }
 
                      return $this->render('test/registerComfirm.html.twig',array(
                     'message' => array(
                         'inscription complétée',
                         'Vous pouvez maintenant vous connecter')));
-                }      
+                }
+                else
+                {
+                    $this->addFlash('flashError',"Accés non autorisé par le fourniseur externe");
+                    return $this->redirectToRoute('signUp'); 
+                }   
         }
 
         $oauthHandler->initOauthProvider('facebook');
@@ -160,7 +176,6 @@ class UserManagementController extends Controller
             return $this->redirectToRoute('admin_home');
         }
 
-
         //LOGIN WITH OAUTH SERVICES
         $pbkdPasswordEncoder = new Pbkdf2PasswordEncoder();
 
@@ -174,7 +189,6 @@ class UserManagementController extends Controller
             {
                 $oauthHandler->initOauthProvider('facebook');
             }
-
 
             if ($oauthHandler->grantAuthorisation())
             {
@@ -192,7 +206,17 @@ class UserManagementController extends Controller
                     $event = new InteractiveLoginEvent($request, $token);
                     $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
                     return $this->redirectToRoute('home');
-                }    
+                }
+                else
+                {
+                    $this->addFlash('flashError',"Les informations de connection ne correspondent pas");
+                    return $this->redirectToRoute('login'); 
+                }     
+            }
+            else
+            {
+                $this->addFlash('flashError',"Erreur d'authentification");
+                return $this->redirectToRoute('login'); 
             }      
         }
 

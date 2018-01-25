@@ -217,7 +217,6 @@ class OauthLoginHandler
 		{
 			$ticket = $this->oauthObject->verifyIdToken($this->token['id_token']);
 
-			
 			if ($ticket)
 			{
 				$userInfo = array(

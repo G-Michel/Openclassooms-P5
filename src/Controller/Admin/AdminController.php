@@ -10,6 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 
+use App\Repository\ObservationRepository;
+use App\Entity\Observation;	
+
+
 
 class AdminController extends Controller
 {
@@ -19,10 +23,17 @@ class AdminController extends Controller
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-	public function homePage()
+	public function homePage(Request $request)
 	{
-		
-        return $this->render('test/home.html.twig');
+		$user = $usr= $this->get("security.token_storage")->getToken()->getUser();
+		$obsRepository = $this->getDoctrine()->getRepository(Observation::Class);
+		$userObservations = $obsRepository->findByUser(5,$user->getUsername());
+		$observationsToValid=$obsRepository->findToValid(5);
+
+        return $this->render('admin/espacePersonnel.html.twig',array(
+        	'userObservations' => $userObservations,
+        	'obsToValid' => $observationsToValid
+        ));
   	}
 
 

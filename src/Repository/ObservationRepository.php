@@ -13,7 +13,7 @@ class ObservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Observation::class);
     }
 
-    public function findByStatus($limit)
+    public function findObservationsWithLimit($limit)
     {
         return $this->createQueryBuilder('o')
             ->leftJoin('o.user', 'o_u')

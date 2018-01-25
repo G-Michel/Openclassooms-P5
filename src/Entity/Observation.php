@@ -191,6 +191,13 @@ class Observation
 
         return $this;
     }
+    public function getStatusDefinition($status)
+    {
+        if ($status == 1) {
+            return 'En ligne';
+        }
+        return 'Validation en cours';
+    }
 
     /**
      * @return mixed

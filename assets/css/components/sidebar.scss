@@ -29,7 +29,11 @@
 
   .nav-link {
     border-radius: 0;
-    line-height: calc(56px - 16px);
+    line-height: 30px;
     text-align: center;
+    padding: 12px 12px;
+    svg,i {
+      vertical-align: middle
+    }
   }
 }

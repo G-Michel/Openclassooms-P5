@@ -1,0 +1,59 @@
+// Admin.scss
+// Include parts of Bootstrap
+//the ~ allows you to reference things in node_modules
+// Required
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import "~bootstrap/scss/mixins";
+@import 'utilities/variables';
+// Components
+@import 'components/table';
+
+.observation-preview ul {
+    > li:nth-of-type(1) .jumbotron{
+      background:linear-gradient(135deg, #af2ad2, #f52df1);
+    }
+    > li:nth-of-type(2) .jumbotron{
+      background:linear-gradient(135deg, #21d09a, #2cdbf3);
+    }
+    > li:nth-of-type(3) .jumbotron{
+      background:linear-gradient(135deg, #d3a22e, #f45326);
+    }
+    > li:nth-of-type(4) .jumbotron{
+      background:linear-gradient(135deg, #1e52d4, #506ae9);
+    }
+    .nav-item a {
+      padding:0;
+    }
+
+  .jumbotron {
+    position: relative;
+    padding: 3.5rem 0;
+    margin: 0;
+  }
+  .title {
+    color: $white;
+    text-align: center;
+    font-size: .9rem;
+  }
+  .lead {
+    color: $white;
+    position:absolute;
+    right:.7rem;
+    bottom:.7rem;
+    margin-bottom: 0;
+    line-height: 1;
+    text-align: right;
+    font-weight: 600;
+    font-size: 2.7rem;
+  }
+}
+.observation {
+  .title {
+    font-size: .8rem;
+    color:$gray-600;
+  }
+}
+#main-header {
+  margin-top: 2rem;
+}

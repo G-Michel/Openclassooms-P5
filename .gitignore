@@ -17,6 +17,7 @@
 ###< symfony/webpack-encore-pack ###
 
 ### delete after test  ###
+/assets/css/images/temp/*
 /public/*.svg
 
 ### delete after test  ###

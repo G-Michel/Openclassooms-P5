@@ -17,7 +17,7 @@ body {
 
 #home:before {
   content: '';
-  background: url('../images/home.jpeg') no-repeat fixed 0 0;
+  background: url('../images/home.jpg') no-repeat right bottom fixed ;
   background-size: cover;
   -webkit-filter: brightness(50%);
      -moz-filter: brightness(50%);
@@ -31,6 +31,77 @@ body {
   right: 0;
   z-index: -1;
 }
+#listingTaxref:before,
+#listingObservation:before,
+{
+  content: '';
+  background: url('../images/listing.jpg') no-repeat center fixed ;
+  background-size: cover;
+  -webkit-filter: brightness(50%);
+     -moz-filter: brightness(50%);
+      -ms-filter: brightness(50%);
+       -o-filter: brightness(50%);
+          filter: brightness(50%);
+  position: fixed;
+  top: 0;
+  bottom:0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+#contact:before {
+  content: '';
+  background: url('../images/contact.jpg') no-repeat center fixed ;
+  background-size: cover;
+  -webkit-filter: brightness(50%);
+     -moz-filter: brightness(50%);
+      -ms-filter: brightness(50%);
+       -o-filter: brightness(50%);
+          filter: brightness(50%);
+  position: fixed;
+  top: 0;
+  bottom:0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+#login:before {
+  content: '';
+  background: url('../images/login.jpg') no-repeat center fixed;
+  position: fixed;
+  background-size: cover;
+  -webkit-filter: brightness(50%);
+     -moz-filter: brightness(50%);
+      -ms-filter: brightness(50%);
+       -o-filter: brightness(50%);
+          filter: brightness(50%);
+  top: 0;
+  bottom:0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+/* Ratio exact */
+@media (aspect-ratio: 3/2) {
+  #login:before {
+    background: url('../images/3_2/login.jpg') no-repeat center fixed ;
+  }
+}
+@media (aspect-ratio: 4/3) {
+  #login:before {
+    background: url('../images/4_3/login.jpg') no-repeat center fixed ;
+  }
+}
+@media (aspect-ratio: 16/9) {
+  #login:before {
+    background: url('../images/16_9/login.jpg') no-repeat center fixed ;
+  }
+}
+@media (aspect-ratio: 16/10) {
+  #login:before {
+    background: url('../images/16_9/login.jpg') no-repeat center fixed ;
+  }
+}
 
 .main-row {
   @include media-breakpoint-up(lg) {
@@ -40,8 +111,8 @@ body {
 
 #home #main-left > div,
 #contact #main-left > div,
-#listingTaxref #main-left > div,
-#listingObservations #main-left > div
+#main_taxref_index #main-left > div
+#main_observation_index #main-left > div
 {
   @include media-breakpoint-up(lg) {
     position:fixed;

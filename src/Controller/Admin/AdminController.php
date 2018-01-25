@@ -2,6 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Observation;
+use App\Form\ObservationType;
+use App\Repository\ObservationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,17 +17,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class AdminController extends Controller
 {
 
-    /**
-     * @Route("/admin/", name="admin_home")
-     * @Method("GET")
-     * @Cache(smaxage="10")
-     */
-	public function homePage()
+  /**
+   * @Route("/admin/", name="admin_home")
+   * @Method("GET")
+   */
+	public function homePage(ObservationRepository $observation)
 	{
-		
-        return $this->render('test/home.html.twig');
-  	}
-
-
+    return new Response("<html><head></head><body>Administration home</body></html>");
+  }
 
 }

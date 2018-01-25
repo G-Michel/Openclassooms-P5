@@ -39,7 +39,7 @@
               <td>
                 <i class="fa fa-circle fa-fw {% if post.status == 1 %} text-primary{% else %}text-warning{% endif %} "></i>{{ post.statusDefinition(post.status) }}
               </td>
-              <td class="text-right"><a href="{{ path('showObservation',{ id: post.id }) }}"><i class="fa fa-eye"></i></a></td>
+              <td class="text-right"><a href="{{ path('observation_show',{ id: post.id }) }}"><i class="fa fa-eye"></i></a></td>
               <td class="text-right"><a href="{{ path('admin_observation_edit',{ id: post.id }) }}"><i class="fa fa-pencil"></i></a></td>
             {% endif %}
           </tr>

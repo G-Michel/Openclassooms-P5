@@ -1,25 +1,5 @@
-{% extends 'admin/layout.html.twig' %}
+{% extends "admin/observation/new.html.twig" %}
 
-{% block title %}Editer l'observation - {{parent()}}{% endblock %}
+{% block title %}Editer l'observation - Administration{% endblock %}
 {% block body_id route %}
 {% block main_id %}main_{{route}}{% endblock %}
-
-{% block main_header %}
-  <div id="main-header" class="row observation-preview">
-    <ul class="nav justify-content-center w-100" id="myTab" role="tablist" >
-      <li class="nav-item col">
-        <a class="nav-link active" id="all-tab" data-toggle="tab" href="#allObs" role="tab" aria-controls="allObs" aria-selected="true">
-          <div class="jumbotron">
-              <h2 class="title">Edition de l'observation</h2>
-              <p class="lead">{{post.id}}</p>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-{% endblock %}
-
-{% block main_content %}
-    <!-- Toute les observation de l'utilisateur -->
-    {{ include('test/_form.html.twig') }}
-{% endblock %}

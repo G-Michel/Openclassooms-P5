@@ -224,7 +224,7 @@ class ObservationController extends Controller
         return $this->redirectToRoute('admin_observation_index');
       }
 
-      return $this->render('admin_observation_index.html.twig',[
+      return $this->render('admin/observation/edit.html.twig',[
         'form' => $form->createView(),
         'options' => $options
       ]);

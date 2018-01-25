@@ -3,9 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        {% block jsfirst %}{% endblock %}
         <link rel="stylesheet" href="{{ asset('build/css/app.css')}}">
+        {% block stylesheets %}{% endblock %}
     </head>
     <style>
         svg.logo {
@@ -13,18 +12,20 @@
             color:#fff;
         }
     </style>
-    <body>
-        {%set route = app.request.attributes.get('_route') %}
+    {%set route = app.request.attributes.get('_route') %}
+    <body id="{% block body_id %}{% endblock %}">
         {{ include('partials/horizontalNav.html.twig') }}
         <div class="container-fluid">
             <div class="row">
                 {{ include('partials/verticalNav.html.twig') }}
-                <main id="{{route}}" role="main" class="main">
+                <main id="{% block main_id %}{% endblock %}" role="main" class="main">
                     <div class="container-fluid">
-                        <div class="row main-row">
-                            {% block mainLeft %}{% endblock %}
-                            {% block mainRight %}{% endblock %}
-                        </div>
+                        {% block body %}
+                            <div class="row main-row">
+                                {% block mainLeft %}{% endblock %}
+                                {% block mainRight %}{% endblock %}
+                            </div>
+                        {% endblock %}
                     </div>
                 </main>
             </div>
@@ -36,7 +37,7 @@
         <script src="{{ asset('lib/moment/locales.min.js')}}"></script>
         <script src="{{ asset('build/js/app.js')}}"></script>
         <script type="text/javascript">
-        function onSignIn(googleUser) 
+        function onSignIn(googleUser)
         {
             var profile = googleUser.getBasicProfile();
             console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.

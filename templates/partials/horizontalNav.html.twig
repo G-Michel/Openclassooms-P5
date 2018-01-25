@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark p-0">
     <a class="navbar-brand" href="#">
-        <svg class="logo" height="46" width="75" ><use xlink:href="{{ asset('images/logo.svg#symbol')}}"></svg>
+        <svg class="logo" height="51" width="75" ><use xlink:href="{{ asset('images/icons/sprite.svg#logo')}}"></svg>
     </a>
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       {% if is_granted('ROLE_USER') %}
@@ -30,27 +30,27 @@
           <li class="nav-item nav-notification">
             <a class="nav-link dropdown" href="#" id="dropdownMenuNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">notifications</i>
-              {% if route != "observe_step_1" and
-                    route != "observe_step_2" and
-                    route != "observe_step_3" and
-                    route != "observe_step_4" and
+              {% if route != "observation_new_step_1" and
+                    route != "observation_new_step_2" and
+                    route != "observation_new_step_3" and
+                    route != "observation_new_step_4" and
                     app.session.get('step')
               %}
                 <span class="badge badge-notify">1</span>
               {% endif %}
             </a>
-            {% if route != "observe_step_1" and
-                  route != "observe_step_2" and
-                  route != "observe_step_3" and
-                  route != "observe_step_4" and
+            {% if route != "observation_new_step_1" and
+                  route != "observation_new_step_2" and
+                  route != "observation_new_step_3" and
+                  route != "observation_new_step_4" and
                   app.session.get('step')
             %}
-            {% set pathStep = "observe_step_"~app.session.get('step') %}
+            {% set pathStep = "observation_new_step_"~app.session.get('step') %}
               <div class="dropdown-menu dropdown-notification dropdown-menu-right" aria-labelledby="dropdownMenuNotification" >
                 <h6 class="dropdown-header">Une nouvelle observation est en cours</h6>
                 <a href="{{ path(pathStep) }}" class="dropdown-item">Retourner à la saisie</a>
                 <div class="dropdown-divider"></div>
-                <a href="{{ path('observe_action', {'action':'above'}) }}" class="text-danger dropdown-item">
+                <a href="{{ path('observation_cancel', {'redirectTo':route}) }}" class="text-danger dropdown-item">
                   Annuler l'observation
                 </a>
 
@@ -59,7 +59,11 @@
           </li>
         {% endif %}
         <li class="nav-item">
-          <a class="nav-link {% if route == 'observe_first_step' %}active{% endif %}" href="{{ path('observe_step_1') }}"><i class="material-icons">add_box</i></a>
+          <a class="nav-link active" href="{{ path('observation_new') }}">
+            <svg class="nav-icons"  >
+                <use xlink:href="{{ asset('images/icons/sprite.svg#dove')}}">
+            </svg>
+          </a>
         </li>
         {% if not is_granted('ROLE_USER') %}
           <li class="nav-item">

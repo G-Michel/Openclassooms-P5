@@ -5,7 +5,7 @@
   {% set backgroundTable = '' %}
   {% set btnColor = 'btn-secondary' %}
     <div class="card-image">
-      <a href="{{ path('showObservation', {id: post.id}) }}"> <img class="img" src="{{ post.bird.taxref.picture.url }}" alt="{{ post.bird.taxref.picture.alt }}"> </a>
+      <a href="{{ path('observation_show', {id: post.id}) }}"> <img class="img" src="{{ post.bird.taxref.picture.url }}" alt="{{ post.bird.taxref.picture.alt }}"> </a>
     </div>
   {% else %}
     {% set backgroundTable = random(['table-info', 'table-danger','','','','','']) %}
@@ -18,7 +18,7 @@
   <div class="table {{ backgroundTable }}">
     <h6 class="category text-secondary">{{ post.bird.taxref.reignType }} {{ post.bird.taxref.frType }} {{ post.status }}</h6>
     <h4 class="card-caption">
-      <a href="{{ path('showObservation', {id: post.id}) }}">{{ post.bird.taxref.nomValideType }}</a>
+      <a href="{{ path('observation_show', {id: post.id}) }}">{{ post.bird.taxref.nomValideType }}</a>
     </h4>
     <div class="card-description">
       {{ post.bird.taxref.nomVernType }}

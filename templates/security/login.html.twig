@@ -1,6 +1,8 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Test Login - {{parent()}}{% endblock %}
+{% block title %}Login - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 

@@ -8,7 +8,7 @@
       //alert("Dommage... Votre navigateur ne prend pas en compte la géolocalisation HTML5");
 
       // include style map
-      {{ include('components/styled_map.html.twig') }}
+      {{ include('components/apiMap/_styled_map.html.twig') }}
 
       // define some values
       {% if app.session.get('observation') %}
@@ -51,7 +51,9 @@
       map.mapTypes.set('styled_map', styledMapType);
       map.setMapTypeId('styled_map');
 
-      {% if app.session.get('step') != 1 %}
+      {% if app.session.get('step') != 1
+         and options.form.action|default(false) != 'edit'
+      %}
         map.setOptions({
           draggable:false
         })
@@ -82,14 +84,21 @@
       google.maps.event.addListener(marker,'dragend',function() {
         geocodeLatLng(geocoder, map, marker);
       })
-      {% if app.session.get('step') == 1 %}
-      // Listen when user whrite address and press on key Enter (keyCode 13)
-      document.getElementById('observe_bird_location_location_address').addEventListener('keypress', function(e) {
-        if(e.keyCode == '13') {
-          e.preventDefault()
-          geocodeAddress(geocoder, map, marker);
-        }
-      });
+      {% if app.session.get('step') == 1
+         or options.form.action|default(false) == 'edit'
+      %}
+        // Listen when user whrite address and press on key Enter (keyCode 13)
+        {% if options.form.action|default(false) == 'edit' %}
+          var inputAdress = document.getElementById('observation_location_address');
+        {% else %}
+          inputAdress = document.getElementById('observe_bird_location_location_address');
+        {% endif %}
+        inputAdress.addEventListener('keypress', function(e) {
+          if(e.keyCode == '13') {
+            e.preventDefault()
+            geocodeAddress(geocoder, map, marker);
+          }
+        });
       {% endif %}
 
     }
@@ -100,7 +109,11 @@
 
     // Geocode => Search Lat and Lng with only address
     function geocodeAddress(geocoder, resultsMap, resultMarker) {
-      var address = document.getElementById('observe_bird_location_location_address').value;
+      {% if options.form.action|default(false) == 'edit' %}
+        var address = document.getElementById('observation_location_address').value;
+      {% else %}
+       address = document.getElementById('observe_bird_location_location_address').value;
+      {% endif %}
       geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
           resultsMap.setZoom(11);
@@ -115,8 +128,14 @@
 
     // Geocode => Search Address with only lat and lng
     function geocodeLatLng(geocoder, resultsMap, resultMarker) {
-      var lng = document.getElementById('observe_bird_location_location_gpsX').value;
-      var lat = document.getElementById('observe_bird_location_location_gpsY').value;
+
+      {% if options.form.action|default(false) == 'edit' %}
+        var lng = document.getElementById('observation_location_gpsX').value;
+        var lat = document.getElementById('observation_location_gpsY').value;
+      {% else %}
+         lng = document.getElementById('observe_bird_location_location_gpsX').value;
+         lat = document.getElementById('observe_bird_location_location_gpsY').value;
+      {% endif %}
       var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
       geocoder.geocode({'location': latlng}, function(results, status) {
         if (status === 'OK') {
@@ -137,14 +156,27 @@
     // Update lat and lng in form input
     function setPosition(marker) {
       var position = marker.getPosition();
-      document.getElementById('observe_bird_location_location_gpsX').value = position.lng()
-      document.getElementById('observe_bird_location_location_gpsY').value = position.lat()
+
+      {% if options.form.action|default(false) == 'edit' %}
+        var lng = document.getElementById('observation_location_gpsX');
+        var lat = document.getElementById('observation_location_gpsY');
+      {% else %}
+        lng = document.getElementById('observe_bird_location_location_gpsX');
+        lat = document.getElementById('observe_bird_location_location_gpsY');
+      {% endif %}
+      lng.value = position.lng()
+      lat.value = position.lat()
     }
 
     // Update address in form input
     function setAddress(address) {
-      var address = address;
-      document.getElementById('observe_bird_location_location_address').value = address
+      {% if options.form.action|default(false) == 'edit' %}
+        var oldAddress = document.getElementById('observation_location_address');
+      {% else %}
+       oldAddress = document.getElementById('observe_bird_location_location_address');
+      {% endif %}
+      var newAddress = address;
+      oldAddress.value = newAddress
     }
 
 

@@ -3,7 +3,7 @@
   {% set backgroundTable = '' %}
   {% set btnColor = 'btn-secondary' %}
     <div class="card-image">
-      <a href="{{ path('showTaxref', {slug: post.slug}) }}"> <img class="img" src="{{ post.picture.url }}" alt="{{ post.picture.alt }}"> </a>
+      <a href="{{ path('taxref_show', {slug: post.slug}) }}"> <img class="img" src="{{ post.picture.url }}" alt="{{ post.picture.alt }}"> </a>
     </div>
   {% else %}
     {% set backgroundTable = random(['table-info', 'table-danger','','','','','']) %}
@@ -16,14 +16,14 @@
   <div class="table {{ backgroundTable }}">
     <h6 class="category text-secondary">{{ post.reignType }} {{ post.frType }}</h6>
     <h4 class="card-caption">
-      <a href="{{ path('showTaxref', {slug: post.slug}) }}">{{ post.nomValideType }}</a>
+      <a href="{{ path('taxref_show', {slug: post.slug}) }}">{{ post.nomValideType }}</a>
     </h4>
     <div class="card-description">{{ post.nomVernType }}</div>
     <div class="ftr text-center">
       {% if include_id_btn|default(false) %}
-        <a href="{{ path('observe_step_4_id', {id: post.id|round}) }}" class="btn {{ btnColor }} btn-round">c'est mon oiseau</a>
+        <a href="{{ path('observation_new_step_4', {id: post.id|round}) }}" class="btn {{ btnColor }} btn-round">c'est mon oiseau</a>
       {% endif %}
-      <a href="{{ path('showTaxref', {slug: post.slug}) }}" class="btn {{ btnColor }} btn-round">Détails</a>
+      <a href="{{ path('taxref_show', {slug: post.slug}) }}" class="btn {{ btnColor }} btn-round">Détails</a>
       {# <button type="button" rel="tooltip" title="" class="btn btn-just-icon btn-simple btn-rose" data-original-title="Saved to Wishlist"><i class="material-icons">search</i></button> #}
     </div>
   </div>

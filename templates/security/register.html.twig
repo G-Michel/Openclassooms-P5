@@ -2,7 +2,9 @@
 
 {% extends "base.html.twig" %}
 
-{% block title %}Test Login - {{parent()}}{% endblock %}
+{% block title %}Inscription - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
@@ -16,7 +18,7 @@
 {% endblock %}
 
 {% block mainRight %}
-	
+
   	<div class="col col-md-6 offset-md-4 offset-lg-5">
     	<div class="login-form">
         	<div class="form">
@@ -32,7 +34,7 @@
           {% if facebookRegister is defined %}
             <p><a href="{{facebookRegister|raw }}">S'inscrire avec fessbouk</a></p>
           {% endif %}
-        	{{ form_start(form) }} 
+        	{{ form_start(form) }}
     				{{ form_widget(form) }}
     				<button type="submit" class="btn btn-primary">S'inscrire</button>
   				{{ form_end(form) }}

@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title%}NAO - Editer mon profil{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block mainLeft %}
+
+<div class="row">
+	<div class="d-flex justify-content-around flex-wrap">
+		<div class="col-md-7">
+			<div class="row">
+				<h1 class="text-white display-4">Mon profil</h1>
+				<p class="text-primary lead">Editer vos informations personnelles</p>
+			</div>
+
+		</div>
+	</div>
+	<div class="text-white col-md-5">
+		<h3>Ma photo de profil</h3>
+		<p><img height="150px"src="{{ app.user.getPicture().getUrl()}}"></p>
+		<p><button class="btn btn-primary">éditer ma photo de profil</button></p>
+		<h3>Adresse mail</h3>
+		<p>
+			{{app.user.getMail()}}
+			<button class="btn btn-primary">éditer mon addresse mail</button>
+		</p>
+		<h3>Mot de passe</h3>
+		<p><button class="btn btn-primary">changer mon mot de passe</button>
+		</p>
+		<p><button class="btn btn-primary">changer mon nom</button></p>
+		<p><button class="btn btn-primary">changer mon prénom</button></p>
+	</div>
+</div>
+
+
+
+{% endblock %}

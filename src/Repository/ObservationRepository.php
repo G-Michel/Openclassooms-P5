@@ -33,4 +33,29 @@ class ObservationRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+        public function findByUser($limit,$username)
+    {
+        return $this->createQueryBuilder('o')
+            ->leftJoin('o.user','u')
+            ->where('u.username = :username')
+            ->setParameter('username',$username)
+            ->orderBy('o.dateAdd', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+        public function findToValid($limit)
+    {
+        return $this->createQueryBuilder('o')
+            ->where('o.status = 0')
+            ->orderBy('o.dateAdd', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }

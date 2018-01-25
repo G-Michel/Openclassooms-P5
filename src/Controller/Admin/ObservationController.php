@@ -4,15 +4,18 @@ namespace App\Controller\Admin;
 
 use App\Entity\Observation;
 use App\Form\ObservationType;
+use App\Form\ObserveBirdDetailType;
+use App\Form\ObserveBirdMomentType;
+use App\Form\ObserveBirdLocationType;
 use App\Repository\TaxrefRepository;
 use App\Repository\ObservationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
@@ -69,7 +72,7 @@ class ObservationController extends Controller
             return $this->redirectToRoute('observation_new_step_2');
         }
 
-        return $this->render('observation/new.html.twig', [
+        return $this->render('admin/observation/new.html.twig', [
             'options' => $options,
             'form' => $form->createView(),
         ]);
@@ -102,7 +105,7 @@ class ObservationController extends Controller
             return $this->redirectToRoute('observation_new_step_3');
         }
 
-        return $this->render('observation/new.html.twig', [
+        return $this->render('admin/observation/new.html.twig', [
             'options' => $options,
             'form' => $form->createView(),
         ]);
@@ -140,10 +143,10 @@ class ObservationController extends Controller
             $session->set('obsId', $observation->getId());
             $session->remove('observation');
 
-            return $this->forward('App\Controller\ObservationController::stepFor');
+            return $this->forward('App\Controller\Admin\ObservationController::stepFor');
         }
 
-        return $this->render('observation/new.html.twig', [
+        return $this->render('admin/observation/new.html.twig', [
             'options' => $options,
             'form' => $form->createView(),
         ]);
@@ -186,7 +189,7 @@ class ObservationController extends Controller
                     "address" => $observation->getLocation()->getAddress()
                 ]
             ];
-            return $this->render('observation/new.html.twig', compact('posts', 'options'));
+            return $this->render('admin/observation/new.html.twig', compact('posts', 'options'));
 
         }
 
@@ -237,7 +240,7 @@ class ObservationController extends Controller
     {
         $session->remove('observation');
         $session->remove('step');
-        return $this->redirectToRoute($redirect);
+        return $this->redirectToRoute($redirectTo);
     }
 
 

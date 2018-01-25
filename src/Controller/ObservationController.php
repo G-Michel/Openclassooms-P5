@@ -3,10 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Observation;
-use App\Form\ObserveBirdDetailType;
-use App\Form\ObserveBirdMomentType;
 use App\Repository\TaxrefRepository;
-use App\Form\ObserveBirdLocationType;
 use App\Repository\ObservationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

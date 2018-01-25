@@ -102,6 +102,7 @@ class ObservationController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $session->set('observation', $observation);
             return $this->redirectToRoute('observation_new_step_3');
         }
 
@@ -136,7 +137,6 @@ class ObservationController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($observation);
             $em->flush();

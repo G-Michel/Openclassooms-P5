@@ -1,5 +1,9 @@
 {% extends 'admin/layout.html.twig' %}
 
+{% block title %}Editer l'observation - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
 {% block main_header %}
   <div id="main-header" class="row observation-preview">
     <ul class="nav justify-content-center w-100" id="myTab" role="tablist" >

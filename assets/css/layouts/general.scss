@@ -15,7 +15,7 @@ body {
 //
 // Custom background img
 
-#home:before {
+#main_home:before {
   content: '';
   background: url('../images/home.jpg') no-repeat right bottom fixed ;
   background-size: cover;
@@ -31,8 +31,8 @@ body {
   right: 0;
   z-index: -1;
 }
-#listingTaxref:before,
-#listingObservation:before,
+#main_taxref_index:before,
+#main_observation_index:before,
 {
   content: '';
   background: url('../images/listing.jpg') no-repeat center fixed ;
@@ -49,7 +49,7 @@ body {
   right: 0;
   z-index: -1;
 }
-#contact:before {
+#main_contact:before {
   content: '';
   background: url('../images/contact.jpg') no-repeat center fixed ;
   background-size: cover;
@@ -65,7 +65,7 @@ body {
   right: 0;
   z-index: -1;
 }
-#login:before {
+#main_login:before {
   content: '';
   background: url('../images/login.jpg') no-repeat center fixed;
   position: fixed;
@@ -83,22 +83,22 @@ body {
 }
 /* Ratio exact */
 @media (aspect-ratio: 3/2) {
-  #login:before {
+  #main_login:before {
     background: url('../images/3_2/login.jpg') no-repeat center fixed ;
   }
 }
 @media (aspect-ratio: 4/3) {
-  #login:before {
+  #main_login:before {
     background: url('../images/4_3/login.jpg') no-repeat center fixed ;
   }
 }
 @media (aspect-ratio: 16/9) {
-  #login:before {
+  #main_login:before {
     background: url('../images/16_9/login.jpg') no-repeat center fixed ;
   }
 }
 @media (aspect-ratio: 16/10) {
-  #login:before {
+  #main_login:before {
     background: url('../images/16_9/login.jpg') no-repeat center fixed ;
   }
 }
@@ -109,9 +109,9 @@ body {
   }
 }
 
-#home #main-left > div,
-#contact #main-left > div,
-#main_taxref_index #main-left > div
+#main_home #main-left > div,
+#main_contact #main-left > div,
+#main_taxref_index #main-left > div,
 #main_observation_index #main-left > div
 {
   @include media-breakpoint-up(lg) {

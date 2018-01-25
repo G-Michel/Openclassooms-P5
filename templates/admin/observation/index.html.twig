@@ -1,6 +1,8 @@
 {% extends 'admin/layout.html.twig' %}
 
+{% block title %}Liste des observations - {{parent()}}{% endblock %}
 {% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
 
 {% block main_header %}
   <div id="main-header" class="row observation-preview">

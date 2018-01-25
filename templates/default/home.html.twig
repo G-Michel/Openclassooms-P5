@@ -1,6 +1,8 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Test Home - {{parent()}}{% endblock %}
+{% block title %}Accueil - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
 
 {% block stylesheets %}{% endblock %}
 
@@ -24,12 +26,12 @@
                         style="background-image: url('http://adamthemes.com/demo/code/cards/images/blog07.jpeg')">
                         <div class="table">
                             <h6 class="category text-info">Taxref</h6>
-                            <a href="{{ path('listingTaxref') }}">
+                            <a href="{{ path('taxref_index') }}">
                                 <h3 class="card-caption">Le référentiel taxonomique taxref</h3>
                             </a>
                             <p class="card-description"> Découvrez l'ensemble des oiseaux référencé par la taxref</p>
-                            <!-- <a href="{{ path('listingTaxref') }}" class="btn btn-white btn-simple"> <i class="fa fa-align-left"></i> Read Article </a> -->
-                            <a href="{{ path('listingTaxref') }}" class="btn btn-warning btn-round"> <i class="fa fa-cogs"></i> Accéder
+                            <!-- <a href="{{ path('taxref_index') }}" class="btn btn-white btn-simple"> <i class="fa fa-align-left"></i> Read Article </a> -->
+                            <a href="{{ path('taxref_index') }}" class="btn btn-warning btn-round"> <i class="fa fa-cogs"></i> Accéder
                                 <div class="ripple-container"></div>
                             </a>
                         </div>

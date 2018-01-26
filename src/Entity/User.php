@@ -69,7 +69,9 @@ class User implements UserInterface, AdvancedUserInterface
     private $password;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *      groups = {"signUp"}
+     * )
      * @Assert\Type(
      *      type    = "string",
      *      message = "Vous devez saisir une chaine de caractère"

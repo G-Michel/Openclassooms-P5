@@ -10,18 +10,18 @@
     <div class=" col-lg-3 col-xl-3 h-75">
         <div class="row no-gutters"> 
             <h2 class="text-white display-4">Espace personnel</h2>
-            <p class="text-primary lead">Vous pouvez accéder aux fonctionalités clés du site</p> 
+            <p class="text-primary lead">Vous pouvez accéder aux fonctionnalités clés du site</p> 
             <div class="col-sm-12">
-                <div><a class="btn btn-block btn-primary text-muted" href="">Voir mes Observations</a></div>
-                <div><a class="btn btn-block btn-primary text-muted " href="">Ajouter une observation</a></div>
-                <div><a class="btn btn-block btn-primary text-muted " href="{{path('edit_profil')}}">Editer mon profil</a></div>
+                <div><a class="btn btn-block btn-primary text-muted" href="{{path('admin_observation_index')}}">Voir mes Observations</a></div>
+                <div><a class="btn btn-block btn-primary text-muted" href="">Ajouter une observation</a></div>
+                <div><a class="btn btn-block btn-primary text-muted" href="{{path('edit_profil')}}">Editer mon profil</a></div>
             </div>  
         </div>        
     </div>
     
     <div class=' col-lg-7 col-xl-7 h-75 '>
         
-        <ul class="nav nav-tabs " role="tablist">
+        <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" href="#lastObs" role="tab" data-toggle="tab">Mes dernières observations</a>
             </li>
@@ -46,7 +46,7 @@
                     {% for observation in userObservations %}
                         <tr class="text-white">
                             <td>
-                                <a href="{{ path('showObservation', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()}}</a>
+                                <a href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()}}</a>
                             </td>
                             <td>
                                 {{observation.getDateAdd().format('d-M-Y')}}
@@ -54,7 +54,7 @@
                             <td>
                                 {% set location =  observation.getLocation().getAddress() |split(',',2) %}
                                 
-                                <a href="{{ path('showObservation', {id: observation.getId()}) }}">{{location[1]}}</a>        
+                                <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{location[1]}}</a>        
                             </td>
                             <td>
                                 {% if observation.getStatus() == 1 %}
@@ -64,7 +64,7 @@
                                 {% endif %}
 
                             </td>
-                            <th><a href="{{ path('showObservation', {id: observation.getId()}) }}">voir</a></th>
+                            <th><a href="{{ path('observation_show', {id: observation.getId()}) }}">voir</a></th>
                             <th><a href="">supprimer</a></th>
                         </tr>
                     {% endfor %}
@@ -84,12 +84,12 @@
                         {% for observation in obsToValid %}
                             <tr class="text-white">
                                 <td>
-                                    <a href="{{ path('showObservation', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()}}</a>
+                                    <a href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()}}</a>
                                 </td>
                                 <td>{{observation.getDateAdd().format('d-M-Y')}}</td>
                                 <td>
                                     {% set location =  observation.getLocation().getAddress() |split(',',2) %}
-                                    <a href="{{ path('showObservation', {id: observation.getId()}) }}">{{location[1]}}</a>
+                                    <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{location[1]}}</a>
                                 </td>
                                 <td>{{observation.getUser().getUsername}}</td>
                                 <th><a href="">valider</a></th>

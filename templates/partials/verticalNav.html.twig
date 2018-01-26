@@ -1,24 +1,31 @@
-<nav class="bg-dark sidebar">
-    <ul class="nav nav-pills flex-column">
+<nav class="bg-dark sidebar d-flex flex-column justify-content-center">
+    <ul class="nav nav-pills flex-column justify-content-around h-75">
         <li class="nav-item">
             <a class="nav-link {% if route == 'home' %}active{% endif %}" href="{{ path('home') }}">
-                <i class="material-icons">home</i>
-                <span class="sr-only">(current)</span>
+                <svg class="nav-icons" >
+                    <use xlink:href="{{ asset('images/icons/sprite.svg#home')}}">
+                </svg>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if route == 'listingTaxref' or route == 'showTaxref' %}active{% endif %}" href="{{ path('listingTaxref') }}">
-                <i class="material-icons">view_list</i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {% if route == 'listingObservations' or route == 'showObservation' %}active{% endif %}" href="{{ path('listingObservations') }}">
-                <i class="material-icons">person</i>
+            <a class="nav-link {% if route == 'taxref_index' or route == 'taxref_show' %}active{% endif %}" href="{{ path('taxref_index') }}">
+                <svg class="nav-icons" >
+                    <use xlink:href="{{ asset('images/icons/sprite.svg#dove')}}">
+                </svg>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link {% if route == 'contact' %}active{% endif %}" href="{{ path('contact') }}">
-                <i class="material-icons">email</i>
+                <svg class="nav-icons" >
+                    <use xlink:href="{{ asset('images/icons/sprite.svg#contact')}}">
+                </svg>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if route == 'observation_index' or route == 'observation_show' %}active{% endif %}" href="{{ path('observation_index') }}">
+                <svg class="nav-icons" >
+                    <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
+                </svg>
             </a>
         </li>
     </ul>

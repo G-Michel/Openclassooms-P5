@@ -6,33 +6,92 @@
 
 {% block mainLeft %}
 
-<div class="row">
-	<div class="d-flex justify-content-around flex-wrap">
-		<div class="col-md-7">
-			<div class="row">
-				<h1 class="text-white display-4">Mon profil</h1>
-				<p class="text-primary lead">Editer vos informations personnelles</p>
-			</div>
+<div class='row no-gutters'>
+    <div class="d-flex justify-content-around align-items-md-center flex-wrap">
+    <div class=" col-lg-3 col-xl-3 h-50">
+        <div class="row no-gutters"> 
+            <h2 class="text-white display-4">Mon profil</h2>
+            <p class="text-primary lead">Editez vos informations personnelles</p> 
+            <div class="col-sm-12">
+               
+            </div>  
+        </div>        
+    </div>
+    
+    <div class=' col-lg-9 col-xl-9  text-white '>
+    	<h2 class="text-warning">Vos informations</h2><br/>
+    	<table class="table">
+	    	<tr>
+	    		<td><h3>Photo de profil</h3></td>
+	    		<td >
+	    		<div class="invisible form_picture_class">
+	    			{{ form_start(forms['picture']) }}
+					{{ form_widget(forms['picture'].file) }}
+					{{ form_widget(forms['picture'].alt,{ 'value': 'profil', 'attr': {'class': 'invisible'} }) }}
+					{{ form_errors(forms['picture']) }}
+					{{ form_end(forms['picture']) }}
+				</div>
+				</td>
+	    		<td class=""><img height="150px"src="{{ app.user.getPicture().getUrl()}}"></td>
+	    		<td class="text-primary form_picture_button">éditer</td>
+	    	</tr>
+	    	<tr>
+	    		<td><h3>Adresse mail</h3></td>
+	    		<td>
+	    		<div class="invisible form_email_class">
+	    			{{ form_start(forms['email']) }}
+					{{ form_widget(forms['email'].mail) }}
+					{{ form_end(forms['email']) }}
+				</div>
+				</td>
+	    		<td>{{app.user.getMail()}}</td>
+	    		<td class="text-primary form_email_button">éditer</td>
 
-		</div>
-	</div>
-	<div class="text-white col-md-5">
-		<h3>Ma photo de profil</h3>
-		<p><img height="150px"src="{{ app.user.getPicture().getUrl()}}"></p>
-		<p><button class="btn btn-primary">éditer ma photo de profil</button></p>
-		<h3>Adresse mail</h3>
-		<p>
-			{{app.user.getMail()}}
-			<button class="btn btn-primary">éditer mon addresse mail</button>
-		</p>
-		<h3>Mot de passe</h3>
-		<p><button class="btn btn-primary">changer mon mot de passe</button>
-		</p>
-		<p><button class="btn btn-primary">changer mon nom</button></p>
-		<p><button class="btn btn-primary">changer mon prénom</button></p>
-	</div>
+	    	</tr>
+	    	<tr>
+	    		<td><h3>Mot de passe</h3></td>
+	    		<td>
+	    		<div class="invisible form_password_class">
+	    			{{ form_start(forms['password']) }}
+					{{ form_widget(forms['password'].plainPassword.first,{ 'attr': {'placeholder': 'Entrez votre mot de passe'} }) }}<br/>
+					{{ form_widget(forms['password'].plainPassword.second,{ 'attr': {'placeholder': 'Repetez votre mot de passe'} }) }}
+					{{ form_end(forms['password']) }}
+				</div>
+	    		</td>
+	    		<td></td>
+	    		<td class="text-primary form_password_button">éditer</td>
+	    	</tr>
+	    	<tr>
+	    		<td><h3>Nom</h3></td>
+	    		<td>
+	    		<div class="invisible form_name_class">
+	    			{{ form_start(forms['name']) }}
+					{{ form_widget(forms['name'].name) }}
+					{{ form_end(forms['name']) }}
+				</div>
+	    		</td>
+	    		<td>{{app.user.getName()}}</td>
+	    		<td class="text-primary form_name_button">éditer</td>
+	    	</tr>
+	    	<tr>
+	    		<td><h3>prenom</h3></td>
+	    		<td>
+	    		<div class="invisible form_surname_class">
+	    			{{ form_start(forms['surname']) }}
+					{{ form_widget(forms['surname'].surname) }}
+					{{ form_end(forms['surname']) }}
+				</div>
+	    		</td>
+	    		<td>{{app.user.getSurname()}}</td>
+	    		<td class="text-primary form_surname_button">éditer</td>
+	    	</tr>
+    	</table>
+       
+    </div>
+    </div>
+
 </div>
-
-
-
+{% block java_per_pages %}	
+ 	
+{% endblock %}
 {% endblock %}

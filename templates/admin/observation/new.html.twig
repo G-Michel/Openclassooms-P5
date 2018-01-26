@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Ajout observation - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
+{% block mainLeft %}
+    <div id="main-left" class="col-lg-5 col-xl-4">
+        <div class="d-flex flex-column">
+            <div class=" mt-auto mb-auto">
+                <h1 class="text-white display-3">{{ options.page.title|default("Nouvelle Observation") }}</h1>
+                <p class="text-primary lead">{{ options.page.subtitle }}</p>
+            </div>
+
+            <div class="wrapper" style="height:60vh;overflow-y:scroll;">
+                {% if app.session.get('step') != 4 %}
+                    {{ include('admin/observation/_form.html.twig', {
+                        form: form,
+                        button_label: options.form.button_label|default('étape suivante'),
+                        include_back_btn: options.form.include_back_btn,
+                        back_btn_label: options.form.back_btn_label|default('étape précédente'),
+                        back_btn_path: options.form.back_btn_path,
+                    }, with_context = false) }}
+                {% else %}
+                    {% for post in posts %}
+                    {{ include('components/cards/taxref.html.twig', {
+                        include_id_btn: true,
+                    }) }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block mainRight %}
+    <div class="col-lg-7 col-xl-8 p-0"><div id="map"></div></div>
+    {{ include('components/apiMap/observation_new.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
+    </script>
+{% endblock %}

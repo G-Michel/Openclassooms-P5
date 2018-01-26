@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Observations - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
+{% block mainLeft %}
+  <div id="main-left" class="col-lg-4 col-xl-3">
+      <div class="d-flex">
+          <div class="container mt-auto mb-auto">
+              <h1 class="text-white display-3">Observations</h1>
+              <p class="text-primary lead">L'ensemble des observations effectuées pas nos membres</p>
+          </div>
+      </div>
+  </div>
+{% endblock %}
+
+{% block mainRight %}
+  <div id="main-right" class="col-lg-8 col-xl-9 mt-3">
+    <div class="container">
+      <div id="listingTaxref" class="card-columns p-3">
+        {% for post in posts %}
+          {{ include('components/cards/observation.html.twig') }}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

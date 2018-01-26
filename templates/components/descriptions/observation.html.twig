@@ -1,0 +1,30 @@
+<div class="d-flex flex-column detail-description">
+  {% if observation.comment %}
+    <h3 class="title">Commentaire</h3>
+    <div class="content d-flex"><p>{{observation.comment}}</p></div>
+  {% endif %}
+  <h3 class="title">Caractéristiques observées</h3>
+  <div class="content row align-items-start">
+    <h4 class="subtitle col-5">Où se trouvait l'oiseau</h4>
+    <p class=" pl-3 m-0 col-7">: {{observation.bird.birdLocation|default('')}}</p>
+    <h4 class="subtitle col-5">Taille de l'oiseau</h4>
+    <p class=" pl-3 m-0 col-7">: {{observation.bird.birdSize}}</p>
+    <h4 class="subtitle col-5">Couleurs principales</h4>
+    <p class=" pl-3 m-0 col-7">: {{observation.bird.birdColorsToString}}</p>
+    <h4 class="subtitle col-5">Nombre observé</h4>
+    <p class=" pl-3 m-0 col-7">: {{observation.bird.birdNumber}}</p>
+  </div>
+  {% if observation.picture %}
+    <h3 class="title mt-4">Clichés sur le vif</h3>
+    <div class="card-image">
+      <img class="img w-100"
+            src="{{ asset( observation.picture.webPath('hd')) }}"
+            alt="{{ observation.picture.alt }}">
+    </div>
+  {% endif %}
+
+  <a class="btn btn-primary mt-5 mb-5" href="{{ path('taxref_show', {slug: post.slug}) }}" role="button">Toute les observations de cet oiseau</a>
+  {% if options.page.include_newId_btn|default(false) %}
+    <a class="btn btn-secondary mb-5" href="{{ path('observation_new') }}" role="button">Ajouter une nouvelle Observation</a>
+  {% endif %}
+</div>

@@ -23,6 +23,7 @@ Encore
     .addEntry('js/search', './assets/js/search.js')
     .addEntry('js/mapShowDetail', './assets/js/mapShowDetail.js')
     .addStyleEntry('css/app', './assets/css/app.scss')
+    .addStyleEntry('css/admin', './assets/css/admin.scss')
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">{% endblock %}
+{% block title %}Administration{% endblock %}
+
+{# {% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/admin.js') }}"></script>
+{% endblock %} #}
+
+{% block body %}
+<div class="row main-row bg-light p-5">
+  <div class="container">
+    {% block main_header %}{% endblock %}
+  </div>
+  <div class="container m-5 p-5">
+    {% block main_content %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

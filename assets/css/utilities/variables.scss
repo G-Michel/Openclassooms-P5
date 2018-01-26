@@ -11,9 +11,15 @@
 // stylelint-disable
 $gray-primary: #272832;
 $gray-secondary: #222329;
+$gray-101: #f1eff1;
+$gray-202: #e1e1e1;
+$gray-501: #acacad;
 
 $grays: (
-  "gray-primary": $gray-primary
+  "gray-primary": $gray-primary,
+  "gray-101": $gray-101,
+  "gray-202": $gray-202,
+  "gray-501": $gray-501,
 );
 
 $turquoise:    #00cccc;
@@ -31,7 +37,7 @@ $secondary:     $rose ;
 // $info:          $cyan !default;
 $warning:       $yellow;
 $danger:        $red;
-$light:         $gray-400;
+$light:         $gray-101;
 $dark:          $gray-primary;
 
 $theme-colors: (
@@ -67,6 +73,31 @@ $component-active-bg:         none;
 $border-width:    1px ;
 $hr-border-color: rgba(white, .4);
 $hr-border-width: $border-width ;
+
+// Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
+
+$table-cell-padding:            .75rem !default;
+$table-cell-padding-top-bottom: 1.3rem;//
+$table-cell-padding-sm:         .3rem !default;
+
+
+$table-accent-bg:             $gray-101;//
+$table-hover-bg:              rgba($black, .075) !default;
+$table-active-bg:             $table-hover-bg !default;
+
+$table-border-width:          $border-width !default;
+$table-border-color:          $gray-101;
+
+$table-head-bg:               $gray-200 !default;
+$table-head-color:            $gray-700 !default;
+
+$table-dark-bg:               $gray-primary ;//
+$table-dark-accent-bg:        rgba($gray-secondary, 1);//
+$table-dark-hover-bg:         rgba($white, .075) !default;
+$table-dark-border-color:     $gray-secondary ;//
+$table-dark-color:            $body-bg !default;
 
 
 // Navs

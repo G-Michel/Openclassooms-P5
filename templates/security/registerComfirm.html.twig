@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Confirmation d'inscription - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block mainLeft %}
+<div class="container mt-auto mb-auto">
+    <h1 class="text-white display-3">{{message[0]}}</h1>
+    <p class="text-primary lead">{{message[1]}}</p>
+</div>
+{% endblock %}
+
+{% block mainRight %}
+
+
+{% endblock %}

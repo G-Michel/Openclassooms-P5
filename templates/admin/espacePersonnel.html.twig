@@ -1,8 +1,18 @@
 {% extends "base.html.twig" %}
 
 {% block title %}NAO - Espace Personnel{% endblock %}
+
 {% block body_id route %}
 {% block main_id %}main_{{route}}{% endblock %}
+
+
+{% block stylesheets %}
+
+
+
+
+{% endblock %}
+
 
 {% block mainLeft %}
 <div class='row no-gutters'>
@@ -32,10 +42,10 @@
             {% endif %}
         </ul>
 
-        <div class="tab-content">
+        <div class="tab-content text-muted petittest">
             <div role="tabpanel" class="tab-pane active " id="lastObs">
-                <table class="table">
-                    <tr class="text-muted">
+                <table class="table table-striped table-light mt-3 ">
+                    <tr class="">
                         <th>Oiseau</th>
                         <th>Date d'ajout</th>
                         <th>Lieu</th>
@@ -44,7 +54,7 @@
                         <th>Supprimer</th>
                     </tr>
                     {% for observation in userObservations %}
-                        <tr class="text-white">
+                        <tr class="">
                             <td>
                                 <a href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()|default('')}}</a>
                             </td>
@@ -64,16 +74,16 @@
                                 {% endif %}
 
                             </td>
-                            <th><a href="{{ path('observation_show', {id: observation.getId()}) }}">voir</a></th>
-                            <th><a href="">supprimer</a></th>
+                            <td><a href="{{ path('observation_show', {id: observation.getId()}) }}">voir</a></td>
+                            <td><a href="">supprimer</a></td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
             {% if is_granted('ROLE_NATURALIST')%}
                 <div role="tabpanel" class="tab-pane" id="toValid">
-                    <table class="table">
-                        <tr class="text-muted">
+                    <table class="table table-striped table-light mt-3">
+                        <tr class="">
                             <th>Oiseau</th>
                             <th>Date d'ajout</th>
                             <th>Lieu</th>
@@ -82,18 +92,22 @@
                             <th>Supprimer</th>
                         </tr>
                         {% for observation in obsToValid %}
-                            <tr class="text-white">
+                            <tr class="text-muted">
                                 <td>
+
                                     <a href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()|default('')}}</a>
+
                                 </td>
                                 <td>{{observation.getDateAdd().format('d-M-Y')}}</td>
                                 <td>
                                     {% set location =  observation.getLocation().getAddress() |split(',',2) %}
                                     <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{location[1]}}</a>
                                 </td>
+
                                 <td>{{observation.getUser().getUsername|default('')}}</td>
                                 <th><a href="">valider</a></th>
                                 <th><a href="">supprimer</a></th>
+
                             </tr>
                         {% endfor %}
                     </table>

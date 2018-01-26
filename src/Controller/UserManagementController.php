@@ -42,6 +42,7 @@ class UserManagementController extends Controller
         }
         $user = new User();
         $auth = new Auth();
+        $picture = new Picture();
         $form = $this->createForm(SignUpType::class, $user);
         $form->handleRequest($request);
 
@@ -95,6 +96,7 @@ class UserManagementController extends Controller
             $user->setPassword($password);
             $user->setRoles(array('ROLE_USER'));
             $user->setAuth($auth);
+            $user->setPicture($picture);
             $user->setIsActive(false);
             $user->getAuth()->setComfirmedToken(uniqid('NAO_'));
             $em = $this->getDoctrine()->getManager();

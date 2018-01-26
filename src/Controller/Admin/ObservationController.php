@@ -33,8 +33,7 @@ class ObservationController extends Controller
      */
     public function index(ObservationRepository $observation)
     {
-
-      $posts = $observation->findByUser(30,$this->getUser());
+      $posts = $observation->findByUser($this->getUser());
       $postsToCheck = $observation->findBy(['status' => 0]);
       return $this->render('admin/observation/index.html.twig', compact('posts','postsToCheck'));
     }

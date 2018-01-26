@@ -18,11 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Form\UserPictureType;
 use App\Form\ResetPasswordType;
 
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use App\Form\UserPictureType;
-use App\Form\ResetPasswordType;
-
 class AdminController extends Controller
 {
 

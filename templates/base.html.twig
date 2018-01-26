@@ -45,6 +45,8 @@
             console.log('Image URL: ' + profile.getImageUrl());
             console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
         }
+        {% block java_per_pages %}{% endblock %}
+        {% endblock %}
         </script>
         <script type="text/javascript">
         {% block java_per_pages %}{% endblock %}

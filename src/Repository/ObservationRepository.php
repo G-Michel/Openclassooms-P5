@@ -34,7 +34,7 @@ class ObservationRepository extends ServiceEntityRepository
         ;
     }
 
-        public function findByUser($limit,$username)
+    public function findByUser($limit,$username)
     {
         return $this->createQueryBuilder('o')
             ->leftJoin('o.user','u')
@@ -47,7 +47,7 @@ class ObservationRepository extends ServiceEntityRepository
         ;
     }
 
-        public function findToValid($limit)
+    public function findToValid($limit)
     {
         return $this->createQueryBuilder('o')
             ->where('o.status = 0')

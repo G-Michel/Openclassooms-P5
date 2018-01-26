@@ -2,30 +2,35 @@
 
 {% block title %}NAO - Espace Personnel{% endblock %}
 
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
+
 {% block stylesheets %}
 
 
-}
+
 
 {% endblock %}
+
 
 {% block mainLeft %}
 <div class='row no-gutters'>
     <div class="d-flex justify-content-around align-items-md-center flex-wrap">
     <div class=" col-lg-3 col-xl-3 h-75">
-        <div class="row no-gutters"> 
+        <div class="row no-gutters">
             <h2 class="text-white display-4">Espace personnel</h2>
-            <p class="text-primary lead">Vous pouvez accéder aux fonctionnalités clés du site</p> 
+            <p class="text-primary lead">Vous pouvez accéder aux fonctionnalités clés du site</p>
             <div class="col-sm-12">
                 <div><a class="btn btn-block btn-primary text-muted" href="{{path('admin_observation_index')}}">Voir mes Observations</a></div>
-                <div><a class="btn btn-block btn-primary text-muted" href="">Ajouter une observation</a></div>
+                <div><a class="btn btn-block btn-primary text-muted" href="{{path('admin_observation_new')}}">Ajouter une observation</a></div>
                 <div><a class="btn btn-block btn-primary text-muted" href="{{path('edit_profil')}}">Editer mon profil</a></div>
-            </div>  
-        </div>        
+            </div>
+        </div>
     </div>
-    
+
     <div class=' col-lg-7 col-xl-7 h-75 '>
-        
+
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" href="#lastObs" role="tab" data-toggle="tab">Mes dernières observations</a>
@@ -51,15 +56,15 @@
                     {% for observation in userObservations %}
                         <tr class="">
                             <td>
-                                <a href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()}}</a>
+                                <a href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()|default('')}}</a>
                             </td>
                             <td>
                                 {{observation.getDateAdd().format('d-M-Y')}}
                             </td>
                             <td>
                                 {% set location =  observation.getLocation().getAddress() |split(',',2) %}
-                                
-                                <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{location[1]}}</a>        
+
+                                <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{location[1]}}</a>
                             </td>
                             <td>
                                 {% if observation.getStatus() == 1 %}
@@ -89,23 +94,27 @@
                         {% for observation in obsToValid %}
                             <tr class="text-muted">
                                 <td>
-                                    <a class="" href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()}}</a>
+
+                                    <a href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()|default('')}}</a>
+
                                 </td>
                                 <td>{{observation.getDateAdd().format('d-M-Y')}}</td>
                                 <td>
                                     {% set location =  observation.getLocation().getAddress() |split(',',2) %}
                                     <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{location[1]}}</a>
                                 </td>
-                                <td>{{observation.getUser().getUsername}}</td>
-                                <td><a href="">valider</a></td>
-                                <td><a href="">supprimer</a></td>
+
+                                <td>{{observation.getUser().getUsername|default('')}}</td>
+                                <th><a href="">valider</a></th>
+                                <th><a href="">supprimer</a></th>
+
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
             {% endif %}
         </div>
-       
+
     </div>
     </div>
 

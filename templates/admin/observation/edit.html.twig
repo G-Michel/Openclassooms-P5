@@ -3,3 +3,14 @@
 {% block title %}Editer l'observation - Administration{% endblock %}
 {% block body_id route %}
 {% block main_id %}main_{{route}}{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/admin.js') }}"></script>
+{% endblock %}
+
+{% block mainLeft %}
+{{parent()}}
+  <div class="section actions">
+      {{ include('admin/observation/_delete_form.html.twig', {observation: observation}, with_context = false) }}
+  </div>
+{% endblock %}

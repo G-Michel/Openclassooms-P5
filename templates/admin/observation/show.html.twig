@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Détail observation - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
+{% block mainLeft %}
+  <div id="main-left" class="col-lg-5 col-xl-4">
+    <div class="container">
+        <div class="row">
+          {{ include('components/cards/detail.html.twig') }}
+          {{ include('components/descriptions/observation.html.twig') }}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block mainRight %}
+    <div class="col-lg-7 col-xl-8 p-0"><div id="map"></div></div>
+    {{ include('components/apiMap/observation_show.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{parent()}}
+  <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
+  </script>
+{% endblock %}

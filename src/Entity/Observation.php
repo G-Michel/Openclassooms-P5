@@ -16,19 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Observation
 {
-    /** @var array Map of standard HTTP status code/reason phrases */
-    private static $phrases = [
-        1    => 'En ligne',
-        0    => 'Validation en cours',
-        -1   => 'En attente',
-        -2   => 'Validation refusée',
-        -201 => 'Votre oiseau ...',
-        -202 => 'Votre oiseau ...',
-        -203 => 'Votre oiseau ...',
-        -204 => 'Votre oiseau ...',
-        -205 => 'Votre oiseau ...'
-
-    ];
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -37,7 +24,7 @@ class Observation
     private $id;
 
     /**
-     * @ORM\Column(name="date_obs", type="datetime")
+     * @ORM\Column(name="date_obs", type="datetime", nullable=true)
      * @Assert\NotBlank(
      *      groups = {"step2"},
      *      message="Vous devez saisir une date et une heure"
@@ -97,6 +84,9 @@ class Observation
      * Unidirectionnal - One Observation has One Picture . (OWNED SIDE)
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist", "remove"})
+     * @Assert\Valid(
+     *      groups = {"step3"}
+     * )
      *
      */
     private $picture;
@@ -105,6 +95,7 @@ class Observation
      * Unidirectionnal - Many Observation has One User . (OWNED SIDE)
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid()
      *
      */
@@ -206,7 +197,10 @@ class Observation
     }
     public function getStatusDefinition($status)
     {
-        return self::$phrases[$status];
+        if ($status == 1) {
+            return 'En ligne';
+        }
+        return 'Validation en cours';
     }
 
     /**

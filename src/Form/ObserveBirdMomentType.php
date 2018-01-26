@@ -25,7 +25,7 @@ class ObserveBirdMomentType extends AbstractType
         $resolver->setDefaults([
             // uncomment if you want to bind to a class
             //'data_class' => ObserveBirdMoment::class,
-            'validation_groups' =>  array('step2', 'Default'),
+            'validation_groups' =>  array('step2'),
         ]);
     }
 

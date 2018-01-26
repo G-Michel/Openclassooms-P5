@@ -4,7 +4,7 @@
         <h6 class="title">{{ title }} (affichage 1 à 6 de 6 enregistrements)</h6>
       </div>
       <div class="col-auto">
-        <a href="{{ path('observation_new') }}" class="text-white btn btn-primary mt-0">
+        <a href="{{ path('admin_observation_new') }}" class="text-white btn btn-primary btn-round mt-0">
           <i class="fa fa-plus"></i>
           Ajouter
         </a>
@@ -39,8 +39,16 @@
               <td>
                 <i class="fa fa-circle fa-fw {% if post.status == 1 %} text-primary{% else %}text-warning{% endif %} "></i>{{ post.statusDefinition(post.status) }}
               </td>
-              <td class="text-right"><a href="{{ path('observation_show',{ id: post.id }) }}"><i class="fa fa-eye"></i></a></td>
-              <td class="text-right"><a href="{{ path('admin_observation_edit',{ id: post.id }) }}"><i class="fa fa-pencil"></i></a></td>
+              <td class="text-right text-right d-inline-flex justify-content-between">
+                <a class="p-2" href="{{ path('admin_observation_show',{ id: post.id }) }}">
+                  <i class="fa fa-eye"></i>
+                </a>
+                <a class="p-2" href="{{ path('admin_observation_edit',{ id: post.id }) }}">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                {{ include('admin/observation/_delete_form.html.twig', {observation: post}, with_context = false) }}
+              </td>
+
             {% endif %}
           </tr>
         {% endfor %}

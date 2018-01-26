@@ -25,7 +25,7 @@ class ObserveBirdDetailType extends AbstractType
         $resolver->setDefaults([
             // uncomment if you want to bind to a class
             //'data_class' => ObserveBirdDetail::class,
-            'validation_groups' =>  array('step3', 'Default'),
+            'validation_groups' =>  array('step3'),
         ]);
     }
     public function getParent()

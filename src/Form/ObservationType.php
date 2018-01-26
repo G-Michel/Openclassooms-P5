@@ -27,22 +27,13 @@ class ObservationType extends AbstractType
                 'label' => 'Observé le',
             ])
             ->add('comment', TextareaType::class)
-            // ->add('bird', EntityType::class, [
-            //     'class'           => Taxref::class,
-            //     'choice_label'    => 'nomValideType',
-            //     'placeholder'     => "Choisissez parmi la liste d'oiseaux",
-            //     'invalid_message' => "Vous devez choisir un oiseau parmi la liste"
-
-            // ])
             ->add('bird', BirdType::class,[
                 'label' => false,
             ])
-            // ->add('birdNumber', IntegerType::class, [
-            //     'attr' => ['min' => "1", 'max' => "20"]
-            // ])
             ->add('picture', PictureType::class,[
                 'label' => false,
                 'attr' => ['class' => 'picture'],
+                'required'  => false
             ])
         ;
     }

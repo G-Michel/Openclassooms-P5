@@ -24,7 +24,7 @@ class Observation
     private $id;
 
     /**
-     * @ORM\Column(name="date_obs", type="datetime")
+     * @ORM\Column(name="date_obs", type="datetime", nullable=true)
      * @Assert\NotBlank(
      *      groups = {"step2"},
      *      message="Vous devez saisir une date et une heure"
@@ -84,6 +84,9 @@ class Observation
      * Unidirectionnal - One Observation has One Picture . (OWNED SIDE)
      *
      * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist", "remove"})
+     * @Assert\Valid(
+     *      groups = {"step3"}
+     * )
      *
      */
     private $picture;
@@ -92,6 +95,7 @@ class Observation
      * Unidirectionnal - Many Observation has One User . (OWNED SIDE)
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid()
      *
      */

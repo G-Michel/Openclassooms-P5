@@ -6,21 +6,22 @@ use App\Entity\Observation;
 use App\Form\ObservationType;
 use App\Form\ObserveBirdDetailType;
 use App\Form\ObserveBirdMomentType;
-use App\Form\ObserveBirdLocationType;
 use App\Repository\TaxrefRepository;
+use App\Form\ObserveBirdLocationType;
 use App\Repository\ObservationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin/observation")
- * @IsGranted("ROLE_USER")
+ * @Security("has_role('ROLE_USER')")
  */
 class ObservationController extends Controller
 {
@@ -33,28 +34,46 @@ class ObservationController extends Controller
      */
     public function index(ObservationRepository $observation)
     {
-      $posts = $observation->findByUser($this->getUser());
+      $posts = $observation->findBy(['user'=> $this->getUser()]);
       $postsToCheck = $observation->findBy(['status' => 0]);
       return $this->render('admin/observation/index.html.twig', compact('posts','postsToCheck'));
     }
 
     /**
-     * @Route("/ajout", name="observation_new")
+     * Finds and displays a Observation entity.
+     *
+     * @Route("/{id}", requirements={"id": "\d+"}, name="admin_observation_show")
+     * @Method("GET")
+     * @Security("is_granted('show', observation)")
+     */
+    public function show(Observation $observation): Response
+    {
+        $taxref = $observation->getBird()->getTaxref();
+        return $this->render('observation/show.html.twig',compact('taxref', 'observation'));
+    }
+
+    /**
+     * @Route("/ajout", name="admin_observation_new")
      * @Method({"GET"})
      */
     public function new(SessionInterface $session)
     {
-        return $this->redirectToRoute('observation_new_step_1');
+        return $this->redirectToRoute('admin_observation_new_step_1');
     }
 
     /**
-     * @Route("/ajout/lieu", name="observation_new_step_1")
+     * @Route("/ajout/lieu", name="admin_observation_new_step_1")
      * @Method({"GET", "POST"})
      */
-    public function stepOne(Request $request, SessionInterface $session)
+    public function stepOne(Request $request, SessionInterface $session, ObservationRepository $observation)
     {
         $session->set('step','1');
-        $observation = new Observation();
+        if ($session->get('observation')) {
+            $observation = $observation->find($session->get('observation'));
+        } else {
+            $observation = new Observation();
+        }
+
         $form = $this->createForm(ObserveBirdLocationType::class, $observation);
         $options = [
             'page' => [
@@ -68,24 +87,31 @@ class ObservationController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $session->set('observation', $observation);
-            return $this->redirectToRoute('observation_new_step_2');
+
+            $observation->setStatus(-101);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($observation);
+            $em->flush();
+            $session->set('observation', $observation->getId());
+
+            return $this->redirectToRoute('admin_observation_new_step_2');
         }
 
         return $this->render('admin/observation/new.html.twig', [
             'options' => $options,
             'form' => $form->createView(),
+            'observation' => $observation
         ]);
     }
 
     /**
-     * @Route("/ajout/moment", name="observation_new_step_2")
+     * @Route("/ajout/moment", name="admin_observation_new_step_2")
      * @Method({"GET", "POST"})
      */
-    public function stepTwo(Request $request, SessionInterface $session)
+    public function stepTwo(Request $request, SessionInterface $session, ObservationRepository $observation)
     {
         $session->set('step','2');
-        $observation = $session->get('observation');;
+        $observation = $observation->find($session->get('observation'));
         $form = $this->createForm(ObserveBirdMomentType::class, $observation);
         $options = [
             'page' => [
@@ -93,7 +119,7 @@ class ObservationController extends Controller
             ],
             'form' => [
                 "include_back_btn" => true,
-                "back_btn_path"    => "observation_new_step_1"
+                "back_btn_path"    => "admin_observation_new_step_1"
             ],
             'map' => [
                 "address" => $observation->getLocation()->getAddress()
@@ -102,25 +128,32 @@ class ObservationController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $session->set('observation', $observation);
-            return $this->redirectToRoute('observation_new_step_3');
+
+            $observation->setStatus(-102);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($observation);
+            $em->flush();
+            $session->set('observation', $observation->getId());
+
+            return $this->redirectToRoute('admin_observation_new_step_3');
         }
 
         return $this->render('admin/observation/new.html.twig', [
             'options' => $options,
             'form' => $form->createView(),
+            'observation' => $observation
         ]);
     }
 
     /**
-     * @Route("/ajout/oiseau", name="observation_new_step_3")
+     * @Route("/ajout/oiseau", name="admin_observation_new_step_3")
      * @Method({"GET", "POST"})
      */
-    public function stepThree(Request $request, SessionInterface $session)
+    public function stepThree(Request $request, SessionInterface $session, ObservationRepository $observation)
     {
 
         $session->set('step','3');
-        $observation = $session->get('observation');
+        $observation = $observation->find($session->get('observation'));
         $form = $this->createForm(ObserveBirdDetailType::class, $observation);
         $options = [
             'page' => [
@@ -128,7 +161,7 @@ class ObservationController extends Controller
             ],
             'form' => [
                 "include_back_btn" => true,
-                "back_btn_path"    => "observation_new_step_2"
+                "back_btn_path"    => "admin_observation_new_step_2"
             ],
             'map' => [
                 "address" => $observation->getLocation()->getAddress()
@@ -137,11 +170,12 @@ class ObservationController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $observation->setStatus(-103);
             $em = $this->getDoctrine()->getManager();
             $em->persist($observation);
             $em->flush();
-            $session->set('obsId', $observation->getId());
-            $session->remove('observation');
+            $session->set('observation', $observation->getId());
 
             return $this->forward('App\Controller\Admin\ObservationController::stepFor');
         }
@@ -149,11 +183,12 @@ class ObservationController extends Controller
         return $this->render('admin/observation/new.html.twig', [
             'options' => $options,
             'form' => $form->createView(),
+            'observation' => $observation
         ]);
     }
 
     /**
-     * @Route("/ajout/reference/{id}", requirements={"id": "[1-9]\d*"}, name="observation_new_step_4")
+     * @Route("/ajout/reference/{id}", requirements={"id": "[1-9]\d*"}, name="admin_observation_new_step_4")
      * @Method({"GET", "POST"})
      */
     public function stepFor(
@@ -165,15 +200,24 @@ class ObservationController extends Controller
     {
         if (!$request->isXmlHttpRequest()) {
             $session->set('step', '4');
-            $observation = $observation->find($session->get('obsId'));
+            $observation = $observation->find($session->get('observation'));
 
             if ($id) {
+
                 $observation->getBird()->setTaxref($taxref->find($id));
                 $observation->setUser($this->getUser());
+                $observation->setStatus(0);
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($observation);
                 $em->flush();
-                return $this->redirectToRoute('observation_show', ['id' => $observation->getId()]);
+
+                $session->remove('observation');
+                $session->remove('step');
+
+                $this->addFlash('success', 'Observation ajouté avec succès !');
+
+                return $this->redirectToRoute('admin_observation_show', ['id' => $observation->getId()]);
             }
 
             $posts = $taxref->findByFrType();
@@ -183,13 +227,15 @@ class ObservationController extends Controller
                 ],
                 'form' => [
                     "include_back_btn" => true,
-                    "back_btn_path"    => "observation_new_step_3"
+                    "back_btn_path"    => "admin_observation_new_step_3"
                 ],
                 'map' => [
                     "address" => $observation->getLocation()->getAddress()
                 ]
             ];
-            return $this->render('admin/observation/new.html.twig', compact('posts', 'options'));
+            return $this->render('admin/observation/new.html.twig',
+                compact('posts', 'options','observation')
+            );
 
         }
 
@@ -229,18 +275,44 @@ class ObservationController extends Controller
 
       return $this->render('admin/observation/edit.html.twig',[
         'form' => $form->createView(),
-        'options' => $options
+        'options' => $options,
+        'observation' => $observation,
       ]);
     }
 
     /**
-     * @Route("cancel/{redirectTo}", name="observation_cancel")
+     * @Route("/cancel/{redirectTo}", name="observation_cancel")
      */
     public function cancel(SessionInterface $session, $redirectTo = 'home')
     {
         $session->remove('observation');
         $session->remove('step');
         return $this->redirectToRoute($redirectTo);
+    }
+
+    /**
+     * Deletes an Observation entity.
+     *
+     * @Route("/{id}/delete", name="admin_observation_delete")
+     * @Method("POST")
+     * @Security("is_granted('delete', observation)")
+     *
+     * The Security annotation value is an expression (if it evaluates to false,
+     * the authorization mechanism will prevent the user accessing this resource).
+     */
+    public function delete(Request $request, Observation $observation): Response
+    {
+        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+            return $this->redirectToRoute('admin_observation_index');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($observation);
+        $em->flush();
+
+        $this->addFlash('success', 'Observation supprimée avec succès !');
+
+        return $this->redirectToRoute('admin_observation_index');
     }
 
 

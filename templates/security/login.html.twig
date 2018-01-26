@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Login - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block mainLeft %}
+  <div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">
+    <div class="container mt-auto mb-auto" >
+        <h1 class="text-white display-3">Login</h1>
+        <p class="text-primary lead">Connectez vous</p>
+    </div>
+  </div>
+{% endblock %}
+
+{% block mainRight %}
+
+  <div class="col col-md-6 offset-md-4 offset-lg-5 login-form">
+
+
+      {% if error %}
+        <div class="alert alert-danger">{{ error.message }}</div>
+      {% endif %}
+      {% for message in app.flashes('flashError') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+      {% endfor %}
+
+      <p>
+        <a href="{{ flink|raw}}">S'identifier avec Facebook</a><br/>
+      </p>
+        <div>
+          <a href="{{glink}}"><img src="images/glogin.png" alt=""/>S'identifier avec Google</a>
+      </div>
+      <form  action="{{ path('login_check') }}" method="post">
+        <div class="form-group">
+          <label for="username">Utilisateur :</label>
+          <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
+          <br/>
+          <label for="password">Mot de passe :</label>
+          <input class="form-control" type="password" id="password" name="_password" />
+          <br />
+          <input type="submit" value="Connexion" />
+        </div>
+      </form>
+      <p>
+        <a href="{{ path('lostPassword') }}">Mot de passe perdu ?</a><br/>
+        <a href="{{ path('signUp') }}">Inscription</a>
+      </p>
+  </div>
+{% endblock %}

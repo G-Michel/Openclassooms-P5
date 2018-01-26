@@ -56,9 +56,9 @@ function bs_input_file() {
 }
 
 // Handling the modal confirmation message.
-$(document).on('submit', 'form[data-confirmation]', function (event) {
+$(document).on('submit', 'form[data-confirmationDelete]', function (event) {
   var $form = $(this),
-      $confirm = $('#confirmationModal');
+      $confirm = $('#deleteConfirmationModal');
 
   if ($confirm.data('result') !== 'yes') {
       //cancel submit event
@@ -69,6 +69,28 @@ $(document).on('submit', 'form[data-confirmation]', function (event) {
           .off('click', '#btnYes')
           .on('click', '#btnYes', function () {
               $confirm.data('result', 'yes');
+              $form.find('input[type="submit"]').attr('disabled', 'disabled');
+              $form.submit();
+          })
+          .modal('show');
+  }
+});
+
+// Handling the modal confirmation message.
+$(document).on('submit', 'form[data-confirmationCheck]', function (event) {
+  var $form = $(this),
+      $confirm = $('#checkConfirmationModal');
+
+  if ($confirm.data('result') !== 'yes') {
+      //cancel submit event
+      event.preventDefault();
+
+      $confirm
+          .off('click', '#btnYes')
+          .on('click', '#btnYes', function () {
+              var $check = $('input[name=customRadio]:checked').val();
+              $confirm.data('result', 'yes');
+              $form.find('#statusCode').attr('value', $check);
               $form.find('input[type="submit"]').attr('disabled', 'disabled');
               $form.submit();
           })

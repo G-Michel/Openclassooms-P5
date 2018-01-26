@@ -56,7 +56,6 @@ class UserManagementController extends Controller
             {
                 $oauthHandler->initOauthProvider('facebook');
             }
-
                 if ($oauthHandler->grantAuthorisation())
                 {
                     $oauthHandler->hydrateWithUserInfos($user);

@@ -59,3 +59,10 @@
   // margin-top: -1.5rem;
   margin-bottom: 0;
 }
+
+.custom-radio .custom-control-input:checked ~ .custom-control-label.valid::before {
+  background-color: $primary;
+}
+.custom-radio .custom-control-input:checked ~ .custom-control-label.novalid::before {
+  background-color: $danger;
+}

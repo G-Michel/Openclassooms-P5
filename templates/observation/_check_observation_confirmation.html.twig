@@ -1,0 +1,55 @@
+<div class="modal fade" id="checkConfirmationModal" tabindex="-1" obsid="{{ observation }}" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-left">
+                <h4 class="title text-secondary">Voulez-vous valider cette observation ?</h4>
+                <p class="lead">Choisissez parmis ces propositions :</p>
+                  <div class="custom-control custom-radio d-flex align-items-center">
+                    <input  type="radio" value="1" id="customRadio1" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label valid" for="customRadio1">
+                      Evidement que je valide cette observation
+                    </label>
+                  </div>
+                  <hr class="text-secondary">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" value="-201" id="customRadio2" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label novalid" for="customRadio2">
+                      Humm... dans cette région vraiment ??
+                    </label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" value="-202" id="customRadio3" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label novalid" for="customRadio3">
+                      Pas pour l'instant, cette espèce observée à l'époque indiqué c'est surprenant
+                    </label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" value="-203" id="customRadio4" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label novalid" for="customRadio4">
+                      Ne réglez pas votre Tv, cette espèce observée avec ces couleurs...  Whouaou!
+                    </label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" value="-204" id="customRadio5" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label novalid" for="customRadio5">
+                      Heu..., un oiseau de cette taille sûr sûr ?
+                    </label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" value="-205" id="customRadio6" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label novalid" for="customRadio6">
+                      Houla, La photo est pour le moins étonnante !
+                    </label>
+                  </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnNo" data-dismiss="modal">
+                    <i class="fa fa-ban" aria-hidden="true"></i> Annuler
+                </button>
+                <button type="button" class="btn btn-info" id="btnYes" data-dismiss="modal">
+                    <i class="fa fa-check" aria-hidden="true"></i> Confirmer votre choix
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

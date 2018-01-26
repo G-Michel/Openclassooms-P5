@@ -15,11 +15,13 @@ class ObservationVoter extends Voter
     const SHOW   = 'show';
     const EDIT   = 'edit';
     const DELETE = 'delete';
+    const CHECK  = 'check';
 
     protected function supports($attribute, $subject)
     {
         // this voter is only executed for three specific permissions on Observation objects
-        return $subject instanceof Observation && in_array($attribute, [self::SHOW, self::EDIT, self::DELETE], true);
+        return $subject instanceof Observation &&
+                        in_array($attribute, [self::SHOW, self::EDIT, self::DELETE, self::CHECK], true);
     }
 
     protected function voteOnAttribute($attribute, $observation, TokenInterface $token): bool
@@ -35,5 +37,7 @@ class ObservationVoter extends Voter
         // author of the given observation, grant permission; otherwise, deny it.
         // (the supports() method guarantees that $observation is a Observation object)
         return $user === $observation->getUser();
+        // TODO
+        // Verifier que l'user est un naturalist si self::CHECK
     }
 }

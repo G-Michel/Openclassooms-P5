@@ -1,0 +1,29 @@
+{{ include('observation/_check_observation_confirmation.html.twig', {observation: observation.id}) }}
+{% if app.request.attributes.get('_route') == 'admin_observation_index' %}
+  <form
+    action="{{ path('admin_observation_check', {id: observation.id}) }}"
+    method="post"
+    data-confirmationCheck="true"
+    id="check-form" class="d-flex"
+  >
+      <input type="hidden" name="token" value="{{ csrf_token('check') }}" />
+      <input type="hidden" name="status" id="statusCode" />
+      <button type="submit" class="btn btn-link text-info d-flex m-0 p-2">
+          <i class="fa fa-check" aria-hidden="true"></i>
+      </button>
+  </form>
+{% else %}
+  <form
+    action="{{ path('admin_observation_check', {id: observation.id}) }}"
+    method="post"
+    data-confirmationCheck="true"
+    id="check-form" class=""
+  >
+      <input type="hidden" name="token" value="{{ csrf_token('check') }}" />
+      <input type="hidden" name="status" id="statusCode" />
+      <button type="submit" class="btn btn-lg btn-block btn-info btn-round">
+          <i class="fa fa-check" aria-hidden="true"></i>
+          Valider l'observation
+      </button>
+  </form>
+{% endif %}

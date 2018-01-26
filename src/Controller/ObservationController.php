@@ -42,25 +42,10 @@ class ObservationController extends Controller
      * @Route("/{id}", requirements={"id": "\d+"}, name="observation_show")
      * @Method("GET")
      */
-    public function show(Observation $observation,SessionInterface $session): Response
+    public function show(Observation $observation): Response
     {
-        $options = [];
-        if ($session->get('obsId')) {
-            $session->remove('obsId');
-            $session->remove('step');
-            $options = [
-                'page' => [
-                    "include_newId_btn" => true
-                ],
-            ];
-        }
-        $bird = $observation->getBird();
-        $taxref = $bird->getTaxref();
-        return $this->render('observation/show.html.twig', [
-            'post' => $taxref,
-            'observation' => $observation,
-            'options' => $options,
-        ]);
+        $taxref = $observation->getBird()->getTaxref();
+        return $this->render('observation/show.html.twig',compact('taxref', 'observation'));
     }
 
 }

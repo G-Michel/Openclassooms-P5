@@ -11,10 +11,10 @@
       {{ include('components/apiMap/_styled_map.html.twig') }}
 
       // define some values
-      {% if app.session.get('observation') %}
+      {% if observation.location != null %}
         var position = {
-          lat: parseFloat("{{ app.session.get('observation').location.gpsY }}"),
-          lng: parseFloat("{{ app.session.get('observation').location.gpsX }}"),
+          lat: parseFloat("{{ observation.location.gpsY }}"),
+          lng: parseFloat("{{ observation.location.gpsX }}"),
         };
         var zoom = 15
       {% else %}
@@ -66,7 +66,7 @@
         infowindow.open(map, marker);
       {% endif %}
 
-      {% if app.session.get('observation') and app.session.get('step') == 1 %}
+      {% if observation and app.session.get('step') == 1 %}
         setPosition(marker);
         geocodeLatLng(geocoder, map, marker);
       {% endif %}

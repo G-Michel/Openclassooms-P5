@@ -1,12 +1,12 @@
 <div class="card card-detail">
-    {% if post.picture and post.picture.url  %}
+    {% if taxref.picture and taxref.picture.url  %}
       <div class="card-image">
-        <a href="#"> <img class="img" src="{{ post.picture.url }}" alt="{{ post.picture.alt }}"></a>
+        <a href="#"> <img class="img" src="{{ taxref.picture.url }}" alt="{{ taxref.picture.alt }}"></a>
       </div>
     {% endif %}
       <div class="table d-flex pr-0">
-          <h6 class="category text-rose">{{ post.nomVernType }}</h6>
-          <p class="card-description mb-auto">{{ post.lbNomType }} {{ post.lbAuteurType }}</p>
+          <h6 class="category text-rose">{{ taxref.nomVernType }}</h6>
+          <p class="card-description mb-auto">{{ taxref.lbNomType }} {{ taxref.lbAuteurType }}</p>
           <div class="d-inline-flex justify-content-between">
             {% if route == "showObservation" %}
             <p class="card-date align-self-end m-0">

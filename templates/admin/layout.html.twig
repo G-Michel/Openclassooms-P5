@@ -3,10 +3,10 @@
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">{% endblock %}
 {% block title %}Administration{% endblock %}
 
-{# {% block javascripts %}
+{% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('build/js/admin.js') }}"></script>
-{% endblock %} #}
+{% endblock %}
 
 {% block body %}
 <div class="row main-row bg-light p-5">

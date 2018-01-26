@@ -23,8 +23,18 @@
     </div>
   {% endif %}
 
-  <a class="btn btn-primary mt-5 mb-5" href="{{ path('taxref_show', {slug: post.slug}) }}" role="button">Toute les observations de cet oiseau</a>
-  {% if options.page.include_newId_btn|default(false) %}
-    <a class="btn btn-secondary mb-5" href="{{ path('observation_new') }}" role="button">Ajouter une nouvelle Observation</a>
+  {% if route == 'observation_show' %}
+    <a class="btn btn-primary mt-5 mb-5" href="{{ path('taxref_show', {slug: taxref.slug}) }}" role="button">
+      Toute les observations de cet oiseau
+    </a>
+  {% endif %}
+  {% if route == 'admin_observation_show' %}
+  <a class="btn btn-primary btn-round mt-5" href="{{ path('admin_home') }}" role="button">
+      Retourner à l'accueil
+    </a>
+    <a class="btn btn-secondary btn-round" href="{{ path('admin_observation_new') }}" role="button">
+      Ajouter une nouvelle Observation
+    </a>
+    {{ include('admin/observation/_delete_form.html.twig', {observation: observation}, with_context = false) }}
   {% endif %}
 </div>

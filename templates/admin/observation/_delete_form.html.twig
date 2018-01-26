@@ -1,0 +1,17 @@
+{{ include('observation/_delete_observation_confirmation.html.twig') }}
+{% if app.request.attributes.get('_route') == 'admin_observation_index' %}
+  <form action="{{ path('admin_observation_delete', {id: observation.id}) }}" method="post" data-confirmation="true" id="delete-form" class="d-flex">
+      <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+      <button type="submit" class="btn btn-link text-danger d-flex m-0 p-2">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+      </button>
+  </form>
+{% else %}
+  <form action="{{ path('admin_observation_delete', {id: observation.id}) }}" method="post" data-confirmation="true" id="delete-form" class="">
+      <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+      <button type="submit" class="btn btn-lg btn-block btn-danger btn-round">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+          Supprimer l'observation
+      </button>
+  </form>
+{% endif %}

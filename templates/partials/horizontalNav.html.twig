@@ -18,7 +18,15 @@
               </div>
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
-                <a href="{{ path('logout') }}" class="text-danger dropdown-item">Déconnection</a>
+              <a href="{{ path('admin_observation_index') }}" class="dropdown-item">
+                  <svg height="21px" width="21px" style="vertical-align: middle;margin-right: -4px;" >
+                      <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
+                  </svg>
+                  Mes observations</a>
+              <a href="{{ path('edit_profil') }}" class="dropdown-item">
+                <i class="fa fa-user fa-fw"></i>Mon profil</a>
+              <a href="{{ path('logout') }}" class="text-danger dropdown-item">
+                <i class="fa fa-sign-out fa-fw"></i>Déconnection</a>
             </div>
         </div>
       {% endif %}
@@ -30,22 +38,22 @@
           <li class="nav-item nav-notification">
             <a class="nav-link dropdown" href="#" id="dropdownMenuNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="material-icons">notifications</i>
-              {% if route != "observation_new_step_1" and
-                    route != "observation_new_step_2" and
-                    route != "observation_new_step_3" and
-                    route != "observation_new_step_4" and
+              {% if route != "admin_observation_new_step_1" and
+                    route != "admin_observation_new_step_2" and
+                    route != "admin_observation_new_step_3" and
+                    route != "admin_observation_new_step_4" and
                     app.session.get('step')
               %}
                 <span class="badge badge-notify">1</span>
               {% endif %}
             </a>
-            {% if route != "observation_new_step_1" and
-                  route != "observation_new_step_2" and
-                  route != "observation_new_step_3" and
-                  route != "observation_new_step_4" and
+            {% if route != "admin_observation_new_step_1" and
+                  route != "admin_observation_new_step_2" and
+                  route != "admin_observation_new_step_3" and
+                  route != "admin_observation_new_step_4" and
                   app.session.get('step')
             %}
-            {% set pathStep = "observation_new_step_"~app.session.get('step') %}
+            {% set pathStep = "admin_observation_new_step_"~app.session.get('step') %}
               <div class="dropdown-menu dropdown-notification dropdown-menu-right" aria-labelledby="dropdownMenuNotification" >
                 <h6 class="dropdown-header">Une nouvelle observation est en cours</h6>
                 <a href="{{ path(pathStep) }}" class="dropdown-item">Retourner à la saisie</a>
@@ -59,7 +67,10 @@
           </li>
         {% endif %}
         <li class="nav-item">
-          <a class="nav-link active" href="{{ path('observation_new') }}">
+          <a class="nav-link active d-flex flex-column justify-content-center" href="{{ path('admin_observation_new') }}">
+            <i  class="fa fa-plus text-white position-absolute align-self-center"
+                style="font-size:11px;margin-left:-3px;margin-top:3px;">
+            </i>
             <svg class="nav-icons"  >
                 <use xlink:href="{{ asset('images/icons/sprite.svg#dove')}}">
             </svg>

@@ -1,7 +1,7 @@
 <nav class="bg-dark sidebar d-flex flex-column justify-content-center">
     <ul class="nav nav-pills flex-column justify-content-around h-75">
         <li class="nav-item">
-            <a class="nav-link {% if route == 'home' %}active{% endif %}" href="{{ path('home') }}">
+            <a class="nav-link {% if route == 'home' or route == 'admin_home' %}active{% endif %}" href="{{ path('home') }}">
                 <svg class="nav-icons" >
                     <use xlink:href="{{ asset('images/icons/sprite.svg#home')}}">
                 </svg>

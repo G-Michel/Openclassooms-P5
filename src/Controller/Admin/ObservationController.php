@@ -315,6 +315,31 @@ class ObservationController extends Controller
         return $this->redirectToRoute('admin_observation_index');
     }
 
+    /**
+     * Check an Observation entity.
+     *
+     * @Route("/{id}/check", name="admin_observation_check")
+     * @Method("POST")
+     *
+     * The Security annotation value is an expression (if it evaluates to false,
+     * the authorization mechanism will prevent the user accessing this resource).
+     */
+    public function check(Request $request, Observation $observation): Response
+    {
+        if (!$this->isCsrfTokenValid('check', $request->request->get('token'))) {
+            return $this->redirectToRoute('admin_observation_index');
+        }
+        // var_dump($request->request->get('status'));die();
+        $observation->setStatus($request->request->get('status'));
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($observation);
+        $em->flush();
+
+        $this->addFlash('success', 'Votre vérification a bien été pris en compte !');
+
+        return $this->redirectToRoute('admin_observation_index');
+    }
+
 
 
 }

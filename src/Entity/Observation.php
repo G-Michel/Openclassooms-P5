@@ -9,13 +9,25 @@ use App\Entity\Location;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ObservationRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Observation
 {
+    /** @var array Map of standard OBSERVATION status code/reason phrases */
+    private static $phrases = [
+        1  => 'En ligne',
+        0    => 'Validation en cours',
+        -100 => 'En attente',
+        -200 => 'Validation refusée',
+        -201 => 'Votre oiseau ...',
+        -202 => 'Votre oiseau ...',
+        -203 => 'Votre oiseau ...',
+        -204 => 'Votre oiseau ...',
+        -205 => 'Votre oiseau ...'
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -197,10 +209,7 @@ class Observation
     }
     public function getStatusDefinition($status)
     {
-        if ($status == 1) {
-            return 'En ligne';
-        }
-        return 'Validation en cours';
+        return self::$phrases[$status];
     }
 
     /**

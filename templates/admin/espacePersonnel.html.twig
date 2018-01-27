@@ -64,7 +64,7 @@
                             <td>
                                 {% set location =  observation.getLocation().getAddress() |split(',',2) %}
 
-                                <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{location[1]}}</a>
+                                <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{observation.getLocation().getAddress()}}</a>
                             </td>
                             <td>
                                 {% if observation.getStatus() == 1 %}
@@ -101,7 +101,7 @@
                                 <td>{{observation.getDateAdd().format('d-M-Y')}}</td>
                                 <td>
                                     {% set location =  observation.getLocation().getAddress() |split(',',2) %}
-                                    <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{location[1]}}</a>
+                                    <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{observation.getLocation().getAddress()}}</a>
                                 </td>
 
                                 <td>{{observation.getUser().getUsername|default('')}}</td>

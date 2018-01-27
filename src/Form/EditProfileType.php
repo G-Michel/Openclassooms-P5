@@ -42,10 +42,10 @@ class EditProfileType extends AbstractType
                 'mapped'      => true,
                 'constraints' => [
                     new Image([
-                        'minWidth'  => 200,
-                        'maxWidth'  => 5000,
-                        'minHeight' => 200,
-                        'maxHeight' => 5000,
+                        'minWidth'  => 30,
+                        'maxWidth'  => 500,
+                        'minHeight' => 30,
+                        'maxHeight' => 500,
                         'mimeTypesMessage' => "Le fichier n’est pas une image valide",
                         'minWidthMessage'  => "La largeur de l'image est trop petite ({{ width }} px), La largeur minimum autorisée est {{ min_width }} px",
                         'maxWidthMessage'  => "La largeur de l'image est trop grande ({{ width }} px), La largeur maximum autorisée est {{ max_width }} px",
@@ -58,8 +58,12 @@ class EditProfileType extends AbstractType
                 'label'       => 'Description de la photo',
                 'required'    => false,
             ])
+            ->add('currentPassword',PasswordType::class,array(
+                'required'    => false,
+            ))
             ->add('resetPassword',ResetPasswordType::class,array(
                 'required'    => false,
+
             ));
 
                 

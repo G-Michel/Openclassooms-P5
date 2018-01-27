@@ -31,6 +31,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UserManagementController extends Controller
 {
+    //schemes={"https"}
     /**
      * @Route("/signUp", name="signUp")
      */
@@ -168,7 +169,7 @@ class UserManagementController extends Controller
 
 
     /**
-     * @Route("/signIn", name="login")
+     * @Route("/signIn", name="login" )
      */
     public function signIn(Request $request, AuthenticationUtils $authUtils, OauthLoginHandler $oauthHandler)
     {

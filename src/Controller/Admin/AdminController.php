@@ -56,36 +56,74 @@ class AdminController extends Controller
       if ($form->isSubmitted() && $form->isValid())
       {
         $formData = $form->getData();
-        //check if a new value has been add
- 
-          if ($parameter != null || $parameter != NULL )
+        //var_dump($formData);
+        //check if a new value has been included
+        $toEdit=false;
+
+        /*if ($formData["picture"]!=null && $formData["alt"]!=null )
+        {
+              if ($user->getPicture()==null)
+              {
+                $user->setPicture(new Picture()); 
+              }
+              else
+              {
+   
+              }
+        }*/
+
+        if ($formData["name"]!=null && $user->getName()!= $formData["name"])
+        {
+              $user->setName($formData["name"]);
+            $toEdit=true; 
+        }
+
+          if ($formData["surname"]!=null && $user->getSurname()!=$formData["surname"])
           {
-            if ($user->getName()!=$form["name"])$user->getName()!=$form["name"];
-            if ($user->getName()!=$form["surname"])$user->getName()!=$form["surname"];
-            if ($user->getName()!=$form["email"])$user->getName()!=$form["email"];
-          
-            
+            $user->setSurname($formData["surname"]);
+            $toEdit=true; 
 
+          }
 
-          } 
+          if ($formData["mail"]!=null && $user->getMail()!=$formData["mail"])
+          { 
+            $user->setMail($formData["mail"]);
+            $toEdit=true; 
+          }
+
+          // is password valid ?
+          if ($formData["resetPassword"]["plainPassword"] != null && $formData["currentPassword"] != null) 
+          {
+            $validCurrentPassword = $encoder->isPasswordValid($user,$formData["currentPassword"]);
+
+            if ($validCurrentPassword)
+            {
+              $encodedPassword = $encoder->encodePassword($user,$formData["resetPassword"]['plainPassword']);
+              $user->setPassword($encodedPassword);
+              $toEdit=true; 
+            }
+          }
+          if($toEdit)
+          {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            try 
+            {
+              $em->flush();  
+            } catch (Doctrine\ORM\ORMException $e) 
+            {
+              $this->addFlash('flash_error',"une erreur est survenue pour le changement d'infos personnelles");
+              $this->redirectToRoute('edit_profil');
+            }
+          }
+           
       }
   		return $this->render('admin/editProfil.html.twig',array(
   			'form' => $form->createView()
   		));
+          
   	}
 }
 
 /*
-      //Generating all forms 
-      $forms= array("email"=>'',"name"=>"",'surname'=>"");
-      $views;
-      foreach ($forms as &$form) $form=$this->createFormBuilder($user);
-      $forms['email']->add('mail', EmailType::class,array('label'=>'Adresse email',));
-      $forms['name']->add('name', TextType::class,array('label'=>'Nom',));
-      $forms['surname']->add('surname',TextType::class,array(
-        'label'=>'Nom de famille'));
-      foreach ($forms as &$form) $form=$form->getForm();
-      $forms['password']= $this->createForm(ResetPasswordType::class);
-      $forms['picture'] = $this->createForm(UserPictureType::class);
-      foreach ($forms as $key => &$form) $views[$key]=$form->createView();
-      foreach ($forms as &$form) $form->handleRequest($request);*/
+     

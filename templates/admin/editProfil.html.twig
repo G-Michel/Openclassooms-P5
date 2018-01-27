@@ -19,16 +19,30 @@
     </div>
     
     <div class=' col-lg-8 col-xl-8  mt-5 text-muted'>
+				{{ form_start(form) }}
+					{% for label, messages in app.flashes %}
+	    				{% for message in messages %}
+	        				<div class="flash-{{ label }}">
+	            				{{ message }}
+	        				</div>
+	    				{% endfor %}
+					{% endfor %}
+				
+				<h4 class="text-warning">
+					{{ form_errors(form.file)}}
+					{{ form_errors(form.currentPassword)}}
+					{{ form_errors(form.resetPassword.plainPassword.first)}}
+				</h4>	
+				
     	<h2 class="text-warning d-block">Vos informations</h2><br/>
     	<table class="table border infoTable table-striped table-light mt-3">
 	    	<tr>
 	    		<td><h3>Photo de profil</h3></td>
 	    		<td >
 	    		<div class="invisible form_picture_class">
-	    			{{ form_start(form) }}
+	    			
 					{{ form_widget(form.file) }}
-					{{ form_widget(form.alt,{ 'value': 'profil', 'attr': {'class': 'invisible'} }) }}
-					{{ form_errors(form.file) }}
+					{{ form_widget(form.alt,{ 'value': 'image de profil','attr': {'class': 'invisible'} }) }}
 				</div>
 				</td>
 	    		<td class=""><img height="100px"src="{{ app.user.getPicture().getUrl()}}"></td>
@@ -39,7 +53,6 @@
 	    		<td>
 	    		<div class="invisible form_email_class">
 					{{ form_widget(form.mail) }}
-					{{ form_errors(form.mail) }}
 
 				</div>
 				</td>
@@ -50,9 +63,9 @@
 	    		<td><h3>Mot de passe</h3></td>
 	    		<td>
 	    		<div class="invisible form_password_class">
-					{{ form_errors(form.resetPassword) }}
-					{{ form_widget(form.resetPassword.plainPassword.first,{ 'attr': {'placeholder': 'Entrez votre mot de passe'} }) }}<br/>
-					{{ form_widget(form.resetPassword.plainPassword.second,{ 'attr': {'placeholder': 'Repetez votre mot de passe'} }) }}
+	    			{{ form_widget(form.currentPassword,{ 'attr': {'placeholder': 'Entrez votre mot de passe actuel'} }) }}<br/>
+					{{ form_widget(form.resetPassword.plainPassword.first,{ 'attr': {'placeholder': 'Entrez le nouveu mot de passe'} }) }}<br/>
+					{{ form_widget(form.resetPassword.plainPassword.second,{ 'attr': {'placeholder': 'Repetez le mot de passe'} }) }}
 				
 				</div>
 	    		</td>
@@ -63,7 +76,6 @@
 	    		<td><h3>Nom</h3></td>
 	    		<td>
 	    		<div class="invisible d-none form_name_class">
-					{{ form_errors(form.name) }}
 					{{ form_widget(form.name) }}
 				</div>
 	    		</td>
@@ -74,7 +86,6 @@
 	    		<td><h3>prenom</h3></td>
 	    		<td>
 	    		<div class="invisible d-none form_surname_class">
-					{{ form_errors(form.surname) }}
 					{{ form_widget(form.surname)}}
 					
 				</div>
@@ -91,30 +102,9 @@
     </div>
 
 </div>
-{% block java_per_pages %}	
- 		var form = document.querySelector(".form_surname_button");
-	form.addEventListener("click",function(e){
-		document.querySelector(".form_surname_class").removeAttribute('class');
-});
 
-var form = document.getElementsByClassName("form_name_button");
-	form[0].addEventListener("click",function(e){
-		document.querySelector(".form_name_class").removeAttribute('class');
-});
-
-var form = document.querySelector(".form_email_button");
-	form.addEventListener("click",function(e){
-		document.querySelector(".form_email_class").removeAttribute('class');
-});
-
-var form = document.querySelector(".form_password_button");
-	form.addEventListener("click",function(e){
-		document.querySelector(".form_password_class").removeAttribute('class');
-});
-
-var form = document.querySelector(".form_picture_button");
-	form.addEventListener("click",function(e){
-		document.querySelector(".form_picture_class").removeAttribute('class');
-});
 {% endblock %}
+
+{% block java_per_pages %}
+	<script src="{{asset('build/js/user-infos.js')}}"></script>
 {% endblock %}

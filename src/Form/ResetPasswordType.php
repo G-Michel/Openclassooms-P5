@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
+//constraints
+use Symfony\Component\Validator\Constraints\Length;
+
 class ResetPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -21,7 +24,12 @@ class ResetPasswordType extends AbstractType
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),));
+                'second_options' => array('label' => 'Repeat Password'),
+                'constraints' => array(new Length(array(
+                    'min' => 6,
+                    'minMessage' => 'Le mot de passe doit comporter au moins 6 caractères'
+                )))
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

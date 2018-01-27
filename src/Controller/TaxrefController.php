@@ -56,7 +56,7 @@ class TaxrefController extends Controller
      */
     public function show(Taxref $taxref): Response
     {
-        return $this->render('taxref/show.html.twig', ['post' => $taxref]);
+        return $this->render('taxref/show.html.twig', compact('taxref'));
     }
 
 

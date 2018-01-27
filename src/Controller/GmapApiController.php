@@ -26,6 +26,7 @@ class GmapApiController extends Controller
 
         $foundBirds = $bird->findBy(["taxref"=>$taxref]);
 
+
         $results = [
             "type"     => "FeatureCollection",
             "features" => []

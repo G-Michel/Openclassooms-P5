@@ -66,7 +66,9 @@
         infowindow.open(map, marker);
       {% endif %}
 
-      {% if observation and app.session.get('step') == 1 %}
+      {% if observation and app.session.get('step') != 1
+         or options.form.action|default(false) == 'edit'
+      %}
         setPosition(marker);
         geocodeLatLng(geocoder, map, marker);
       {% endif %}

@@ -347,8 +347,5 @@ class UserManagementController extends Controller
                         'message' => array('Erreur Réinitialisation Mot de Passe',
                         'délai dépassé veuillez faire à nouveau la demande')));
         }
-
     }
-
-
 }

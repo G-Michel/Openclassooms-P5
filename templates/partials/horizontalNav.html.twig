@@ -9,7 +9,11 @@
             <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media">
                 <div class="media-left">
-                  <img src="{{ app.user.picture.url }}" alt="user" class="mCS_img_loaded">
+                  {% if app.user.picture.url|length > 6 %}
+                    <img src="{{ app.user.picture.url }}" alt="user" class="mCS_img_loaded">
+                  {% else %}
+                    <img src="{{ asset( app.user.picture.webPath('thumbnails')) }}" alt="user" class="mCS_img_loaded">
+                  {% endif %}
                 </div>
                 <div class="media-body">
                   <p class="name">{{ app.user.name }} {{ app.user.surname }} <i class="material-icons">keyboard_arrow_down</i></p>

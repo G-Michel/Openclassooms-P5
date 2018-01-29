@@ -96,6 +96,7 @@ class Picture
     $this->manager->make($this->getFile())
                      ->resize(1920, 1080)
                      ->save($this->getUploadRootDir().'/fullHd/'.$this->getId().'.'.$this->getUrl());
+  unset($this->file);
   }
 
   /**
@@ -136,7 +137,7 @@ class Picture
     if ($size === 'hd') {
       return $this->getUploadDir().'/fullHd/'.$this->getId().'.'.$this->getUrl();
     }
-    return $this->getUploadDir().'/thubnails/'.$this->getId().'.'.$this->getUrl();
+    return $this->getUploadDir().'/thumbnails/'.$this->getId().'.'.$this->getUrl();
   }
 
   /**

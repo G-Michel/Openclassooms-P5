@@ -100,7 +100,7 @@ class User implements UserInterface, AdvancedUserInterface
 
      * Unidirectionnal - One User has One Picture . (OWNED SIDE)
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist", "remove"})
      * @Assert\Valid()
      *
      */

@@ -1,112 +1,81 @@
 {% extends "base.html.twig" %}
 
-{% block title %}NAO - Espace Personnel{% endblock %}
+{% block title %}Espace Personnel - {{parent()}}{% endblock %}
 
 {% block body_id route %}
 {% block main_id %}main_{{route}}{% endblock %}
 
 
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">{% endblock %}
 
 
 {% block mainLeft %}
-<div class='row no-gutters'>
+<div class='row no-gutters bg-light'>
     <div class="d-flex justify-content-around align-items-md-center flex-wrap">
     <div class=" col-lg-3 col-xl-3 h-75">
         <div class="row no-gutters">
-            <h2 class="text-white display-4">Espace personnel</h2>
+            <h2 class="text-dark display-4">Espace personnel</h2>
             <p class="text-primary lead">Vous pouvez accéder aux fonctionnalités clés du site</p>
             <div class="col-sm-12">
-                <div><a class="btn btn-block btn-primary text-muted" href="{{path('admin_observation_index')}}">Voir mes Observations</a></div>
-                <div><a class="btn btn-block btn-primary text-muted" href="{{path('admin_observation_new')}}">Ajouter une observation</a></div>
-                <div><a class="btn btn-block btn-primary text-muted" href="{{path('edit_profil')}}">Editer mon profil</a></div>
+                <div>
+                    <a class="btn btn-block btn-primary btn-round" href="{{path('admin_observation_index')}}">
+                        <svg height="24px" width="24px" style="vertical-align: middle;" >
+                            <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
+                        </svg>Voir mes Observations
+                    </a>
+                </div>
+                <div><a class="btn btn-block btn-primary btn-round" href="{{path('admin_observation_new')}}">
+                        <i class="fa fa-plus fa-fw"></i>Ajouter une observation
+                    </a>
+                </div>
+                <div>
+                    <a class="btn btn-block btn-primary btn-round" href="{{path('edit_profil')}}">
+                        <i class="fa fa-user fa-fw"></i>Editer mon profil
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class=' col-lg-7 col-xl-7 h-75 '>
-
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" href="#lastObs" role="tab" data-toggle="tab">Mes dernières observations</a>
+    <div class=' col-lg-7 col-xl-7 mt-5 mb-5 observation-preview'>
+        <ul class="nav justify-content-center w-100" id="myTab" role="tablist" >
+            {# Commons #}
+            <li class="nav-item col p-0">
+                <a class="nav-link active" id="last-tab" data-toggle="tab" href="#lastObs" role="tab" aria-controls="lastObs" aria-selected="true">
+                <div class="jumbotron">
+                    <h2 class="title">Mes dernières observations</h2>
+                    <p class="lead">{{userObservations|length}}</p>
+                </div>
+                </a>
             </li>
-            {% if is_granted('ROLE_NATURALIST')%}
-                <li class="nav-item">
-                    <a class="nav-link" href="#toValid" role="tab" data-toggle="tab">Dernières observations en attente de validation</a>
+            {# Only Naluralist #}
+            {% if is_granted('ROLE_NATURALIST') %}
+                <li class="nav-item col pr-0">
+                    <a class="nav-link" id="toCheck-tab" data-toggle="tab" href="#toCheckObs" role="tab" aria-controls="toCheckObs" aria-selected="false">
+                    <div class="jumbotron">
+                        <h2 class="title">Les observations à vérifier</h2>
+                        <p class="lead">{{obsToValid|length}}</p>
+                    </div>
+                    </a>
                 </li>
             {% endif %}
         </ul>
 
-        <div class="tab-content text-muted petittest">
-            <div role="tabpanel" class="tab-pane active " id="lastObs">
-                <table class="table table-striped table-light mt-3 ">
-                    <tr class="">
-                        <th>Oiseau</th>
-                        <th>Date d'ajout</th>
-                        <th>Lieu</th>
-                        <th>Statut</th>
-                        <th>Voir</th>
-                        <th>Supprimer</th>
-                    </tr>
-                    {% for observation in userObservations %}
-                        <tr class="">
-                            <td>
-                                <a href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()|default('')}}</a>
-                            </td>
-                            <td>
-                                {{observation.getDateAdd().format('d-M-Y')}}
-                            </td>
-                            <td>
-                                {% set location =  observation.getLocation().getAddress() |split(',',2) %}
-
-                                <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{observation.getLocation().getAddress()}}</a>
-                            </td>
-                            <td>
-                                {% if observation.getStatus() == 1 %}
-                                    Validée
-                                {% else %}
-                                    En attente de validation
-                                {% endif %}
-
-                            </td>
-                            <td><a href="{{ path('observation_show', {id: observation.getId()}) }}">voir</a></td>
-                            <td><a href="">supprimer</a></td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
+        <div class="tab-content pt-5">
+            <!-- Les 5 dernières observations de l'utilisateur -->
+            {{ include('components/tables/observation/default.html.twig', {
+                observations: userObservations,
+                id:  'last',
+                title: 'Mes dernières observations',
+                active: true,
+            }) }}
             {% if is_granted('ROLE_NATURALIST')%}
-                <div role="tabpanel" class="tab-pane" id="toValid">
-                    <table class="table table-striped table-light mt-3">
-                        <tr class="">
-                            <th>Oiseau</th>
-                            <th>Date d'ajout</th>
-                            <th>Lieu</th>
-                            <th>Observateur</th>
-                            <th>Valider</th>
-                            <th>Supprimer</th>
-                        </tr>
-                        {% for observation in obsToValid %}
-                            <tr class="text-muted">
-                                <td>
-
-                                    <a href="{{ path('observation_show', {id: observation.getId()})}}">{{observation.getBird().getTaxref().getNomVernType()|default('')}}</a>
-
-                                </td>
-                                <td>{{observation.getDateAdd().format('d-M-Y')}}</td>
-                                <td>
-                                    {% set location =  observation.getLocation().getAddress() |split(',',2) %}
-                                    <a href="{{ path('observation_show', {id: observation.getId()}) }}">{{observation.getLocation().getAddress()}}</a>
-                                </td>
-
-                                <td>{{observation.getUser().getUsername|default('')}}</td>
-                                <th><a href="">valider</a></th>
-                                <th><a href="">supprimer</a></th>
-
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
+                <!-- Les 5 dernières observations à valider -->
+                {{ include('components/tables/observation/toCheck.html.twig', {
+                    observations: obsToValid,
+                    id:  'toCheck',
+                    title: 'Les dernières observations à vérifier'
+                }) }}
             {% endif %}
         </div>
 

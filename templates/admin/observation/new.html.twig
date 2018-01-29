@@ -21,7 +21,8 @@
                         back_btn_label: options.form.back_btn_label|default('étape précédente'),
                         back_btn_path: options.form.back_btn_path,
                     }, with_context = false) }}
-                {% else %}
+                    {% block obsAction %}{% endblock %}
+                    {% else %}
                     {% for post in posts %}
                     {{ include('components/cards/taxref.html.twig', {
                         include_id_btn: true,

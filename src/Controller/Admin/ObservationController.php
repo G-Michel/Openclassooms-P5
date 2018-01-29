@@ -28,15 +28,30 @@ class ObservationController extends Controller
 
 
     /**
+     * Finds and displays all Observations entity of user.
+     *
      * @Route("s/", name="admin_observation_index")
      * @Method("GET")
      * @Cache(smaxage="10")
      */
     public function index(ObservationRepository $observation)
     {
-      $posts = $observation->findBy(['user'=> $this->getUser()]);
-      $postsToCheck = $observation->findBy(['status' => 0]);
-      return $this->render('admin/observation/index.html.twig', compact('posts','postsToCheck'));
+      $userObservations        = $observation->findByUser($this->getUser());
+      $observationsToCheck     = $observation->findEqualToStatus(0);
+      $uncommittedObservations = $observation->findLessThanOrEqualStatus(-200);
+
+      return $this->render(
+        'admin/observation/index.html.twig',
+        compact('userObservations','observationsToCheck', 'uncommittedObservations')
+      );
+    //   EqualTo
+    //   NotEqualTo
+    //   IdenticalTo
+    //   NotIdenticalTo
+    //   LessThan
+    //   LessThanOrEqual
+    //   GreaterThan
+    //   GreaterThanOrEqual
     }
 
     /**
@@ -329,7 +344,6 @@ class ObservationController extends Controller
         if (!$this->isCsrfTokenValid('check', $request->request->get('token'))) {
             return $this->redirectToRoute('admin_observation_index');
         }
-        // var_dump($request->request->get('status'));die();
         $observation->setStatus($request->request->get('status'));
         $em = $this->getDoctrine()->getManager();
         $em->persist($observation);

@@ -62,7 +62,7 @@ class ObservationFixtures extends Fixture implements OrderedFixtureInterface
             $location = new Location();
             $location->setGpsX($arrayLocations[$numRow][19]);
             $location->setGpsY($arrayLocations[$numRow][20]);
-            $location->setAddress($faker->address);
+            $location->setAddress(" , ".$arrayLocations[$numRow][8]." ".$arrayLocations[$numRow][5].", France");
             $observation->setLocation($location);
             // On sauvegarde $location;
             $manager->persist($location);

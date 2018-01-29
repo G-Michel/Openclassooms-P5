@@ -34,28 +34,79 @@ class ObservationRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByUser($limit,$username)
+    // public function findByUser($limit,$username)
+    // {
+    //     return $this->createQueryBuilder('o')
+    //         ->leftJoin('o.user','u')
+    //         ->where('u.username = :username')
+    //         ->setParameter('username',$username)
+    //         ->orderBy('o.dateAdd', 'DESC')
+    //         ->setMaxResults($limit)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
+    // public function findToValid($limit)
+    // {
+    //     return $this->createQueryBuilder('o')
+    //         ->where('o.status = 0')
+    //         ->orderBy('o.dateAdd', 'DESC')
+    //         ->setMaxResults($limit)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+
+    public function findByUser($user, $limit = null)
     {
-        return $this->createQueryBuilder('o')
-            ->leftJoin('o.user','u')
-            ->where('u.username = :username')
-            ->setParameter('username',$username)
-            ->orderBy('o.dateAdd', 'DESC')
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('o')
+            ->select('o.id','o.dateObs','o.status','l.address')
+            ->leftJoin('o.location','l')
+            ->where('o.user = :user')
+            ->setParameter('user',$user)
+            ->orderBy('o.dateAdd', 'DESC');
+        if ($limit) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()
+                  ->getResult();
     }
 
-    public function findToValid($limit)
+    public function findEqualToStatus($status,$limit = null)
     {
-        return $this->createQueryBuilder('o')
-            ->where('o.status = 0')
-            ->orderBy('o.dateAdd', 'DESC')
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('o')
+            ->select('o')
+            ->leftJoin('o.location','o_l')
+            ->leftJoin('o.user','o_u')
+            ->leftJoin('o.bird','o_b')
+            ->leftJoin('o_b.taxref','o_b_t')
+            ->addselect('o_l','o_u','o_b','o_b_t')
+            ->where('o.status = :status')
+            ->setParameter('status',$status)
+            ->orderBy('o.dateAdd', 'DESC');
+        if ($limit) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()
+                  ->getResult();
+    }
+
+    public function findLessThanOrEqualStatus($status,$limit = null)
+    {
+        $qb = $this->createQueryBuilder('o')
+            ->where('o.status = :status')
+            ->orwhere('o.status < :status')
+            ->setParameter('status',$status)
+            ->orderBy('o.dateAdd', 'DESC');
+        if ($limit) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()
+                  ->getResult();
     }
 
 }

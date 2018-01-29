@@ -7,11 +7,12 @@
 {% block main_header %}
   <div id="main-header" class="row observation-preview">
     <ul class="nav justify-content-center w-100" id="myTab" role="tablist" >
+      {# Commons #}
       <li class="nav-item col">
         <a class="nav-link active" id="all-tab" data-toggle="tab" href="#allObs" role="tab" aria-controls="allObs" aria-selected="true">
           <div class="jumbotron">
               <h2 class="title">Mes observations</h2>
-              <p class="lead">{{posts|length}}</p>
+              <p class="lead">{{userObservations|length}}</p>
           </div>
         </a>
       </li>
@@ -20,14 +21,16 @@
           <div class="jumbotron">
               <h2 class="title">En ligne</h2>
               {% set countInline = 0 %}
-              {% for inline in posts if inline.status == 1 %}
+              {% for inline in userObservations if inline.status == 1 %}
                   {% set countInline = countInline + 1 %}
               {% endfor %}
               <p class="lead">{{ countInline }}</p>
           </div>
         </a>
       </li>
-      <li class="nav-item col">
+      {# Only Member #}
+      {% for role in app.user.roles if role =="ROLE_USER" %}
+        <li class="nav-item col">
           <a class="nav-link" id="wait-tab" data-toggle="tab" href="#waitObs" role="tab" aria-controls="waitObs" aria-selected="false">
             <div class="jumbotron">
                 <h2 class="title">En cours validation</h2>
@@ -39,14 +42,34 @@
             </div>
           </a>
         </li>
+        <li class="nav-item col">
+          <a class="nav-link" id="check-tab" data-toggle="tab" href="#checkObs" role="tab" aria-controls="checkObs" aria-selected="false">
+            <div class="jumbotron">
+                <h2 class="title">Non validées</h2>
+                <p class="lead">{{postsToCheck|length}}</p>
+            </div>
+          </a>
+        </li>
+      {% endfor %}
+      {# Only Naluralist #}
+      {% if is_granted('ROLE_NATURALIST') %}
       <li class="nav-item col">
         <a class="nav-link" id="check-tab" data-toggle="tab" href="#checkObs" role="tab" aria-controls="checkObs" aria-selected="false">
           <div class="jumbotron">
-              <h2 class="title">A valider</h2>
-              <p class="lead">{{postsToCheck|length}}</p>
+              <h2 class="title">Les observations à vérifier</h2>
+              <p class="lead">{{observationsToCheck|length}}</p>
           </div>
         </a>
       </li>
+      <li class="nav-item col">
+        <a class="nav-link" id="check-tab" data-toggle="tab" href="#checkObs" role="tab" aria-controls="checkObs" aria-selected="false">
+          <div class="jumbotron">
+              <h2 class="title">Les observations non validées</h2>
+              <p class="lead">{{observationsToCheck|length}}</p>
+          </div>
+        </a>
+      </li>
+      {% endif %}
     </ul>
   </div>
 {% endblock %}
@@ -54,34 +77,43 @@
 {% block main_content %}
 
   <div class="tab-content" id="myTabContent">
-    <!-- Toute les observation de l'utilisateur -->
-    {{ include('components/tables/observation.html.twig', {
-      posts: posts,
-      type:  'all',
+    <!-- Toute les observations de l'utilisateur -->
+    {{ include('components/tables/observation/default.html.twig', {
+      observations: userObservations,
+      id:  'all',
       title: 'Toutes mes observations',
-      cols:  ['Lieu','Moment','Oiseau','Status']
     }) }}
-    <!-- En ligne -->
-    {{ include('components/tables/observation.html.twig', {
-      posts: posts,
-      type:  'valid',
+    <!-- En lignes -->
+    {{ include('components/tables/observation/default.html.twig', {
+      observations: userObservations,
+      id:  'valid',
       title: 'Mes observations en ligne',
-      cols:  ['Lieu','Moment','Oiseau','Status']
     }) }}
-    <!-- En cours de validation -->
-    {{ include('components/tables/observation.html.twig', {
-      posts: posts,
-      type:  'wait',
-      title: 'Mes observations en cours de validation',
-      cols:  ['Lieu','Moment','Oiseau','Status']
-    }) }}
-    <!-- A valider -->
-    {{ include('components/tables/observation.html.twig', {
-      posts: postsToCheck,
-      type:  'check',
-      title: 'Les observations à valider',
-      cols:  ['Lieu','Moment','Observateur','Mail']
-    }) }}
+    {# Only Member #}
+    {% for role in app.user.roles if role =="ROLE_USER" %}
+      <!-- En cours de validation -->
+      {{ include('components/tables/observation/default.html.twig', {
+        observations: userObservations,
+        id:  'wait',
+        title: 'Mes observations en cours de validation',
+      }) }}
+    {% endfor %}
+    {# Only Naluralist #}
+    {% if is_granted('ROLE_NATURALIST') %}
+      <!-- A vérifer -->
+      {{ include('components/tables/observation/old.html.twig', {
+        observations: observationsToCheck,
+        id:  'check',
+        title: 'Les observations à vérifier',
+      }) }}
+      <!-- Non validées -->
+      {{ include('components/tables/observation/old.html.twig', {
+        observations: uncommittedObservations,
+        id:  'uncommitted',
+        title: 'Les observations à valider',
+        cols:  ['Lieu','Moment','Observateur','Mail']
+      }) }}
+    {% endif %}
   </div>
 
 {% endblock %}

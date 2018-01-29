@@ -126,4 +126,13 @@ class Location
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFormatedAddress()
+    {
+        $array = explode(',', $this->address);
+        return $array[1];
+    }
 }

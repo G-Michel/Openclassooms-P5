@@ -17,21 +17,17 @@
           <th scope="col">Lieu</th>
           <th scope="col">Moment</th>
           <th scope="col">Oiseau</th>
-          <th scope="col">Status</th>
+          <th scope="col">Raison</th>
           <th scope="col-action"></th>
         </tr>
       </thead>
       <tbody>
-        {% if id == 'valid' %}
-          {% for obs in observations if obs.status == 1  %}
-            {{ include('components/tables/observation/_table_default.html.twig')}}
-          {% endfor %}
-        {% elseif id == 'wait' %}
-          {% for obs in observations if obs.status == 0  %}
-          {{ include('components/tables/observation/_table_default.html.twig')}}
+        {% if id == 'uncommitted'%}
+          {% for obs in observations %}
+            {{ include('components/tables/observation/_table_noValid.html.twig')}}
           {% endfor %}
         {% else %}
-          {% for obs in observations %}
+          {% for obs in observations if obs.status <= -199  %}
             {{ include('components/tables/observation/_table_default.html.twig')}}
           {% endfor %}
         {% endif %}

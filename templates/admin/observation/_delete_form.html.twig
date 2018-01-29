@@ -1,5 +1,7 @@
 {{ include('observation/_delete_observation_confirmation.html.twig') }}
-{% if app.request.attributes.get('_route') == 'admin_observation_index' %}
+{% if app.request.attributes.get('_route') == 'admin_observation_index'
+   or app.request.attributes.get('_route') == 'admin_home'
+%}
   <form
     action="{{ path('admin_observation_delete', {id: observation.id}) }}"
     method="post"

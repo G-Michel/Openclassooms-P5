@@ -24,16 +24,18 @@ class AdminController extends Controller
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-  public function homePage(Request $request)
-  {
-    $user = $this->get("security.token_storage")->getToken()->getUser();
-    $obsRepository = $this->getDoctrine()->getRepository(Observation::Class);
-    $userObservations = $obsRepository->findByUser(5,$user->getUsername());
-    $observationsToValid=$obsRepository->findToValid(5);
+	public function homePage(Request $request, ObservationRepository $observation)
+	{
+		// $user = $this->get("security.token_storage")->getToken()->getUser();
+		// $obsRepository = $this->getDoctrine()->getRepository(Observation::Class);
+		// $userObservations = $obsRepository->findByUser(5,$user->getUsername());
+    // $observationsToValid=$obsRepository->findToValid(5);
+		$userObservations    = $observation->findByUser($this->getUser(),5);
+		$observationsToValid = $observation->findEqualToStatus(0,5);
 
         return $this->render('admin/espacePersonnel.html.twig',array(
-          'userObservations' => $userObservations,
-          'obsToValid' => $observationsToValid
+        	'userObservations' => $userObservations,
+        	'obsToValid'       => $observationsToValid
         ));
     }
 

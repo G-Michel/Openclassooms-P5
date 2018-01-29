@@ -167,7 +167,6 @@ class UserManagementController extends Controller
     }
 
 
-
     /**
      * @Route("/signIn", name="login" )
      */

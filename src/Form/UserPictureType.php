@@ -35,7 +35,7 @@ class UserPictureType extends AbstractType
             ]
         ])
         ->add('alt', TextType::class, [
-            'label'       => 'Description de la photo',
+        
         ])
 
         ;

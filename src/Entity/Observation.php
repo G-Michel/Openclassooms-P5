@@ -21,11 +21,11 @@ class Observation
         0    => 'Validation en cours',
         -100 => 'En attente',
         -200 => 'Validation refusée',
-        -201 => 'Votre oiseau ...',
-        -202 => 'Votre oiseau ...',
-        -203 => 'Votre oiseau ...',
-        -204 => 'Votre oiseau ...',
-        -205 => 'Votre oiseau ...'
+        -201 => 'Validation refusée, Vérifer la région de l\'observation',
+        -202 => 'Validation refusée, Vérifer le moment de l\'observation',
+        -203 => 'Validation refusée, Vérifer les couleurs de l\'oiseau observé',
+        -204 => 'Validation refusée, Vérifer la taille de l\'oiseau observé',
+        -205 => 'Validation refusée, Vérifer la photo de l\'oiseau observé'
     ];
 
     /**

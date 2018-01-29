@@ -1,0 +1,24 @@
+<tr>
+  <th scope="row">{{ obs.id }}</th>
+  <td>{{obs.location.formatedAddress}}</td>
+  <td> {{ obs.getAgo(obs.dateObs|date()) }} </td>
+  <td> {{ obs.bird.taxref.lbNomType }} </td>
+  <td>
+    <i class="fa fa-circle fa-fw
+      {% if obs.status == 1 %} text-primary
+      {% elseif obs.status == 0 %} text-warning
+      {% else %}text-danger
+      {% endif %} ">
+    </i>
+    {{ obs.statusDefinition(obs.status) }}
+  </td>
+  <td class="text-right d-inline-flex justify-content-between">
+    <a class="p-2" href="{{ path('admin_observation_show',{ id: obs.id }) }}">
+      <i class="fa fa-eye"></i>
+    </a>
+    <a class="p-2" href="{{ path('admin_observation_edit',{ id: obs.id }) }}">
+      <i class="fa fa-pencil"></i>
+    </a>
+    {{ include('admin/observation/_delete_form.html.twig', {observation: obs}, with_context = false) }}
+  </td>
+</tr>

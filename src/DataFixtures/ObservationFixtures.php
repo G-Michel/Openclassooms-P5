@@ -42,9 +42,12 @@ class ObservationFixtures extends Fixture implements OrderedFixtureInterface
 
           for ($i=0; $i < $nbObs ; $i++) {
             // Variables
-            $status = rand(0,1);
+            $user   = $this->getReference('user-'.rand(4,20));
+            $status = $faker->randomElement($array = ['0','1','-201','-202','-203','-204','-205']);
+            if ($user->getRoles() == 'ROLE_ADMIN' || $user->getRoles() == 'ROLE_NATURALIST') {
+              $status = 1;
+            }
             $dateObs = $faker->dateTimeBetween($startDate = '-10 years', $endDate = '- 5 days');
-            $user   = $this->getReference('user-'.rand(4,63));
             // Lecture des fichiers Communes CSV
             $numFile ==36?$numRow=rand(0,699):$numRow=rand(0,999);
             $arrayLocations = array_map(function($rowLocation) {

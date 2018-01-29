@@ -1,5 +1,7 @@
 {{ include('observation/_check_observation_confirmation.html.twig', {observation: observation.id}) }}
-{% if app.request.attributes.get('_route') == 'admin_observation_index' %}
+{% if app.request.attributes.get('_route') == 'admin_observation_index'
+   or app.request.attributes.get('_route') == 'admin_home'
+%}
   <form
     action="{{ path('admin_observation_check', {id: observation.id}) }}"
     method="post"

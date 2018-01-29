@@ -8,8 +8,7 @@
     <script src="{{ asset('build/js/admin.js') }}"></script>
 {% endblock %}
 
-{% block mainLeft %}
-{{parent()}}
+{% block obsAction %}
   <div class="section actions">
       {{ include('admin/observation/_delete_form.html.twig', {observation: observation}, with_context = false) }}
   </div>

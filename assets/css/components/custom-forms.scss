@@ -66,3 +66,26 @@
 .custom-radio .custom-control-input:checked ~ .custom-control-label.novalid::before {
   background-color: $danger;
 }
+
+// FORM
+
+form {
+  .btn {
+    width: 100%;
+    padding: 18px 50px;
+    font-size: 16px;
+    line-height: 1;
+  }
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 18px 50px;
+  font-size: 16px;
+  line-height: 1;
+  color: #495057;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 0.25rem;
+}

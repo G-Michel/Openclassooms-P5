@@ -19,8 +19,7 @@
 
 {% block mainRight %}
 	{% form_theme form 'bootstrap_4_layout.html.twig' %}
-    <div id="main-right" class=" col-sm-6 col-xl-5 offset-sm-3 offset-lg-1 offset-xl-2 mt-3">
-    	<div class="login-form">
+    <div id="main-right" class="  col-sm-6 col-xl-5 offset-sm-3 offset-lg-3 offset-xl-2 mt-1">
         	<div class="form">
         		{{ form_start(form) }}
                 {{ form_errors(form.mail) }}
@@ -47,6 +46,5 @@
                 {{ form_rest(form)}}
 				{{ form_end(form) }}
     		</div>
-  		</div>
 	</div>
 {% endblock %}

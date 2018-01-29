@@ -23,8 +23,28 @@
     	<div class="login-form">
         	<div class="form">
         		{{ form_start(form) }}
-				{{ form_widget(form) }}
-				<button type="submit" class="btn btn-primary">S'inscrire</button>
+                {{ form_errors(form.mail) }}
+                {{ form_errors(form.username) }}
+                {{ form_errors(form.message) }}
+                {% if is_granted('ROLE_USER')%}
+                    {{ form_widget(form.mail,{
+                        'value': app.User.getMail(),
+                         'attr' :{'class': 'invisible'}
+                     })}}
+                    {{ form_widget(form.username,{
+                        'value': app.User.getUsername(),
+                        'attr' :{'class': 'invisible'}
+                    })}}
+                {% else %}
+                    {{ form_label(form.mail)}}
+                    {{ form_widget(form.mail)}}
+                    {{ form_label(form.username)}}
+                    {{ form_widget(form.username)}}
+                {% endif %}
+                {{ form_label(form.message)}}
+				{{ form_widget(form.message)}}
+				<button type="submit" class="btn btn-primary">Contacter</button>
+                {{ form_rest(form)}}
 				{{ form_end(form) }}
     		</div>
   		</div>

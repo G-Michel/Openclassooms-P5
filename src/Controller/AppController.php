@@ -34,7 +34,6 @@ class AppController extends Controller
 
     /**
      * @Route("/contact", name="contact")
-     * @Method("GET")
      * @Cache(smaxage="10")
      */
 	public function contact(Request $request)
@@ -43,7 +42,18 @@ class AppController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            # code...
+            
+            $formData = $form->getData();
+
+            $mailer = $this->get("mailer");
+            $title = "Message de " . $formData['username'] .' "' .$formData['mail'] . '"';
+
+            $message = (new \Swift_Message($title))
+                ->setFrom('Openclassroom5pteam@smtp.openclass-cours.ovh')
+                ->setTo('opclass-p5@openclass-cours.ovh')
+                ->setBody( $this->renderView('mails/contactUs.html.twig',array(
+                    "formData" => $formData)));
+            $mailer->send($message);
         }
 
         return $this->render('default/contact.html.twig', [

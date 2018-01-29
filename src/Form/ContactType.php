@@ -16,6 +16,8 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Constraints\Email;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
+
 
 class ContactType extends AbstractType
 {
@@ -23,7 +25,6 @@ class ContactType extends AbstractType
     {
         $builder
             ->add('mail', EmailType::class, [
-                'mapped' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => "Vous devez saisir un mail"
@@ -34,8 +35,7 @@ class ContactType extends AbstractType
                     ])
                 ]
             ])
-            ->add('userName', TextType::class, [
-                'mapped' => false,
+            ->add('username', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => "Vous devez saisir un nom"
@@ -53,7 +53,6 @@ class ContactType extends AbstractType
                 ]
             ])
             ->add('message', TextareaType::class, [
-                'mapped' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => "Vous devez saisir un message"
@@ -67,8 +66,8 @@ class ContactType extends AbstractType
                         'maxMessage' => "Vous devez entrer moins de {{ limit }} caractères"
                     ])
                 ]
-            ])
-        ;
+            ]);
+            
     }
 
     public function configureOptions(OptionsResolver $resolver)

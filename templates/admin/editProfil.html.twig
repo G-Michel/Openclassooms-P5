@@ -45,7 +45,11 @@
 					{{ form_widget(form.picture.alt,{ 'value': 'image de profil','attr': {'class': 'invisible'} }) }}
 				</div>
 				</td>
-	    		<td class=""><img height="auto" width="150px" src="{{ asset( app.user.picture.webPath('thumbnails')) }}"></td>
+				{% if app.user.picture.url|length > 6 %}
+	    			<td class=""><img height="auto" width="150px" src="{{ app.user.picture.url }}"></td>
+                {% else %}
+	    			<td class=""><img height="auto" width="150px" src="{{ asset( app.user.picture.webPath('thumbnails')) }}"></td>
+                {% endif %}
 	    		<td class="text-primary form_picture_button">éditer</td>
 	    	</tr>
 	    	<tr>

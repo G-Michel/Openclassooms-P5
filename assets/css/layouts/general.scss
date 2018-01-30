@@ -17,91 +17,174 @@ body {
 
 #main_home:before {
   content: '';
-  background: url('../images/home.jpg') no-repeat right bottom fixed ;
+  background: url('../images/home-sm.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
+  background-color: #464646;
   -webkit-filter: brightness(50%);
      -moz-filter: brightness(50%);
       -ms-filter: brightness(50%);
        -o-filter: brightness(50%);
           filter: brightness(50%);
-  position: fixed;
+  position:fixed;
   top: 0;
   bottom:0;
   left: 0;
   right: 0;
   z-index: -1;
+  // breakpoint(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+  @include media-breakpoint-only(sm) {
+    background-image: url('../images/home-md.jpg');
+  }
+  @include media-breakpoint-only(md) {
+    background-image: url('../images/home-md.jpg');
+  }
+  @include media-breakpoint-only(lg) {
+    background-image: url('../images/home-lg.jpg');
+  }
+  @include media-breakpoint-only(xl) {
+    background-image: url('../images/home-xl.jpg');
+  }
 }
 #main_taxref_index:before,
 #main_observation_index:before,
 {
   content: '';
-  background: url('../images/listing.jpg') no-repeat center fixed ;
+  background: url('../images/listing-sm.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
+  background-color: #464646;
   -webkit-filter: brightness(50%);
      -moz-filter: brightness(50%);
       -ms-filter: brightness(50%);
        -o-filter: brightness(50%);
           filter: brightness(50%);
-  position: fixed;
+  position:fixed;
   top: 0;
   bottom:0;
   left: 0;
   right: 0;
   z-index: -1;
+  // breakpoint(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+  @include media-breakpoint-only(sm) {
+    background-image: url('../images/listing-md.jpg');
+  }
+  @include media-breakpoint-only(md) {
+    background-image: url('../images/listing-md.jpg');
+  }
+  @include media-breakpoint-only(lg) {
+    background-image: url('../images/listing-lg.jpg');
+  }
+  @include media-breakpoint-only(xl) {
+    background-image: url('../images/listing-xl.jpg');
+  }
 }
 #main_contact:before {
   content: '';
-  background: url('../images/contact.jpg') no-repeat center fixed ;
+  background: url('../images/contact-sm.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
+  background-color: #464646;
   -webkit-filter: brightness(50%);
      -moz-filter: brightness(50%);
       -ms-filter: brightness(50%);
        -o-filter: brightness(50%);
           filter: brightness(50%);
-  position: fixed;
+  position:fixed;
   top: 0;
   bottom:0;
   left: 0;
   right: 0;
   z-index: -1;
+  // breakpoint(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+  @include media-breakpoint-only(sm) {
+    background-image: url('../images/contact-md.jpg');
+  }
+  @include media-breakpoint-only(md) {
+    background-image: url('../images/contact-md.jpg');
+  }
+  @include media-breakpoint-only(lg) {
+    background-image: url('../images/contact-lg.jpg');
+  }
+  @include media-breakpoint-only(xl) {
+    background-image: url('../images/contact-xl.jpg');
+  }
 }
 #main_login:before {
   content: '';
-  background: url('../images/login.jpg') no-repeat center fixed;
-  position: fixed;
+  background: url('../images/login-sm.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
+  background-color: #464646;
   -webkit-filter: brightness(50%);
      -moz-filter: brightness(50%);
       -ms-filter: brightness(50%);
        -o-filter: brightness(50%);
           filter: brightness(50%);
+  position:fixed;
   top: 0;
   bottom:0;
   left: 0;
   right: 0;
   z-index: -1;
-}
-/* Ratio exact */
-@media (aspect-ratio: 3/2) {
-  #main_login:before {
-    background: url('../images/3_2/login.jpg') no-repeat center fixed ;
+  // breakpoint(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+  @include media-breakpoint-only(sm) {
+    background-image: url('../images/login-md.jpg');
+  }
+  @include media-breakpoint-only(md) {
+    background-image: url('../images/login-md.jpg');
+  }
+  @include media-breakpoint-only(lg) {
+    background-image: url('../images/login-lg.jpg');
+  }
+  @include media-breakpoint-only(xl) {
+    background-image: url('../images/login-xl.jpg');
   }
 }
-@media (aspect-ratio: 4/3) {
-  #main_login:before {
-    background: url('../images/4_3/login.jpg') no-repeat center fixed ;
+#main_admin_home:before,
+#main_admin_observation_index:before
+{
+  content: '';
+  background: url('../images/admin-sm.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #464646;
+  -webkit-filter: brightness(90%);
+     -moz-filter: brightness(90%);
+      -ms-filter: brightness(90%);
+       -o-filter: brightness(90%);
+          filter: brightness(90%);
+  position:fixed;
+  top: 0;
+  bottom:0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  // breakpoint(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+  @include media-breakpoint-only(sm) {
+    background-image: url('../images/admin-md.jpg');
+  }
+  @include media-breakpoint-only(md) {
+    background-image: url('../images/admin-md.jpg');
+  }
+  @include media-breakpoint-only(lg) {
+    background-image: url('../images/admin-lg.jpg');
+  }
+  @include media-breakpoint-only(xl) {
+    background-image: url('../images/admin-xl.jpg');
   }
 }
-@media (aspect-ratio: 16/9) {
-  #main_login:before {
-    background: url('../images/16_9/login.jpg') no-repeat center fixed ;
-  }
-}
-@media (aspect-ratio: 16/10) {
-  #main_login:before {
-    background: url('../images/16_9/login.jpg') no-repeat center fixed ;
-  }
-}
+
 
 .main-row {
   @include media-breakpoint-up(lg) {
@@ -134,4 +217,19 @@ body {
   position: relative;
   top: -50px;
   left: 10px;
+ }
+
+ // SEARCH
+ //
+ // Custom css for search results
+ #resultsTaxref {
+  z-index: 10;
+  position: absolute;
+  top: 0px;
+  left: 56px;
+  max-height:350px;
+  background: rgba(0, 0, 0, 0.65);
+  overflow-x: scroll;
+  display:flex;
+  width: 100%;
  }

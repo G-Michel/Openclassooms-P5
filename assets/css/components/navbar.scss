@@ -46,6 +46,7 @@
 //
 // Custom navbar navigation (doesn't require `.nav`, but does make use of `.nav-link`).
 .navbar-search {
+  flex-flow: row nowrap;
 
   .nav-search {
     text-align: left;

@@ -1,10 +1,10 @@
 <div class="tab-pane fade {% if active|default(false) %}show active{% endif %}" id="{{ id }}Obs" role="tabpanel" aria-labelledby="{{ id }}-tab">
   <div class="row observation">
     <div class="col">
-      <h6 class="title">{{ title }} (affichage 1 à 6 de {{observations|length}} enregistrements)</h6>
+      <h6 class="text-light title">{{ title }} (affichage 1 à 6 de {{observations|length}} enregistrements)</h6>
     </div>
     <div class="col-auto">
-      <a href="{{ path('admin_observation_new') }}" class="text-white btn btn-primary btn-round mt-0">
+      <a href="{{ path('admin_observation_new') }}" class="text-white btn btn-primary mt-0">
         <i class="fa fa-plus"></i>
         Ajouter
       </a>

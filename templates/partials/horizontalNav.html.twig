@@ -3,6 +3,20 @@
     <a class="navbar-brand" href="{{ path('home') }}">
         <svg class="logo" height="51" width="75" ><use xlink:href="{{ asset('images/icons/sprite.svg#logo')}}"></svg>
     </a>
+    <form class="form-inline mt-2 mt-md-0 mr-auto navbar-search" action="{{ path('taxref_search') }}">
+      <button class="btn btn-link my-2 my-sm-0 p-2" type="submit">
+        <i class="material-icons">search</i>
+      </button>
+      <input  class="form-control mr-sm-2 nav-search search-field p-2"
+              type="text"
+              placeholder="Rechercher"
+              aria-label="Search"
+              name="q"
+              autocomplete="off"
+              autofocus
+              data-no-results-message="<p class='pt-5 m-0 text-center text-white w-100'>Aucun résultat pour cette recherche</p>"
+      >
+    </form>
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       {% if is_granted('ROLE_USER') %}
         <div class="user-action dropdown show ml-auto">

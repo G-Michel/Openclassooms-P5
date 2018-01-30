@@ -18,6 +18,7 @@
         {{ include('partials/horizontalNav.html.twig') }}
         <div class="container-fluid">
             <div class="row">
+                <div id="resultsTaxref"></div>
                 {{ include('partials/verticalNav.html.twig') }}
                 <main id="{% block main_id %}{% endblock %}" role="main" class="main">
                     <div class="container-fluid">
@@ -37,6 +38,7 @@
             <script src="{{ asset('lib/moment/moment.min.js')}}"></script>
             <script src="{{ asset('lib/moment/locales.min.js')}}"></script>
             <script src="{{ asset('build/js/app.js')}}"></script>
+            <script src="{{ asset('build/js/search.js') }}"></script>
             <script type="text/javascript">
                 function onSignIn(googleUser)
                 {

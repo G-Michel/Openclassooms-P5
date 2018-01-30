@@ -91,10 +91,12 @@ class Picture
     // to finally create image thumnail and fullHd
     $this->manager->make($this->getFile())
                      ->resize(160, 100)
+                     ->interlace(true)
                      ->save($this->getUploadRootDir().'/thumbnails/'.$this->getId().'.'.$this->getUrl());
     // to finally create image thumnail and fullHd
     $this->manager->make($this->getFile())
                      ->resize(1920, 1080)
+                     ->interlace(true)
                      ->save($this->getUploadRootDir().'/fullHd/'.$this->getId().'.'.$this->getUrl());
   unset($this->file);
   }

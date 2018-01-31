@@ -1,99 +1,98 @@
-// app.js
-
-// JS is equivalent to the normal "bootstrap" package
-// no need to set this to a variable, just require it
 import 'bootstrap';
-import './datepicker';
+import './jquery.instantSearch.js';
+
+let jQueryBridget = require('jquery-bridget');
+let Masonry = require('masonry-layout');
+
+jQueryBridget( 'masonry', Masonry, $ );
 
 $(function() {
 
-  // Datepicker date obs
-  $('#observe_bird_moment_dateObs').datetimepicker();
+    // SEARCH BAR
+    //===========
+    $('.search-field').instantSearch({
+        delay: 300,
+    });
 
-  // Choose file picture
-  bs_input_file();
+    // DISPLAY MORE RESULTS
 
-  // Slider number birds
-  if (document.getElementById("observe_bird_detail_bird_birdNumber")) {
-    var slider = document.getElementById("observe_bird_detail_bird_birdNumber");
-    var output = document.getElementById("birdNumber");
-    output.innerHTML = 'Nombre d\'oiseaux : ' + slider.value; // Display the default slider value
+    //=====================
+    // test Masonry
+    var $grid = $('.result');
+    // let $grid = $('#listingTaxref')
+    $grid.masonry({
+        itemSelector: '.card',
+        gutter: 30,
+        itemAnimated: true,
+    })
 
-    // Update the current slider value (each time you drag the slider handle)
-    slider.oninput = function() {
-        output.innerHTML = 'Nombre d\'oiseaux : ' + this.value;
-    }
-  }
+    $('.more-results').on('click', function(e) {
+
+        var $form = $(this.closest('form'));
+        var $spinner = $('#moreResult-spinner');
+        var $btn = $('#moreResult-button');
+        var nbItems = $grid.find('.card').length;
+        var taxrefTemplate = '\
+            <div class="card card-blog">\
+                <div class="table">\
+                    <h6 class="category text-secondary">{{ lbAuteurType }}</h6>\
+                    <h4 class="card-caption">\
+                        <a href="/taxref/{{ slug }}">{{ lbNomType }}</a>\
+                    </h4>\
+                    <div class="card-description">{{ nomVernType }}</div>\
+                    <div class="ftr text-center">\
+                        <a href="/taxref/{{ slug }}" class="btn btn-secondary">Détails</a>\
+                    </div>\
+                </div>\
+            </div>';
+        var taxrefTemplateWithImg = '\
+            <div class="card card-blog">\
+                <div class="card-image">\
+                    <a href="/taxref/{{ slug }}"> <img class="img" src="{{ url }}" alt="{{ alt }}"> </a>\
+                </div>\
+                <div class="table">\
+                    <h6 class="category text-secondary">{{ lbAuteurType }}</h6>\
+                    <h4 class="card-caption">\
+                        <a href="/taxref/{{ slug }}">{{ lbNomType }}</a>\
+                    </h4>\
+                    <div class="card-description">{{ nomVernType }}</div>\
+                    <div class="ftr text-center">\
+                        <a href="/taxref/{{ slug }}" class="btn btn-secondary">Détails</a>\
+                    </div>\
+                </div>\
+            </div>';
+        var data = [];
+        data = {
+            'o' : nbItems-1
+        }
+        // display spinner and cache btn
+        $spinner.show()
+        $btn.hide()
+
+        // Ajax request
+        var jqxhr = $.getJSON($form.attr('action'), data)
+        .done(function(items) {
+            if (0 === items.length) {
+                $spinner.hide()
+            } else {
+                $spinner.hide()
+                $btn.show()
+                $.each(items, function (i, item) {
+                    if (item.url) {
+                        var doc = new DOMParser().parseFromString(taxrefTemplateWithImg.render(item),'text/html');
+                    } else {
+                        var doc = new DOMParser().parseFromString(taxrefTemplate.render(item),'text/html');
+                    }
+                    items[i] = doc.body.firstChild;
+                });
+                $grid.append(items).masonry( 'appended', items );
+
+            }
+        })
+
+        e.preventDefault();
+    })
 
 });
 
-// Function Choose file picture
-function bs_input_file() {
-  $(".input-file").before(
-    function() {
-      if ( $(this).prev().hasClass('form-control-file') ) {
-        var element = $("#observe_bird_detail_picture_file");
-        element.addClass('d-none')
-        element.change(function(){
-          element.next(element).find('input').val((element.val()).split('\\').pop());
-        });
-        $(this).find("button.btn-choose").click(function(){
-          element.click();
-        });
-        // $(this).find("button.btn-reset").click(function(){
-        //   element.val(null);
-        //   $(this).parents(".input-file").find('input').val('');
-        // });
-        $(this).find('input').css("cursor","pointer");
-        $(this).find('input').mousedown(function() {
-          $(this).parents('.input-file').prev().click();
-          return false;
-        });
-        return element;
-      }
-    }
-  );
-}
 
-// Handling the modal confirmation message.
-$(document).on('submit', 'form[data-confirmationDelete]', function (event) {
-  var $form = $(this),
-      $confirm = $('#deleteConfirmationModal');
-
-  if ($confirm.data('result') !== 'yes') {
-      //cancel submit event
-      event.preventDefault();
-      // console.log($confirm.modal('click', '#btnYes'))
-
-      $confirm
-          .off('click', '#btnYes')
-          .on('click', '#btnYes', function () {
-              $confirm.data('result', 'yes');
-              $form.find('input[type="submit"]').attr('disabled', 'disabled');
-              $form.submit();
-          })
-          .modal('show');
-  }
-});
-
-// Handling the modal confirmation message.
-$(document).on('submit', 'form[data-confirmationCheck]', function (event) {
-  var $form = $(this),
-      $confirm = $('#checkConfirmationModal');
-
-  if ($confirm.data('result') !== 'yes') {
-      //cancel submit event
-      event.preventDefault();
-
-      $confirm
-          .off('click', '#btnYes')
-          .on('click', '#btnYes', function () {
-              var $check = $('input[name=customRadio]:checked').val();
-              $confirm.data('result', 'yes');
-              $form.find('#statusCode').attr('value', $check);
-              $form.find('input[type="submit"]').attr('disabled', 'disabled');
-              $form.submit();
-          })
-          .modal('show');
-  }
-});

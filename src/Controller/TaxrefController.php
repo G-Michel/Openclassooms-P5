@@ -28,29 +28,25 @@ class TaxrefController extends Controller
             return $this->render('taxref/index.html.twig', compact('posts'));
         }
 
-        // $rawQuery = $request->query->get('q', '');
-        // $query = $this->sanitizeSearchQuery($rawQuery);
-        // $searchTerms = $this->extractSearchTerms($query);
-        // $termsLighting = $this->lightingSearchTerms($searchTerms);
-        // $limit = $request->query->get('l', 30);
-        // $foundPosts = $taxref->findBySearchQuery($searchTerms, $limit);
+        $offset      = $request->query->get('o', '');
+        $foundTaxref = $taxref->findByFrType($offset);
+        $results     = [];
+        foreach ($foundTaxref as $taxref) {
+            $results[] = [
+                'page'         => 'taxref',
+                'reignType'    => htmlspecialchars($taxref->getReignType()),
+                'lbNomType'    => htmlspecialchars($taxref->getLbNomType()),
+                'lbAuteurType' => trim(htmlspecialchars($taxref->getLbAuteurType()),'()'),
+                'nomVernType'  => htmlspecialchars($taxref->getNomVernType()),
+                'slug'         => htmlspecialchars($taxref->getSlug()),
+                'phylumType'   => htmlspecialchars($taxref->getPhylumType()),
+                'classType'    => htmlspecialchars($taxref->getClassType()),
+                'url'          => $taxref->getPicture() ? htmlspecialchars($taxref->getPicture()->getUrl()): null,
+                'alt'          => $taxref->getPicture() ? htmlspecialchars($taxref->getPicture()->getAlt()): null
+            ];
+        }
 
-        // $results = [];
-        // foreach ($foundPosts as $post) {
-
-        //     $results[] = [
-        //         'reignType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getReignType())),
-        //         'nomValideType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getNomValideType())),
-        //         'nomVernType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getNomVernType())),
-        //         'slug' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getSlug())),
-        //         'phylumType' => htmlspecialchars($post->getPhylumType()),
-        //         'classType' => htmlspecialchars($post->getClassType()),
-        //         'url' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getUrl()):'',
-        //         'alt' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getAlt()):''
-        //     ];
-        // }
-
-        // return $this->json($results);
+        return $this->json($results);
     }
 
     /**
@@ -72,7 +68,7 @@ class TaxrefController extends Controller
         $query = $this->sanitizeSearchQuery($rawQuery);
         $searchTerms = $this->extractSearchTerms($query);
         $termsLighting = $this->lightingSearchTerms($searchTerms);
-        $limit = $request->query->get('l', 15);
+        $limit = $request->query->get('l', 5);
         $foundPosts = $taxref->findBySearchQuery($searchTerms, $limit);
 
         $results = [];

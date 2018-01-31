@@ -13,7 +13,7 @@ class ObservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Observation::class);
     }
 
-    public function findObservationsWithLimit($limit)
+    public function findObservationsWithLimit(int $offset = -1, int $limit = Observation::NUM_ITEMS)
     {
         return $this->createQueryBuilder('o')
             ->select('o')
@@ -25,6 +25,7 @@ class ObservationRepository extends ServiceEntityRepository
             ->addSelect('o_u','o_u_p','o_b','o_b_t','o_b_t_p')
             ->where('o.status = 1')
             ->orderBy('o.dateObs', 'DESC')
+            ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult()

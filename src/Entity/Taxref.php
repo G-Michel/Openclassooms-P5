@@ -18,7 +18,7 @@ class Taxref
      *
      * See https://symfony.com/doc/current/best_practices/configuration.html#constants-vs-configuration-options
      */
-    const NUM_ITEMS = 100;
+    const NUM_ITEMS = 5;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

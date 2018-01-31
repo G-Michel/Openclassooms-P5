@@ -18,11 +18,12 @@
 {% block mainRight %}
   <div id="main-right" class="col-lg-8 col-xl-9 mt-3">
     <div class="container">
-      <div id="listingTaxref" class="card-columns p-3">
+      <div id="listingTaxref" class="result row pt-4">
         {% for post in posts %}
           {{ include('components/cards/observation.html.twig') }}
         {% endfor %}
       </div>
+      {{ include('components/buttons/moreResults.html.twig') }}
     </div>
   </div>
 {% endblock %}

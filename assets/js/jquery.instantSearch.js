@@ -27,6 +27,7 @@
             e.preventDefault();
         }
       });
+
       this.$input.keyup(this.debounce());
   };
 
@@ -36,15 +37,21 @@
       delay: 500,
       noResultsMessage: 'No results found',
       itemTemplate: '\
-            <div class="card">\
-                <img class="card-img-top" src="{{ url }}" alt="{{ alt }}">\
-                <div class="card-body">\
-                    <h5 class="card-title">{{ nomVernType }}</h5>\
-                    <p class="card-text">{{ phylumType }}</p>\
-                    <p class="card-text">{{ classType }}</p>\
-                    <a href="#" class="btn btn-primary">Plus de détail</a>\
+      <div class="card card-blog card-search">\
+            <div class="card-image">\
+                <a href="/taxref/{{ slug }}"> <img class="img" src="{{ url }}" alt="{{ alt }}"> </a>\
+            </div>\
+            <div class="table ">\
+                <h6 class="category text-secondary">{{ lbNomType }}</h6>\
+                <h4 class="card-caption">\
+                <a href="/taxref/{{ slug }}">{{ lbAuteurType }}</a>\
+                </h4>\
+                <div class="card-description">{{ nomVernType }}</div>\
+                <div class="ftr text-center">\
+                <a href="/taxref/{{ slug }}" class="btn btn-secondary">Détails</a>\
                 </div>\
-            </div>'
+            </div>\
+        </div>'
   };
 
   InstantSearch.prototype.debounce = function () {
@@ -62,19 +69,27 @@
   };
 
   InstantSearch.prototype.search = function () {
+      //   to display the spinner between each search
+      //   this.$preview.empty();
+
       var query = $.trim(this.$input.val()).replace(/\s{2,}/g, ' ');
       if (query.length < this.options.minQueryLength) {
           this.$preview.empty();
           return;
+      }
+      //   shows the spinner
+      if ($('#search-spinner').length == 0){
+          this.$preview.append('<p id="search-spinner" class="pt-5 m-0 text-center text-white w-100"><i class="fa fa-spinner fa-spin" aria-hidden="true">')
       }
 
       var self = this;
       var data = this.$form.serializeArray();
       data['l'] = this.limit;
 
-      $.getJSON(this.$form.attr('action'), data, function (items) {
-          self.show(items);
-      });
+      var jqxhr = $.getJSON(this.$form.attr('action'), data)
+        .done(function( items ) {
+            self.show(items);
+        });
   };
 
   InstantSearch.prototype.show = function (items) {

@@ -28,26 +28,29 @@ class TaxrefController extends Controller
             return $this->render('taxref/index.html.twig', compact('posts'));
         }
 
-        $rawQuery = $request->query->get('q', '');
-        $query = $this->sanitizeSearchQuery($rawQuery);
-        $searchTerms = $this->extractSearchTerms($query);
-        $termsLighting = $this->lightingSearchTerms($searchTerms);
-        $limit = $request->query->get('l', 30);
-        $foundPosts = $taxref->findBySearchQuery($searchTerms, $limit);
+        // $rawQuery = $request->query->get('q', '');
+        // $query = $this->sanitizeSearchQuery($rawQuery);
+        // $searchTerms = $this->extractSearchTerms($query);
+        // $termsLighting = $this->lightingSearchTerms($searchTerms);
+        // $limit = $request->query->get('l', 30);
+        // $foundPosts = $taxref->findBySearchQuery($searchTerms, $limit);
 
-        $results = [];
-        foreach ($foundPosts as $post) {
+        // $results = [];
+        // foreach ($foundPosts as $post) {
 
-            $results[] = [
-                'nomVernType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getNomVernType())),
-                'phylumType' => htmlspecialchars($post->getPhylumType()),
-                'classType' => htmlspecialchars($post->getClassType()),
-                'url' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getUrl()):'',
-                'alt' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getAlt()):''
-            ];
-        }
+        //     $results[] = [
+        //         'reignType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getReignType())),
+        //         'nomValideType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getNomValideType())),
+        //         'nomVernType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getNomVernType())),
+        //         'slug' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getSlug())),
+        //         'phylumType' => htmlspecialchars($post->getPhylumType()),
+        //         'classType' => htmlspecialchars($post->getClassType()),
+        //         'url' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getUrl()):'',
+        //         'alt' => $post->getPicture() ? htmlspecialchars($post->getPicture()->getAlt()):''
+        //     ];
+        // }
 
-        return $this->json($results);
+        // return $this->json($results);
     }
 
     /**
@@ -57,6 +60,38 @@ class TaxrefController extends Controller
     public function show(Taxref $taxref): Response
     {
         return $this->render('taxref/show.html.twig', compact('taxref'));
+    }
+
+    /**
+     * @Route("/search/", name="taxref_search")
+     * @Method("GET")
+     */
+    public function search(Request $request, TaxrefRepository $taxref): Response
+    {
+        $rawQuery = $request->query->get('q', '');
+        $query = $this->sanitizeSearchQuery($rawQuery);
+        $searchTerms = $this->extractSearchTerms($query);
+        $termsLighting = $this->lightingSearchTerms($searchTerms);
+        $limit = $request->query->get('l', 15);
+        $foundPosts = $taxref->findBySearchQuery($searchTerms, $limit);
+
+        $results = [];
+        foreach ($foundPosts as $post) {
+
+            $results[] = [
+                'reignType'    => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getReignType())),
+                'lbNomType'    => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getLbNomType())),
+                'lbAuteurType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getLbAuteurType())),
+                'nomVernType'  => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getNomVernType())),
+                'slug'         => htmlspecialchars($post->getSlug()),
+                'phylumType'   => htmlspecialchars($post->getPhylumType()),
+                'classType'    => htmlspecialchars($post->getClassType()),
+                'url'          => $post->getPicture() ? htmlspecialchars($post->getPicture()->getUrl()): '',
+                'alt'          => $post->getPicture() ? htmlspecialchars($post->getPicture()->getAlt()): ''
+            ];
+        }
+
+        return $this->json($results);
     }
 
 

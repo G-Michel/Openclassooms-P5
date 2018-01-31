@@ -62,7 +62,7 @@ CARDS
   position: relative;
   width: 100%;
   margin-bottom: 30px;
-  border-radius: 6px;
+  @include border-radius($border-radius-lg);
   color: rgba(0, 0, 0, 0.87);
   background: #fff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
@@ -75,14 +75,14 @@ CARDS
   margin-left: 15px;
   margin-right: 15px;
   margin-top: -30px;
-  border-radius: 6px;
+  @include border-radius($border-radius-lg);
   box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .card .card-image img {
   width: 100%;
   height: 100%;
-  border-radius: 6px;
+  @include border-radius($border-radius-lg);
   pointer-events: none;
 }
 
@@ -167,7 +167,7 @@ CARDS
 
 .card [class*="table-"] {
   color: #FFFFFF;
-  border-radius: 6px;
+  @include border-radius($border-radius-lg);
 }
 
 .card [class*="table-"] .card-caption a,
@@ -217,6 +217,44 @@ CARDS
 .card-raised {
   box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
+.card-search {
+  margin-top: 100px;
+  margin-right: 15px;
+  min-width: 150px;
+  max-width: 200px;
+  min-height: 200px;
+  .card-image {
+    height: 40%;
+    background: $dark;
+    .img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  .table {
+    padding: 5px;
+    h6 {
+      font-size: 0.67em;
+    }
+    h4 {
+      font-size: .8rem;
+      margin-bottom: 0;
+    }
+    .card-description {
+      font-size: 0.67em;
+    }
+    .ftr {
+      margin-top: 0;
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      right: 0;
+      .btn {
+        padding: 6px 12px;
+      }
+    }
+  }
+}
 
  /* ============ Card Background ============ */
 
@@ -257,7 +295,7 @@ CARDS
   top: 0;
   table: "";
   background-color: rgba(0, 0, 0, 0.56);
-  border-radius: 6px;
+  @include border-radius($border-radius-lg);
 }
 
 
@@ -508,12 +546,12 @@ BUTTONS
   user-select: none;
   background-image: none;
   border: 1px solid transparent;
-  border-radius: 4px;
+  @include border-radius($border-radius-lg);
 }
 .btn,
 .navbar .navbar-nav > li > a.btn {
   border: none;
-  border-radius: 3px;
+  @include border-radius($border-radius-lg);
   position: relative;
   padding: 12px 10px;
   margin: 10px 1px;

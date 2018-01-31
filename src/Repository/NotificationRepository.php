@@ -13,12 +13,12 @@ class NotificationRepository extends ServiceEntityRepository
         parent::__construct($registry, Notification::class);
     }
 
-    public function findUserNotifications($user)
+    public function findUserNotifications($userId)
     {
 
         return $this->createQueryBuilder('n')
-            ->where("n.user = :user")
-            ->setParameter('user', $user)
+            ->where("n.to = :to")
+            ->setParameter('to', $userId)
             ->setMaxResults(30)
             ->getQuery()
             ->getResult()

@@ -10,9 +10,6 @@ parameters:
 
 
 services:
-    App\Service\Event\LoginListener:
-        tags:
-            - {name: security.authentication.success, event: security.authentication.success,   method: onUserConnect }
     
         # default configuration for services in *this* file
     _defaults:
@@ -38,6 +35,11 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Service\:
         resource: '../src/Service/*'
+
+    App\Service\Event\LoginListener:
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onUserConnect, , priority: 9 }
+        
 
     # src/OC/PlatformBundle/Resources/config/services.yml
 

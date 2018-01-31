@@ -5,8 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Observation;
 use App\Entity\Picture;
 
-use App\Service\Event\LoginListener;
-
 use App\Form\EditProfileType;
 use App\Repository\ObservationRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,19 +32,6 @@ class AdminController extends Controller
     // $observationsToValid=$obsRepository->findToValid(5);
 		$userObservations    = $observation->findByUser($this->getUser(),5);
 		$observationsToValid = $observation->findEqualToStatus(0,5);
-
-
-    $listener = new LoginListener();
-    // On récupère le gestionnaire d'évènements, qui heureusement est un service !
-    $dispatcher = $this->get('event_dispatcher');
-
-
-      $dispatcher->addListener(
-        'kernel.response',
-        array($listener, 'onUserConnect'));
-
-
-
 
         return $this->render('admin/espacePersonnel.html.twig',array(
         	'userObservations' => $userObservations,

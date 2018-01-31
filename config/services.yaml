@@ -10,6 +10,10 @@ parameters:
 
 
 services:
+    App\Service\Event\LoginListener:
+        tags:
+            - {name: security.authentication.success, event: security.authentication.success,   method: onUserConnect }
+    
         # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -34,3 +38,7 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Service\:
         resource: '../src/Service/*'
+
+    # src/OC/PlatformBundle/Resources/config/services.yml
+
+    

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Oauth;
 use App\Entity\Picture;
+use App\Entity\Notification;
 use App\Entity\Auth;
 use App\Form\SignInType;
 use App\Form\SignUpType;
@@ -201,6 +202,7 @@ class UserManagementController extends Controller
 
                 if ($user->getOAuthUserID() == $encodedSub )
                 {
+  
                     $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
                     $this->get('security.token_storage')->setToken($token);
                     $this->get('session')->set('_security_main', serialize($token));

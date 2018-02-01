@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Observation;
+use App\Entity\Notification;
 use App\Form\ObservationType;
 use App\Form\ObserveBirdDetailType;
 use App\Form\ObserveBirdMomentType;
@@ -18,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
  * @Route("/admin/observation")
@@ -341,8 +343,15 @@ class ObservationController extends Controller
             return $this->redirectToRoute('admin_observation_index');
         }
         $observation->setStatus($request->request->get('status'));
+        
+        $notification = new Notification(
+          $observation,
+          $this->getUser()->getUsername()
+        );
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($observation);
+        $em->persist($notification);
         $em->flush();
 
         $this->addFlash('success', 'Votre vérification a bien été pris en compte !');

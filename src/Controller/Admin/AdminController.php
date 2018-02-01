@@ -4,11 +4,15 @@ namespace App\Controller\Admin;
 
 use App\Entity\Observation;
 use App\Entity\Picture;
+use App\Entity\Notification;
 
 use App\Form\EditProfileType;
 use App\Repository\ObservationRepository;
+use App\Repository\NotificationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -38,6 +42,63 @@ class AdminController extends Controller
         	'obsToValid'       => $observationsToValid
         ));
     }
+
+
+    /**
+     * @Route("/admin/mesNotifications", name="admin_user_notifications")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+  public function myNotifications(Request $request, NotificationRepository $notification)
+  {
+
+    $userNotifications = $notification->findUserNotifications($this->getUser()->getId());
+        return $this->render('admin/mesNotifications.html.twig',array(
+          'userNotifications' => $userNotifications,
+        ));
+    }
+
+
+    /**
+     * @Route("/admin/seen", name="seen_update")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+  public function seenUpdate(Request $request, NotificationRepository $notification)
+  {
+      if (!$request->isXmlHttpRequest()) {
+            return $this->redirectToRoute('admin_home');
+        }
+        $toFlush=0;
+        $seen = $request->query->get('seen');
+
+        if ($seen == "true" )
+        {
+          $em = $this->getDoctrine()->getManager();
+          $notifications = $this->get('session')->get("notificationUser");
+
+          foreach ($notifications as $notification) 
+          {
+            if ($notification->getSeen()==false)
+            {
+              $notification->setSeen(true);
+              $notifdb = $this->getDoctrine()->getRepository(Notification::class)->find($notification->getId());
+              $notifdb->setSeen(true);
+              $toFlush++;
+              $em->persist($notifdb);
+            }
+          }
+          if ($toFlush>0) 
+          {
+            $em->flush();
+            return $this->render('partials/notificationAreaNav.html.twig');
+          }
+          else
+          {
+            return new Response('nothing to flush');
+          } 
+        }
+  }
 
 
 

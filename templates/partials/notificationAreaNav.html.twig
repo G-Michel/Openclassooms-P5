@@ -1,0 +1,61 @@
+ <li class="nav-item nav-notification dropdown-event-listener">
+
+    {% if route is not defined %}
+    {% set route = app.request.attributes.get('_route') %}
+    {% endif %}
+
+    {% set notifNumber = 0 %}
+
+    {% if route != "admin_observation_new_step_1" and
+            route != "admin_observation_new_step_2" and
+            route != "admin_observation_new_step_3" and
+            route != "admin_observation_new_step_4" and
+            app.session.get('step')%}
+
+      {% set notifNumber = notifNumber + 1 %}
+      {% set pathStep = "admin_observation_new_step_"~app.session.get('step') %}
+
+    {% endif %}
+
+    {% for notification in app.session.get('notificationUser') if notification.seen == 0 %}
+      {% set notifNumber = notifNumber + 1 %}
+    {% endfor %}
+
+    <a  class="nav-link dropdown" href="#" id="dropdownMenuNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="material-icons">notifications</i>
+      
+      {% if notifNumber > 0%}
+        <span class="badge badge-notify">{{notifNumber}}</span>
+      {% endif %}
+    </a>
+
+        <div class="dropdown-menu dropdown-notification dropdown-menu-right" aria-labelledby="dropdownMenuNotification" >
+    {% if notifNumber > 0%}
+        {% if pathStep is defined %}
+          <h6 class="dropdown-header">Une nouvelle observation est en cours</h6>
+          <a href="{{ path(pathStep) }}" class="dropdown-item">
+          Retourner à la saisie</a>
+          <a href="{{ path('observation_cancel', {'redirectTo':route}) }}" class="text-danger dropdown-item">
+            Annuler l'observation
+          </a>
+          <div class="dropdown-divider"></div>
+        {% endif %}
+        {% if app.session.get("notificationUser") is defined  %}
+          {% for notification in app.session.get('notificationUser') if notification.seen == 0 %}
+            <a href="{{ path('admin_observation_show', {id: notification.getObservation().getId()}) }}">
+            <h6 class="dropdown-header">{{ notification.getFromUser }} à traité votre observation
+            </h6>
+            <p class="dropdown-item" >Oiseau : {{ notification.getBirdName() }} status: {{ notification.getStatusDefinition() }}</p>
+            </a>
+          {% endfor %}
+        {% endif %}
+    {% else %}
+          <h6 class="dropdown-header">Pas de nouvelles notifications</h6> 
+    {% endif %}
+          <div class="dropdown-divider"></div>
+          <a href="{{ path('admin_user_notifications')}}">
+            <h6 class="dropdown-header">Mes notifications</h6>
+          </a>
+        </div>
+
+</li>

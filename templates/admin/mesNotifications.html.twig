@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Espace Personnel - {{parent()}}{% endblock %}
+
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">{% endblock %}
+
+
+{% block mainLeft %}
+<div class='row no-gutters bg-light'>
+    <div class="d-flex justify-content-around align-items-md-center flex-wrap">
+    <div class=" col-lg-3 col-xl-3 h-75">
+        <div class="row no-gutters">
+            <h2 class="text-dark display-4">Mes notifications</h2>
+            <p class="text-primary lead">L'historique des activités concernant vos observations</p>
+            <div class="col-sm-12">
+            </div>
+        </div>
+    </div>
+
+    <div class=' col-lg-7 col-xl-7 mt-5 mb-5 observation-preview'>
+        <ul class="nav justify-content-center w-100" id="myTab" role="tablist" >
+            {# Commons #}
+            <li class="nav-item col p-0">
+                <a class="nav-link active" id="last-tab" data-toggle="tab" href="#lastObs" role="tab" aria-controls="lastObs" aria-selected="true">
+                <div class="jumbotron">
+                    <h2 class="title">Notifications</h2>
+                    <p class="lead">{{userNotifications|length}}</p>
+                </div>
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="tab-content pt-5">
+            <!-- Les 5 dernières observations de l'utilisateur -->
+            {{ include('components/tables/notification/default.html.twig', {
+                observations: userNotifications,
+                id:  'last',
+                title: 'Mes dernières observations',
+                active: true,
+            }) }}
+        </div>
+
+    </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
+

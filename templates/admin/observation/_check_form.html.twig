@@ -6,11 +6,11 @@
     action="{{ path('admin_observation_check', {id: observation.id}) }}"
     method="post"
     data-confirmationCheck="true"
-    id="check-form" class="d-flex"
+    id="check-form" class="d-inline-flex"
   >
       <input type="hidden" name="token" value="{{ csrf_token('check') }}" />
       <input type="hidden" name="status" id="statusCode" />
-      <button type="submit" class="btn btn-link text-info d-flex m-0 p-2">
+      <button type="submit" class="btn btn-link text-info d-flex m-0 p-0">
           <i class="fa fa-check" aria-hidden="true"></i>
       </button>
   </form>

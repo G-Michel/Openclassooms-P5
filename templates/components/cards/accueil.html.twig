@@ -1,0 +1,17 @@
+<div class="card card-background"
+style="background-color:#474a4c70;max-height: 200px;">
+<div class="table">
+    <h6 class="category text-info">{{ title }}</h6>
+    <a href="{{ path('taxref_index') }}">
+        <h3 class="card-caption">{{ subtitle }}</h3>
+    </a>
+    <p class="card-description">({{ description }})</p>
+    <a href="{{ path('taxref_index') }}" class="btn btn-warning d-inline-flex justify-content-center align-items-center">
+      <svg class="nav-icons text-white pr-2" >
+          <use xlink:href="{{ asset('images/icons/sprite.svg#'~icon )}}">
+      </svg>
+      Accéder
+        <div class="ripple-container"></div>
+    </a>
+</div>
+</div>

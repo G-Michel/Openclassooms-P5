@@ -27,26 +27,39 @@ class ObservationController extends Controller
     public function index(Request $request, ObservationRepository $observation): Response
     {
         if (!$request->isXmlHttpRequest()) {
-            $posts = $observation->findObservationsWithLimit(100);
+            $posts = $observation->findObservationsWithLimit();
             return $this->render('observation/index.html.twig', compact('posts'));
         }
 
         $offset      = $request->query->get('o', '');
         $foundTaxref = $observation->findObservationsWithLimit($offset);
         $results     = [];
-        foreach ($foundTaxref as $observation) {
-            $results[] = [
+        foreach ($foundTaxref as $k => $observation) {
+            $results[$k] = [
                 'page'         => 'observation',
-                'reignType'    => htmlspecialchars($observation->getBird()->getTaxref()->getReignType()),
+                'id'           => htmlspecialchars($observation->getId()),
                 'lbNomType'    => htmlspecialchars($observation->getBird()->getTaxref()->getLbNomType()),
                 'lbAuteurType' => trim(htmlspecialchars($observation->getBird()->getTaxref()->getLbAuteurType()),'()'),
                 'nomVernType'  => htmlspecialchars($observation->getBird()->getTaxref()->getNomVernType()),
-                'slug'         => htmlspecialchars($observation->getBird()->getTaxref()->getSlug()),
-                'phylumType'   => htmlspecialchars($observation->getBird()->getTaxref()->getPhylumType()),
-                'classType'    => htmlspecialchars($observation->getBird()->getTaxref()->getClassType()),
+                'user'         => htmlspecialchars($observation->getUser()->getName()) . " " . htmlspecialchars($observation->getUser()->getSurname()) ,
+                'userUrl'      => htmlspecialchars($observation->getUser()->getPicture()->getUrl()),
+                'userAlt'      => htmlspecialchars($observation->getUser()->getPicture()->getAlt()),
                 'url'          => $observation->getBird()->getTaxref()->getPicture() ? htmlspecialchars($observation->getBird()->getTaxref()->getPicture()->getUrl()): null,
-                'alt'          => $observation->getBird()->getTaxref()->getPicture() ? htmlspecialchars($observation->getBird()->getTaxref()->getPicture()->getAlt()): null
+                'alt'          => $observation->getBird()->getTaxref()->getPicture() ? htmlspecialchars($observation->getBird()->getTaxref()->getPicture()->getAlt()): null,
+                'ago'          => $observation->getAgo(date_format($observation->getdateObs(), 'Y-m-d H:i:s'))
             ];
+            if ($results[$k]['url']) {
+                $results[$k]['backgroundTable'] = '';
+                $results[$k]['btnColor'] = 'btn-secondary';
+            } else {
+                $backgroundTable = ['table-info', 'table-danger','','','','',''];
+                $results[$k]['backgroundTable'] = $backgroundTable[array_rand($backgroundTable,1)];
+                if ($backgroundTable === '') {
+                    $results[$k]['btnColor'] = 'btn-secondary';
+                } else {
+                    $results[$k]['btnColor'] = 'btn-white';
+                }
+            }
         }
 
         return $this->json($results);

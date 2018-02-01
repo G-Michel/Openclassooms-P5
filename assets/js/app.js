@@ -34,14 +34,14 @@ $(function() {
         var nbItems = $grid.find('.card').length;
         var taxrefTemplate = '\
             <div class="card card-blog">\
-                <div class="table">\
+                <div class="table {{ backgroundTable }}">\
                     <h6 class="category text-secondary">{{ lbAuteurType }}</h6>\
                     <h4 class="card-caption">\
                         <a href="/taxref/{{ slug }}">{{ lbNomType }}</a>\
                     </h4>\
                     <div class="card-description">{{ nomVernType }}</div>\
                     <div class="ftr text-center">\
-                        <a href="/taxref/{{ slug }}" class="btn btn-secondary">Détails</a>\
+                        <a href="/taxref/{{ slug }}" class="btn {{ btnColor }}">Détails</a>\
                     </div>\
                 </div>\
             </div>';
@@ -50,14 +50,59 @@ $(function() {
                 <div class="card-image">\
                     <a href="/taxref/{{ slug }}"> <img class="img" src="{{ url }}" alt="{{ alt }}"> </a>\
                 </div>\
-                <div class="table">\
+                <div class="table {{ backgroundTable }}">\
                     <h6 class="category text-secondary">{{ lbAuteurType }}</h6>\
                     <h4 class="card-caption">\
                         <a href="/taxref/{{ slug }}">{{ lbNomType }}</a>\
                     </h4>\
                     <div class="card-description">{{ nomVernType }}</div>\
                     <div class="ftr text-center">\
-                        <a href="/taxref/{{ slug }}" class="btn btn-secondary">Détails</a>\
+                        <a href="/taxref/{{ slug }}" class="btn {{ btnColor }}">Détails</a>\
+                    </div>\
+                </div>\
+            </div>';
+            var obsTemplate = '\
+            <div class="card card-blog">\
+                <div class="table {{ backgroundTable }}">\
+                    <h6 class="category text-secondary">{{ lbAuteurType }}</h6>\
+                    <h4 class="card-caption">\
+                        <a href="/observation/{{ id }}">{{ lbNomType }}</a>\
+                    </h4>\
+                    <div class="card-description">\
+                    {{ nomVernType }}\
+                    <div class="ftr ">\
+                        <div class="author col-9 p-0 text-truncate">\
+                            <a href="#">\
+                                <img src="{{ userUrl }}" alt="{{ userAlt }}" class="avatar img-raised">\
+                                <span class="text-truncate">{{ user }}</span>\
+                            </a>\
+                        </div>\
+                        <div class="stats d-inline-flex align-items-center col-3 p-0"> <i class="material-icons">access_time</i>{{ ago }}</div>\
+                    </div>\
+                    </div>\
+                </div>\
+            </div>';
+        var obsTemplateWithImg = '\
+            <div class="card card-blog">\
+                <div class="card-image">\
+                <a href="/observation/{{ id }}"> <img class="img" src="{{ url }}" alt="{{ alt }}"></a>\
+                </div>\
+                <div class="table {{ backgroundTable }}">\
+                    <h6 class="category text-secondary">{{ lbAuteurType }}</h6>\
+                    <h4 class="card-caption">\
+                        <a href="/observation/{{ id }}">{{ lbNomType }}</a>\
+                    </h4>\
+                    <div class="card-description">\
+                    {{ nomVernType }}\
+                        <div class="ftr">\
+                            <div class="author col-9 p-0 text-truncate">\
+                                <a href="#">\
+                                    <img src="{{ userUrl }}" alt="{{ userAlt }}" class="avatar img-raised">\
+                                    <span class="text-truncate">{{ user }}</span>\
+                                </a>\
+                            </div>\
+                            <div class="stats d-inline-flex align-items-center  col-3 p-0"> <i class="material-icons">access_time</i>{{ ago }}</div>\
+                        </div>\
                     </div>\
                 </div>\
             </div>';
@@ -79,9 +124,17 @@ $(function() {
                 $btn.show()
                 $.each(items, function (i, item) {
                     if (item.url) {
-                        var doc = new DOMParser().parseFromString(taxrefTemplateWithImg.render(item),'text/html');
+                        if (item.page == 'taxref') {
+                            var doc = new DOMParser().parseFromString(taxrefTemplateWithImg.render(item),'text/html');
+                        }else {
+                            var doc = new DOMParser().parseFromString(obsTemplateWithImg.render(item),'text/html');
+                        }
                     } else {
-                        var doc = new DOMParser().parseFromString(taxrefTemplate.render(item),'text/html');
+                        if (item.page == 'taxref') {
+                            var doc = new DOMParser().parseFromString(taxrefTemplate.render(item),'text/html');
+                        }else {
+                            var doc = new DOMParser().parseFromString(obsTemplate.render(item),'text/html');;
+                        }
                     }
                     items[i] = doc.body.firstChild;
                 });

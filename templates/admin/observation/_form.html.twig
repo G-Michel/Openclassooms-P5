@@ -15,19 +15,7 @@
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_widget(form) }}
 
-    <div class="section actions d-flex justify-content-between mb-4">
-
-      {% if include_back_btn|default(false) %}
-      <a href="{{ path( back_btn_path|default('home') ) }}" class="btn btn-secondary btn-round  d-inline-flex align-items-center" style="padding: 10px;">
-        <i class="material-icons">navigate_before</i>
-        {{ back_btn_label|default('retour') }}
-      </a>
-      {% endif %}
-
-      <button type="submit" class="{{ button_css|default("btn btn-primary btn-round d-flex align-items-center ml-auto") }}">
-        {{ button_label|default('envoyer') }}
-        <i class="material-icons">navigate_next</i>
-      </button>
-    </div>
+    <!-- include btn for go to back and forward -->
+    {{ include('components/buttons/tunnelObs.html.twig') }}
 
 {{ form_end(form) }}

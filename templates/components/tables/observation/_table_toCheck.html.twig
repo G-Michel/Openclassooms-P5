@@ -9,17 +9,15 @@
     {{ obs.id }}
   </th>
   {% set col_2 = obs.location.formatedAddress|trim|split(' ')%}
-  <td>{% for row in col_2 %}{{ row }}<br>{% endfor %}</td>
+  <td >{% for row in col_2 %}{{ row }}<br>{% endfor %}</td>
   <td> {{ obs.ago(obs.dateObs|date()) }} </td>
   {% set col_4 = obs.bird.taxref.lbNomType|trim|split(' ',2)%}
   <td>{% for row in col_4 %}{{ row }}<br>{% endfor %}</td>
-  <td>
-    {% set col_5 = obs.statusDefinition(obs.status)|split(',') %}
-    {% for row in col_5 %}{{ row }}<br>{% endfor %}
-  </td>
+  <td> {{ obs.user.name }} {{ obs.user.surname }} </td>
+  <td>{{ obs.user.mail }} </td>
   <!-- actions -->
   <td class="text-right">
-    <a href="{{ path('home') }}"><i class="fa fa-eye"></i></a>
+    <a class="p-2" href="{{ path('home') }}"><i class="fa fa-eye"></i></a>
     {{ include('admin/observation/_check_form.html.twig', {observation: obs}, with_context = false) }}
   </td>
 </tr>

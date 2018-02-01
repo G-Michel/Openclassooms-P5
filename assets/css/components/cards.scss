@@ -118,13 +118,13 @@ CARDS
 
 .card .ftr .stats {
   float: right;
-  line-height: 36px;
+  line-height: 34px;
 }
 
 .card .ftr .stats {
   position: relative;
   top: 1px;
-  font-size: 12px;
+  font-size: 10px;
   .materials-icons {
     font-size: 18px;
   }
@@ -203,7 +203,7 @@ CARDS
 /* ============ Card Blog ============ */
   // breakpoint(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 
-.card-blog {
+.card-blog, .card-background {
   @include make-col-ready();
 
   @include media-breakpoint-up(sm) {
@@ -245,6 +245,11 @@ CARDS
   .table {
     margin:0px;
   }
+}
+.wrapper > .card-blog,
+.card-background
+ {
+  @include make-col(12,12);
 }
 
 
@@ -297,14 +302,17 @@ CARDS
   background-position: center;
   background-size: cover;
   text-align: center;
+  .btn {
+    padding: 6px 12px;
+  }
 }
 
 .card-background .table {
   position: relative;
   z-index: 2;
-  min-height: 280px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  min-height: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   max-width: 440px;
   margin: 0 auto;
 }
@@ -590,9 +598,8 @@ BUTTONS
   position: relative;
   padding: 12px 10px;
   margin: 10px 1px;
-  font-size: 12px;
-  font-weight: 400;
-  text-transform: uppercase;
+  font-size: $font-size-base;
+  font-weight: $font-weight-light;
   letter-spacing: 0;
   will-change: box-shadow, transform;
   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);

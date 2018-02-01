@@ -1,13 +1,13 @@
-// app.js
+// admin.js
 
-
-// import 'bootstrap';
 import './datepicker';
 
 $(function() {
 
-  // Datepicker date obs
+  // Datepicker date obs new
   $('#observe_bird_moment_dateObs').datetimepicker();
+  // Datepicker date obs edit
+  $('#observation_dateObs').datetimepicker();
 
   // Choose file picture
   bs_input_file();

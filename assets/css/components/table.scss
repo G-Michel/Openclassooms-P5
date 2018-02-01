@@ -1,29 +1,66 @@
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color:transparent;
+}
 
 .table {
+  border-collapse: separate;
+  border-spacing: 0px 20px;
+  margin-top: -10px; /* correct offset on first border spacing if desired */
   color:$gray-501;
-  font-size: .75rem;
   &.table-light {
-    background-color: $gray-202;
+    background-color: transparent;
   }
   thead {
-    color:$gray-600;
+    color:$light;
+    th {
+      background: transparent;
+      border-top: none;
+      border-bottom: 2px solid $primary;
+      font-weight: $font-weight-light;
+      font-size: $font-size-sm;
+      padding-top:$table-cell-padding-top-bottom;
+      padding-bottom:$table-cell-padding-top-bottom;
+    }
   }
-  th {
-    padding-top:$table-cell-padding-top-bottom;
-    padding-bottom:$table-cell-padding-top-bottom;
-  }
-  td {
-    vertical-align: middle;
-    a{
-      color:$gray-600;
-      :hover {
-        color:$gray-900;
+  tbody {
+    color:$light;
+      tr {
+        td {
+          padding: 0.55rem;
+        }
+        th:first-child {
+          border-top-left-radius: $border-radius-lg;
+          border-bottom-left-radius: $border-radius-lg;
+        }
+        td:last-child {
+            border-bottom-right-radius: $border-radius-lg;
+            border-top-right-radius: $border-radius-lg;
+            padding:0.25rem;
+            min-width: 75px;
+        }
+        td,th {
+          border-top: none;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          font-weight: $font-weight-light;
+          font-size: $font-size-sm;
+          background-color: rgba(0, 0, 0, 0.5)!important;
+          vertical-align: middle;
+          a{
+            color:$gray-300;
+            :hover {
+              color:$light;
+            }
+            padding-right: 0.5rem;
+          }
+          i.fa-circle {
+            font-size: .5em;
+            width: 1.25em;
+            text-align: center;
+          }
+        }
       }
-    }
-    i.fa-circle {
-      font-size: .5em;
-      width: 1.25em;
-      text-align: center;
-    }
+
   }
+
 }

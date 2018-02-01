@@ -84,7 +84,7 @@
             {% endif %}
           </li>
         {% endif %}
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link active d-flex flex-column justify-content-center" href="{{ path('admin_observation_new') }}">
             <i  class="fa fa-plus text-white position-absolute align-self-center"
                 style="font-size:11px;margin-left:-3px;margin-top:3px;">
@@ -93,7 +93,7 @@
                 <use xlink:href="{{ asset('images/icons/sprite.svg#dove')}}">
             </svg>
           </a>
-        </li>
+        </li> -->
         {% if not is_granted('ROLE_USER') %}
           <li class="nav-item">
             <a class="nav-link {% if route == 'login' %}active{% endif %}" href="{{ path('login') }}"><i class="material-icons">input</i></a>

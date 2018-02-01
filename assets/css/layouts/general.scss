@@ -159,11 +159,11 @@ body {
   background-attachment: fixed;
   background-size: cover;
   background-color: #464646;
-  -webkit-filter: brightness(90%);
-     -moz-filter: brightness(90%);
-      -ms-filter: brightness(90%);
-       -o-filter: brightness(90%);
-          filter: brightness(90%);
+  -webkit-filter: brightness(50%);
+     -moz-filter: brightness(50%);
+      -ms-filter: brightness(50%);
+       -o-filter: brightness(50%);
+          filter: brightness(50%);
   position:fixed;
   top: 0;
   bottom:0;
@@ -233,4 +233,38 @@ body {
   overflow-x: scroll;
   display:flex;
   width: auto;
+ }
+ // ADD OBS BUTTON
+ //
+ // Custom css for search results
+ .add-obs {
+   position: fixed;
+   right: 10px;
+   bottom: 10px;
+   z-index: 1030;
+
+   @include media-breakpoint-up(lg) {
+      right: 20px;
+      bottom: 20px;
+    }
+    .btn {
+      margin:0;
+      padding:10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .09), 0 4px 40px rgba(0, 0, 0, .24);
+    }
+  }
+ // TUNNEL OBS BUTTON
+ //
+ // Custom css for search results
+ .tunnel-obs {
+  display: inline-flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  width:100%;
+  .btn {
+    width: auto;
+    &.back {
+      padding: 10px 14px;
+    }
+  }
  }

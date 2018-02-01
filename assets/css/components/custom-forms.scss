@@ -1,3 +1,26 @@
+// FORM
+
+form {
+  .btn {
+    width: 100%;
+    padding: 18px 50px;
+    font-size: 16px;
+    line-height: 1;
+  }
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 18px 50px;
+  font-size: 16px;
+  line-height: 1;
+  color: #495057;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 0.25rem;
+}
+
 .input-group > .form-control:not(:last-child) {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
@@ -16,7 +39,7 @@
   @include gradient-bg($custom-file-button-bg);
   border-left: $custom-file-border-width solid $custom-file-border-color;
   @include border-radius(0 $custom-file-border-radius $custom-file-border-radius 0);
-  height: calc(2.25rem + 2px);
+  // height: calc(2.25rem + 2px);
 
   line-height: 1.5;
   border: 1px solid #ced4da;
@@ -32,6 +55,7 @@
   opacity: 0.7;
   -webkit-transition: .2s;
   transition: opacity .2s;
+  padding: 0;
 }
 
 .slider::-webkit-slider-thumb {
@@ -66,26 +90,9 @@
 .custom-radio .custom-control-input:checked ~ .custom-control-label.novalid::before {
   background-color: $danger;
 }
-
-// FORM
-
-form {
-  .btn {
-    width: 100%;
-    padding: 18px 50px;
-    font-size: 16px;
-    line-height: 1;
-  }
+.input-file {
+  margin-top: -31px;
+  background-color: black;
+  border-radius:0.25rem 0 0 0.25rem;
 }
 
-.form-control {
-  display: block;
-  width: 100%;
-  padding: 18px 50px;
-  font-size: 16px;
-  line-height: 1;
-  color: #495057;
-  background-color: rgba(0, 0, 0, 0.4);
-  border: none;
-  border-radius: 0.25rem;
-}

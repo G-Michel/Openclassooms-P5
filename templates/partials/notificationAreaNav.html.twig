@@ -1,5 +1,9 @@
  <li class="nav-item nav-notification dropdown-event-listener">
 
+    {% if route is not defined %}
+    {% set route = app.request.attributes.get('_route') %}
+    {% endif %}
+
     {% set notifNumber = 0 %}
 
     {% if route != "admin_observation_new_step_1" and
@@ -25,8 +29,8 @@
       {% endif %}
     </a>
 
-    {% if notifNumber > 0%}
         <div class="dropdown-menu dropdown-notification dropdown-menu-right" aria-labelledby="dropdownMenuNotification" >
+    {% if notifNumber > 0%}
         {% if pathStep is defined %}
           <h6 class="dropdown-header">Une nouvelle observation est en cours</h6>
           <a href="{{ path(pathStep) }}" class="dropdown-item">
@@ -38,22 +42,20 @@
         {% endif %}
         {% if app.session.get("notificationUser") is defined  %}
           {% for notification in app.session.get('notificationUser') if notification.seen == 0 %}
-          <a href="{{ path('admin_observation_show', {id: notification.getObservation().getId()}) }}">
-            <h6 class="dropdown-header">Observation vérifiée par :
-              {{ notification.getFromUser }}
+            <a href="{{ path('admin_observation_show', {id: notification.getObservation().getId()}) }}">
+            <h6 class="dropdown-header">{{ notification.getFromUser }} à traité votre observation
             </h6>
-            <p class="dropdown-item" >Status: {{ notification.getStatusDefinition() }}</p>
-            <p class="dropdown-item">Voir</p>
+            <p class="dropdown-item" >Oiseau : {{ notification.getBirdName() }} status: {{ notification.getStatusDefinition() }}</p>
             </a>
-        {% endfor %}
-        {% else %}
-          <h6 class="dropdown-header">Pas de nouvelles notifications</h6> 
+          {% endfor %}
         {% endif %}
-        <div class="dropdown-divider"></div>
+    {% else %}
+          <h6 class="dropdown-header">Pas de nouvelles notifications</h6> 
+    {% endif %}
+          <div class="dropdown-divider"></div>
           <a href="{{ path('admin_user_notifications')}}">
             <h6 class="dropdown-header">Mes notifications</h6>
           </a>
         </div>
-  {% endif %}
 
 </li>

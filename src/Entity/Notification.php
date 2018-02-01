@@ -56,6 +56,12 @@ class Notification
 	*/
 	private $fromUser;
 
+    /**
+    *
+    * @ORM\Column(type="string", name="birdName")
+    */
+    private $birdName;
+
 	/**
 	* @ORM\ManyToOne(targetEntity="App\Entity\Observation")
 	* 
@@ -70,7 +76,8 @@ class Notification
 		$this->setTo($observation->getUser());
 		$this->observation = $observation;
 		$this->seen = 0;
-	}
+        $this->birdName = $observation->getBird()->getTaxref()->getNomVernType();
+    }
 
 
     /**
@@ -184,5 +191,13 @@ class Notification
         $this->observation = $observatrion;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBirdName()
+    {
+        return $this->birdName;
     }
 }

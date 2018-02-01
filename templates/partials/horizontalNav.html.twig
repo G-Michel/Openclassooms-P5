@@ -38,10 +38,11 @@
         {# <li class="nav-item active">
           <a class="nav-link" href="#"><i class="material-icons">keyboard_arrow_left</i><span class="sr-only">(current)</span></a>
         </li> #}
-
+        <div class="notificationAreaNav">
         {% if is_granted('ROLE_USER') %}
           {% include('partials/notificationAreaNav.html.twig') %}
         {% endif %}
+        </div>
 
         <li class="nav-item">
           <a class="nav-link active d-flex flex-column justify-content-center" href="{{ path('admin_observation_new') }}">
@@ -55,7 +56,7 @@
         </li>
         {% if not is_granted('ROLE_USER') %}
           <li class="nav-item">
-            <a class="nav-link {% if route == 'login' %}active{% endif %}" href="{{ path('login') }}"><i class="material-icons">input</i></a>
+            <a class="nav-link {% if route == 'login' %} active {% endif %}" href="{{ path('login') }}"><i class="material-icons">input</i></a>
           </li>
         {% endif %}
 

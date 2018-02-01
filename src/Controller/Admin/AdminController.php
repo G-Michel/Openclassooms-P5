@@ -74,15 +74,11 @@ class AdminController extends Controller
 
         if ($seen == "true" )
         {
-
-
-
           $em = $this->getDoctrine()->getManager();
           $notifications = $this->get('session')->get("notificationUser");
 
           foreach ($notifications as $notification) 
           {
-
             if ($notification->getSeen()==false)
             {
               $notification->setSeen(true);
@@ -91,19 +87,16 @@ class AdminController extends Controller
               $toFlush++;
               $em->persist($notifdb);
             }
-
           }
           if ($toFlush>0) 
           {
             $em->flush();
-            return new Response('success');
-
+            return $this->render('partials/notificationAreaNav.html.twig');
           }
           else
           {
             return new Response('nothing to flush');
-          }
-          
+          } 
         }
   }
 

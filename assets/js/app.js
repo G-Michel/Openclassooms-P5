@@ -5,6 +5,8 @@
 import 'bootstrap';
 import './datepicker';
 
+
+
 $(function() {
 
   // Datepicker date obs
@@ -97,3 +99,20 @@ $(document).on('submit', 'form[data-confirmationCheck]', function (event) {
           .modal('show');
   }
 });
+
+
+
+
+  $('.dropdown-event-listener').on('hidden.bs.dropdown', function () {
+    var result =$.ajax({
+      url : symfoUrlRoute,
+      type : 'GET',
+      data : 'seen=true',
+      dataType: 'html'
+      });
+  console.log(result);
+    
+  });
+
+
+

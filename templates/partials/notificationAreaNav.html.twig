@@ -1,4 +1,4 @@
- <li class="nav-item nav-notification">
+ <li class="nav-item nav-notification dropdown-event-listener">
 
     {% set notifNumber = 0 %}
 
@@ -13,11 +13,11 @@
 
     {% endif %}
 
-    {% for notification in app.session.get('notificationUser') %}
+    {% for notification in app.session.get('notificationUser') if notification.seen == 0 %}
       {% set notifNumber = notifNumber + 1 %}
     {% endfor %}
 
-    <a class="nav-link dropdown" href="#" id="dropdownMenuNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a  class="nav-link dropdown" href="#" id="dropdownMenuNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <i class="material-icons">notifications</i>
       
       {% if notifNumber > 0%}

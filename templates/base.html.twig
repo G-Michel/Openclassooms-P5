@@ -36,6 +36,7 @@
             <script src="{{ asset('build/js/common.js')}}"></script>
             <script src="{{ asset('lib/moment/moment.min.js')}}"></script>
             <script src="{{ asset('lib/moment/locales.min.js')}}"></script>
+            <script type="text/javascript">var symfoUrlRoute= "{{ url('seen_update')}}"</script>
             <script src="{{ asset('build/js/app.js')}}"></script>
             <script type="text/javascript">
                 function onSignIn(googleUser)
@@ -46,7 +47,9 @@
                     console.log('Image URL: ' + profile.getImageUrl());
                     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
                 }
+
             </script>
+
 
         {% block java_per_pages %}{% endblock %}
 

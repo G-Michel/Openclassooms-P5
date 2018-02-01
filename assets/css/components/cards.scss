@@ -201,18 +201,53 @@ CARDS
 
 
 /* ============ Card Blog ============ */
+  // breakpoint(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 
 .card-blog {
-  margin-top: 30px;
-}
+  @include make-col-ready();
 
-.card-blog .card-caption {
-  margin-top: 5px;
-}
-
-.card-blog .card-image + .category {
+  @include media-breakpoint-up(sm) {
+    @include make-col(6,13);
+  }
+  @include media-breakpoint-up(lg) {
+    @include make-col(4,13);
+  }
   margin-top: 20px;
+  margin-bottom: 20px;
+  border: none;
+  padding: 0px;
+  float:left;
+
+  .card-caption {
+    margin-top: 5px;
+  }
+  .card-image {
+    @include media-breakpoint-up(sm) {
+      height: 150px;
+    }
+    @include media-breakpoint-up(lg) {
+      height: 150px;
+    }
+    width: auto;
+    margin-top: -20px;
+  }
+  .card-image + .category {
+    margin-top: 20px;
+  }
+  .card-caption {
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+  .card-description {
+    font-size: .8rem;
+    line-height: 1;
+  }
+  .table {
+    margin:0px;
+  }
 }
+
+
 
 .card-raised {
   box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
@@ -361,7 +396,7 @@ CARDS
 
 .category {
   position: relative;
-  line-height: 0;
+  font-size: .9rem;
   margin: 15px 0;
 }
 

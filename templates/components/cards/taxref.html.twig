@@ -14,9 +14,9 @@
     {% endif %}
   {% endif %}
   <div class="table {{ backgroundTable }}">
-    <h6 class="category text-secondary">{{ post.reignType }} {{ post.frType }}</h6>
+    <h6 class="category text-secondary">{{ post.lbAuteurType|trim('()') }}</h6>
     <h4 class="card-caption">
-      <a href="{{ path('taxref_show', {slug: post.slug}) }}">{{ post.nomValideType }}</a>
+      <a href="{{ path('taxref_show', {slug: post.slug}) }}">{{ post.lbNomType }}</a>
     </h4>
     <div class="card-description">{{ post.nomVernType }}</div>
     <div class="ftr text-center">

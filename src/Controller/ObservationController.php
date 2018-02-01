@@ -28,14 +28,29 @@ class ObservationController extends Controller
     {
         if (!$request->isXmlHttpRequest()) {
             $posts = $observation->findObservationsWithLimit(100);
-            $options = [
-              'page' => [
-                'title' => 'Observations',
-                'subtitle' => 'Les observations de tous les membres'
-              ]
-            ];
-            return $this->render('observation/index.html.twig', compact('posts', 'options'));
+            return $this->render('observation/index.html.twig', compact('posts'));
         }
+
+        $offset      = $request->query->get('o', '');
+        $foundTaxref = $observation->findObservationsWithLimit($offset);
+        $results     = [];
+        foreach ($foundTaxref as $observation) {
+            $results[] = [
+                'page'         => 'observation',
+                'reignType'    => htmlspecialchars($observation->getBird()->getTaxref()->getReignType()),
+                'lbNomType'    => htmlspecialchars($observation->getBird()->getTaxref()->getLbNomType()),
+                'lbAuteurType' => trim(htmlspecialchars($observation->getBird()->getTaxref()->getLbAuteurType()),'()'),
+                'nomVernType'  => htmlspecialchars($observation->getBird()->getTaxref()->getNomVernType()),
+                'slug'         => htmlspecialchars($observation->getBird()->getTaxref()->getSlug()),
+                'phylumType'   => htmlspecialchars($observation->getBird()->getTaxref()->getPhylumType()),
+                'classType'    => htmlspecialchars($observation->getBird()->getTaxref()->getClassType()),
+                'url'          => $observation->getBird()->getTaxref()->getPicture() ? htmlspecialchars($observation->getBird()->getTaxref()->getPicture()->getUrl()): null,
+                'alt'          => $observation->getBird()->getTaxref()->getPicture() ? htmlspecialchars($observation->getBird()->getTaxref()->getPicture()->getAlt()): null
+            ];
+        }
+
+        return $this->json($results);
+
     }
 
     /**

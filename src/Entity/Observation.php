@@ -28,6 +28,8 @@ class Observation
         -205 => 'Validation refusée, Vérifer la photo de l\'oiseau observé'
     ];
 
+    const NUM_ITEMS = 5;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

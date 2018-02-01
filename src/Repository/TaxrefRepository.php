@@ -44,7 +44,7 @@ class TaxrefRepository extends ServiceEntityRepository
     }
 
 
-    public function findByFrType(int $limit = Taxref::NUM_ITEMS)
+    public function findByFrType(int $offset = -1, int $limit = Taxref::NUM_ITEMS)
     {
         // ['B','D','P','I','J','X','W']
         $em = $this->getEntityManager();
@@ -62,8 +62,9 @@ class TaxrefRepository extends ServiceEntityRepository
 
         $findResults = $query->execute();
 
+        $limit = $limit + $offset + 1;
         foreach ($findResults as $k => $result) {
-            if ($k < $limit) {
+            if ($offset < $k && $k < $limit) {
                 $results[] = $result[0];
             }
         }

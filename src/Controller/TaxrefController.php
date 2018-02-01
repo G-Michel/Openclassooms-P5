@@ -75,6 +75,8 @@ class TaxrefController extends Controller
         foreach ($foundPosts as $post) {
 
             $results[] = [
+                'page'         => 'taxref',
+                'color'        => 'taxref',
                 'reignType'    => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getReignType())),
                 'lbNomType'    => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getLbNomType())),
                 'lbAuteurType' => str_ireplace($searchTerms,$termsLighting,htmlspecialchars($post->getLbAuteurType())),

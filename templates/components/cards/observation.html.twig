@@ -16,20 +16,20 @@
     {% endif %}
   {% endif %}
   <div class="table {{ backgroundTable }}">
-    <h6 class="category text-secondary">{{ post.bird.taxref.reignType }} {{ post.bird.taxref.frType }} {{ post.status }}</h6>
+    <h6 class="category text-secondary">{{ post.bird.taxref.lbNomType }}</h6>
     <h4 class="card-caption">
-      <a href="{{ path('observation_show', {id: post.id}) }}">{{ post.bird.taxref.nomValideType }}</a>
+      <a href="{{ path('observation_show', {id: post.id}) }}">{{ post.bird.taxref.lbAuteurType }}</a>
     </h4>
     <div class="card-description">
       {{ post.bird.taxref.nomVernType }}
       <div class="ftr">
-          <div class="author">
+          <div class="author text-truncate col-9 p-0">
               <a href="#">
                 <img src="{{ post.user.picture.url }}" alt="{{ post.user.picture.alt }}" class="avatar img-raised">
-                <span>{{ post.user.name }} {{ post.user.surname }}</span>
+                <span class="text-truncate">{{ post.user.name }} {{ post.user.surname }}</span>
               </a>
           </div>
-          <div class="stats d-inline-flex align-items-center"> <i class="material-icons">access_time</i>{{ post.ago(post.dateObs|date())}}</div>
+          <div class="stats d-inline-flex align-items-center col-3 p-0"> <i class="material-icons">access_time</i>{{ post.ago(post.dateObs|date())}}</div>
       </div>
     </div>
   </div>

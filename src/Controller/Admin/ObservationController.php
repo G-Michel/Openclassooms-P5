@@ -44,14 +44,6 @@ class ObservationController extends Controller
         'admin/observation/index.html.twig',
         compact('userObservations','observationsToCheck', 'uncommittedObservations')
       );
-    //   EqualTo
-    //   NotEqualTo
-    //   IdenticalTo
-    //   NotIdenticalTo
-    //   LessThan
-    //   LessThanOrEqual
-    //   GreaterThan
-    //   GreaterThanOrEqual
     }
 
     /**
@@ -282,9 +274,13 @@ class ObservationController extends Controller
 
       $form->handleRequest($request);
       if ($form->isSubmitted() && $form->isValid()) {
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($observation);
         $em->flush();
+
+        $this->addFlash('success', 'Observation modifié avec succès !');
+
         return $this->redirectToRoute('admin_observation_index');
       }
 

@@ -28,7 +28,7 @@ class Observation
         -205 => 'Validation refusée, Vérifer la photo de l\'oiseau observé'
     ];
 
-    const NUM_ITEMS = 5;
+    const NUM_ITEMS = 10;
 
     /**
      * @ORM\Id
@@ -332,6 +332,6 @@ class Observation
         }
 
         if (!$full) $string = array_slice($string, 0, 1);
-        return $string ? ' il y a ' . implode(', ', $string) : 'maintenant';
+        return $string ?  implode(', ', $string) : 'maintenant';
     }
 }

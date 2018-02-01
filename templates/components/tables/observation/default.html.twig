@@ -1,5 +1,5 @@
 <div class="tab-pane fade {% if active|default(false) %}show active{% endif %}" id="{{ id }}Obs" role="tabpanel" aria-labelledby="{{ id }}-tab">
-    <div class="row observation">
+    <!-- <div class="row observation">
       <div class="col">
         <h6 class="text-light title">{{ title }} (affichage 1 à 6 de {{observations|length}} enregistrements)</h6>
       </div>
@@ -9,32 +9,34 @@
           Ajouter
         </a>
       </div>
+    </div> -->
+    <div class="table-responsive">
+      <table class="table table-striped table-light mt-3">
+        <thead>
+          <tr>
+            <th scope="col">ID Observation</th>
+            <th scope="col">Lieu</th>
+            <th scope="col">Moment</th>
+            <th scope="col">Oiseau</th>
+            <th scope="col">Status</th>
+            <th scope="col-action"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if id == 'valid' %}
+            {% for obs in observations if obs.status == 1  %}
+              {{ include('components/tables/observation/_table_default.html.twig')}}
+            {% endfor %}
+          {% elseif id == 'wait' %}
+            {% for obs in observations if obs.status == 0  %}
+            {{ include('components/tables/observation/_table_default.html.twig')}}
+            {% endfor %}
+          {% else %}
+            {% for obs in observations %}
+              {{ include('components/tables/observation/_table_default.html.twig')}}
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
     </div>
-    <table class="table table-striped table-light mt-3">
-      <thead>
-        <tr>
-          <th scope="col">Obs ID</th>
-          <th scope="col">Lieu</th>
-          <th scope="col">Moment</th>
-          <th scope="col">Oiseau</th>
-          <th scope="col">Status</th>
-          <th scope="col-action"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% if id == 'valid' %}
-          {% for obs in observations if obs.status == 1  %}
-            {{ include('components/tables/observation/_table_default.html.twig')}}
-          {% endfor %}
-        {% elseif id == 'wait' %}
-          {% for obs in observations if obs.status == 0  %}
-          {{ include('components/tables/observation/_table_default.html.twig')}}
-          {% endfor %}
-        {% else %}
-          {% for obs in observations %}
-            {{ include('components/tables/observation/_table_default.html.twig')}}
-          {% endfor %}
-        {% endif %}
-      </tbody>
-    </table>
   </div>

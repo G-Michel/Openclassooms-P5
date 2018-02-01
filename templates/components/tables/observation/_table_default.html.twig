@@ -1,22 +1,31 @@
 <tr>
-  <th scope="row">{{ obs.id }}</th>
-  <td>{{obs.location.formatedAddress}}</td>
-  <td> {{ obs.getAgo(obs.dateObs|date()) }} </td>
-  <td> {{ obs.bird.taxref.lbNomType }} </td>
-  <td>
+  <th scope="row">
     <i class="fa fa-circle fa-fw
       {% if obs.status == 1 %} text-primary
       {% elseif obs.status == 0 %} text-warning
       {% else %}text-danger
       {% endif %} ">
     </i>
-    {{ obs.statusDefinition(obs.status) }}
+    {{ obs.id }}
+  </th>
+  {% set col_2 = obs.location.formatedAddress|trim|split(' ')%}
+  <td>{% for row in col_2 %}{{ row }}<br>{% endfor %}</td>
+  <td> {{ obs.getAgo(obs.dateObs|date()) }} </td>
+  {% set col_4 = obs.bird.taxref.lbNomType|trim|split(' ',2)%}
+  <td>{% for row in col_4 %}{{ row }}<br>{% endfor %}</td>
+  <td>
+    {% set col_5 = obs.statusDefinition(obs.status)|split(',') %}
+    {% if route == 'admin_home' %}
+      {% for i,row in col_5 if i == 0 %}{{ row }}{% endfor %}
+    {% else %}
+      {% for row in col_5 %}{{ row }}<br>{% endfor %}
+    {% endif %}
   </td>
-  <td class="text-right d-inline-flex justify-content-between">
-    <a class="p-2" href="{{ path('admin_observation_show',{ id: obs.id }) }}">
+  <td class="text-right">
+    <a class="" href="{{ path('admin_observation_show',{ id: obs.id }) }}">
       <i class="fa fa-eye"></i>
     </a>
-    <a class="p-2" href="{{ path('admin_observation_edit',{ id: obs.id }) }}">
+    <a class="" href="{{ path('admin_observation_edit',{ id: obs.id }) }}">
       <i class="fa fa-pencil"></i>
     </a>
     {{ include('admin/observation/_delete_form.html.twig', {observation: obs}, with_context = false) }}

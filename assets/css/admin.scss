@@ -12,15 +12,27 @@
 .observation-preview ul {
     > li:nth-of-type(1) .jumbotron{
       background:linear-gradient(135deg, #af2ad2, #f52df1);
+      background-size: 100% 3px;
+      background-repeat: no-repeat;
+      background-position: bottom;
     }
     > li:nth-of-type(2) .jumbotron{
       background:linear-gradient(135deg, #21d09a, #2cdbf3);
+      background-size: 100% 3px;
+      background-repeat: no-repeat;
+      background-position: bottom;
     }
     > li:nth-of-type(3) .jumbotron{
       background:linear-gradient(135deg, #d3a22e, #f45326);
+      background-size: 100% 3px;
+      background-repeat: no-repeat;
+      background-position: bottom;
     }
     > li:nth-of-type(4) .jumbotron{
       background:linear-gradient(135deg, #1e52d4, #506ae9);
+      background-size: 100% 3px;
+      background-repeat: no-repeat;
+      background-position: bottom;
     }
     .nav-item a {
       padding:0;
@@ -28,13 +40,14 @@
 
   .jumbotron {
     position: relative;
-    padding: 3.5rem 0;
+    padding: 2.5rem 0;
     margin: 0;
   }
   .title {
     color: $white;
-    text-align: center;
-    font-size: .9rem;
+    text-align: left;
+    font-size: $font-size-base;
+    font-weight:$font-weight-light;
   }
   .lead {
     color: $white;
@@ -44,8 +57,8 @@
     margin-bottom: 0;
     line-height: 1;
     text-align: right;
-    font-weight: 600;
-    font-size: 2.7rem;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-xl;
   }
 }
 .observation {

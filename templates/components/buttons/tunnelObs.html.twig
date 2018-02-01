@@ -1,0 +1,16 @@
+<div class="section actions tunnel-obs">
+
+  {% if include_back_btn|default(false) %}
+  <a href="{{ path( back_btn_path|default('home') ) }}" class="btn btn-secondary d-flex align-items-center back">
+    <i class="material-icons">navigate_before</i>
+    {{ back_btn_label|default('retour') }}
+  </a>
+  {% endif %}
+
+  <button type="submit" class="{{ button_css|default("btn btn-primary d-flex align-items-center ml-auto") }}">
+    {{ button_label|default('envoyer') }}
+    {% if route != 'admin_observation_edit' %}
+      <i class="material-icons">navigate_next</i>
+    {% endif %}
+  </button>
+</div>

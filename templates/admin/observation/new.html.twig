@@ -16,6 +16,7 @@
                 {% if app.session.get('step') != 4 %}
                     {{ include('admin/observation/_form.html.twig', {
                         form: form,
+                        route:route,
                         button_label: options.form.button_label|default('étape suivante'),
                         include_back_btn: options.form.include_back_btn,
                         back_btn_label: options.form.back_btn_label|default('étape précédente'),
@@ -41,6 +42,9 @@
 
 {% block javascripts %}
     {{parent()}}
+    <script src="{{ asset('lib/moment/moment.min.js')}}"></script>
+    <script src="{{ asset('lib/moment/locales.min.js')}}"></script>
+    <script src="{{ asset('build/js/admin.js')}}"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
     </script>

@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+{{ include('default/_flash_messages.html.twig') }}
 <div class="row main-row p-5">
   <div class="container">
     {% block main_header %}{% endblock %}

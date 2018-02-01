@@ -38,38 +38,11 @@
         {# <li class="nav-item active">
           <a class="nav-link" href="#"><i class="material-icons">keyboard_arrow_left</i><span class="sr-only">(current)</span></a>
         </li> #}
-        {% if is_granted('ROLE_USER') %}
-          <li class="nav-item nav-notification">
-            <a class="nav-link dropdown" href="#" id="dropdownMenuNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">notifications</i>
-              {% if route != "admin_observation_new_step_1" and
-                    route != "admin_observation_new_step_2" and
-                    route != "admin_observation_new_step_3" and
-                    route != "admin_observation_new_step_4" and
-                    app.session.get('step')
-              %}
-                <span class="badge badge-notify">1</span>
-              {% endif %}
-            </a>
-            {% if route != "admin_observation_new_step_1" and
-                  route != "admin_observation_new_step_2" and
-                  route != "admin_observation_new_step_3" and
-                  route != "admin_observation_new_step_4" and
-                  app.session.get('step')
-            %}
-            {% set pathStep = "admin_observation_new_step_"~app.session.get('step') %}
-              <div class="dropdown-menu dropdown-notification dropdown-menu-right" aria-labelledby="dropdownMenuNotification" >
-                <h6 class="dropdown-header">Une nouvelle observation est en cours</h6>
-                <a href="{{ path(pathStep) }}" class="dropdown-item">Retourner à la saisie</a>
-                <div class="dropdown-divider"></div>
-                <a href="{{ path('observation_cancel', {'redirectTo':route}) }}" class="text-danger dropdown-item">
-                  Annuler l'observation
-                </a>
 
-              </div>
-            {% endif %}
-          </li>
+        {% if is_granted('ROLE_USER') %}
+          {% include('partials/notificationAreaNav.html.twig') %}
         {% endif %}
+
         <li class="nav-item">
           <a class="nav-link active d-flex flex-column justify-content-center" href="{{ path('admin_observation_new') }}">
             <i  class="fa fa-plus text-white position-absolute align-self-center"

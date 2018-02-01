@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use App\Entity\Observation;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,6 +13,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Notification
 {
+	/** @var array Map of standard OBSERVATION status code/reason phrases */
+    private static $phrases = [
+        1  => 'En ligne',
+        0    => 'Validation en cours',
+        -100 => 'En attente',
+        -200 => 'Validation refusée',
+        -201 => 'Validation refusée, Vérifer la région de l\'observation',
+        -202 => 'Validation refusée, Vérifer le moment de l\'observation',
+        -203 => 'Validation refusée, Vérifer les couleurs de l\'oiseau observé',
+        -204 => 'Validation refusée, Vérifer la taille de l\'oiseau observé',
+        -205 => 'Validation refusée, Vérifer la photo de l\'oiseau observé'
+    ];
+
 	/**
 	* @ORM\Id
 	* @ORM\GeneratedValue
@@ -37,16 +51,24 @@ class Notification
 	private $to;
 
 	/**
-	* @ORM\ManyToOne(targetEntity="App\Entity\User")
+	*
+	* @ORM\Column(type="string", name="fromUser")
 	*/
-	private $from;
+	private $fromUser;
+
+	/**
+	* @ORM\ManyToOne(targetEntity="App\Entity\Observation")
+	* 
+	*/
+	private $observation;
 
 
-	public function __construct(User $from,User $to,$status)
+	public function __construct(Observation $observation,$from)
 	{
-		$this->setStatus($status);
-		$this->setFrom($from);
-		$this->setTo($to);
+		$this->setStatus($observation->getStatus());
+		$this->fromUser= $from;
+		$this->setTo($observation->getUser());
+		$this->observation = $observation;
 		$this->seen = 0;
 	}
 
@@ -122,9 +144,9 @@ class Notification
     /**
      * @return mixed
      */
-    public function getFrom()
+    public function getFromUser()
     {
-        return $this->from;
+        return $this->fromUser;
     }
 
     /**
@@ -132,9 +154,34 @@ class Notification
      *
      * @return self
      */
-    public function setFrom($from)
+    public function setFromUser($fromUser)
     {
-        $this->from = $from;
+        $this->fromUser = $fromUser;
+
+        return $this;
+    }
+
+        public function getStatusDefinition()
+    {
+        return self::$phrases[$this->getStatus()];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObservation()
+    {
+        return $this->observation;
+    }
+
+    /**
+     * @param mixed $to
+     *
+     * @return self
+     */
+    public function setObservation($observation)
+    {
+        $this->observation = $observatrion;
 
         return $this;
     }

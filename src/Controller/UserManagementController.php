@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Oauth;
 use App\Entity\Picture;
-use App\Entity\Notification;
 use App\Entity\Auth;
 use App\Form\SignInType;
 use App\Form\SignUpType;

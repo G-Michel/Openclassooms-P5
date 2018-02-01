@@ -347,10 +347,12 @@ class ObservationController extends Controller
             return $this->redirectToRoute('admin_observation_index');
         }
         $observation->setStatus($request->request->get('status'));
+        
         $notification = new Notification(
-          $this->getUser(),
-          $observation->getUser(),
-          $request->request->get('status'));
+          $observation,
+          $this->getUser()->getUsername()
+        );
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($observation);
         $em->persist($notification);

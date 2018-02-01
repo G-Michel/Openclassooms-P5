@@ -7,6 +7,7 @@ use App\Entity\Picture;
 
 use App\Form\EditProfileType;
 use App\Repository\ObservationRepository;
+use App\Repository\NotificationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -36,6 +37,23 @@ class AdminController extends Controller
         return $this->render('admin/espacePersonnel.html.twig',array(
         	'userObservations' => $userObservations,
         	'obsToValid'       => $observationsToValid
+        ));
+    }
+
+
+    /**
+     * @Route("/admin/mesNotifications", name="admin_user_notifications")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+  public function myNotifications(Request $request, NotificationRepository $notification)
+  {
+
+    $userNotifications = $notification->findUserNotifications($this->getUser()->getId());
+
+
+        return $this->render('admin/mesNotifications.html.twig',array(
+          'userNotifications' => $userNotifications,
         ));
     }
 

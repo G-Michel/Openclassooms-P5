@@ -96,3 +96,19 @@ $(document).on('submit', 'form[data-confirmationCheck]', function (event) {
           .modal('show');
   }
 });
+
+//Update notifications
+  $('.dropdown-event-listener').on('hidden.bs.dropdown', function () {
+    var result = $.ajax({
+      url : symfoUrlRoute,
+      type : 'GET',
+      data : 'seen=true',
+      dataType: 'html',
+      success : function(code_html, status){
+        if (code_html == 'nothing to flush'){}
+        else{
+          $('.notificationAreaNav').replaceWith(code_html);
+        }
+      }
+    });
+  });

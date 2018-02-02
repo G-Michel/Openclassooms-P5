@@ -19,7 +19,7 @@ class SignInType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('login', TextType::class, [
+            ->add('_username', TextType::class, [
                 'mapped'   => false,
                 'constraints' => [
                     new NotBlank([
@@ -31,7 +31,7 @@ class SignInType extends AbstractType
                     ])
                 ]
             ])
-            ->add('password', PasswordType::class, [
+            ->add('_password', PasswordType::class, [
                 'mapped'   => false,
                 'constraints' => [
                     new NotBlank([

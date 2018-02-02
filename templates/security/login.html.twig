@@ -22,7 +22,8 @@
     <div id="main-right" class=" mt-5 pt-5 mt-lg-0 pt-lg-0 mt-xl-5 pt-xl-5 col-xl-6 offset-lg-5 offset-xl-2  justify-content-center text-white">
 
       {% if error %}
-        <div class="alert alert-danger">{{ error.message }}</div>
+        <div class="alert alert-danger">{{ error.message | replace({"Bad credentials." : "Nom d'utilisateur/Mot de passe invalide."}) }}
+        </div>
       {% endif %}
       {% for message in app.flashes('flashError') %}
         <div class="alert alert-danger">
@@ -43,24 +44,23 @@
           S'identifier avec Google
         </a>
         </div>
-      
-          <div class="form ">
-      <form  action="{{ path('login_check') }}" method="post">
-        <div class="form-group">
-          <label for="username">Utilisateur :</label>
-          <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
-          <br/>
-          <label for="password">Mot de passe :</label>
-          <input class="form-control" type="password" id="password" name="_password" />      
-            <small><a class="pull-right" href="{{ path('lostPassword') }}">Mot de passe oublié ?</a></small>
+        <div class="form ">
+            <form  action="{{ path('login_check') }}" method="post">
+              <div class="form-group">
+                <label for="username">Utilisateur :</label>
+                <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
+                <br/>
+                <label for="password">Mot de passe :</label>
+                <input class="form-control" type="password" id="password" name="_password" />      
+                  <small><a class="pull-right" href="{{ path('lostPassword') }}">Mot de passe oublié ?</a></small>
 
-          <br />
-          <input class="btn btn-primary" type="submit" value="Connexion" />
-        </div>
-      </form>
-      <p>
-        <a href="{{ path('signUp') }}">Pas de compte ? CREER UN COMPTE</a>
-      </p>
+                <br />
+                <input class="btn btn-primary" type="submit" value="Connexion" />
+              </div>
+            </form>
+            <p>
+              <a href="{{ path('signUp') }}">Pas de compte ? CREER UN COMPTE</a>
+            </p>
         </div>
   </div>
 {% endblock %}

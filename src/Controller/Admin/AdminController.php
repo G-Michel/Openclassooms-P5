@@ -89,32 +89,39 @@ class AdminController extends Controller
         if ($seen == "true" )
         {
           $em = $this->getDoctrine()->getManager();
-          $notifications = $this->get('session')->get("notificationUser");
+          $notifs = $this->get('session')->get("notificationUser");
 
-          foreach ($notifications as $notification) 
+          if ($notifs != null)
           {
-            if ($notification->getSeen()==false)
+
+            foreach ($notifs as $notification) 
             {
-              $notification->setSeen(true);
-              $notifdb = $this->getDoctrine()->getRepository(Notification::class)->find($notification->getId());
-              $notifdb->setSeen(true);
-              $toFlush++;
-              $em->persist($notifdb);
+              if ($notification->getSeen()==false)
+              {
+                $notification->setSeen(true);
+                $notifdb = $this->getDoctrine()->getRepository(Notification::class)->find($notification->getId());
+                $notifdb->setSeen(true);
+                $toFlush++;
+                $em->persist($notifdb);
+              }
             }
-          }
-          if ($toFlush>0) 
-          {
-            $em->flush();
-            return $this->render('partials/notificationAreaNav.html.twig');
+            if ($toFlush>0) 
+            {
+              $em->flush();
+              return $this->render('partials/notificationAreaNav.html.twig');
+            }
+            else
+            {
+              return new Response('nothing to flush');
+            } 
           }
           else
-          {
-            return new Response('nothing to flush');
-          } 
+            {
+              return new Response('nothing to flush');
+            } 
         }
+
   }
-
-
 
 
     /**

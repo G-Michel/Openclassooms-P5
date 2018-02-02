@@ -199,12 +199,20 @@ body {
 #main_contact #main-left > div,
 #main_login #main-left > div,
 #main_taxref_index #main-left > div,
-#main_observation_index #main-left > div
+#main_observation_index #main-left > div,
+#main_mentionsLegales #main-left > div
 {
   @include media-breakpoint-up(lg) {
     position:fixed;
     top: 56px;
     bottom: 0;
+    @include make-col(4,12);
+    @include make-row();
+  }
+
+  @include media-breakpoint-up(xl) {
+    @include make-col(3,12);
+    @include make-row();
   }
 }
 // MAP

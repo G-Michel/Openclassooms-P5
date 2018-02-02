@@ -1,3 +1,4 @@
+{{ include('observation/_delete_observation_confirmation.html.twig') }}
 {% if app.request.attributes.get('_route') == 'admin_observation_index'
    or app.request.attributes.get('_route') == 'admin_home'
 %}
@@ -26,4 +27,3 @@
       </button>
   </form>
 {% endif %}
-{{ include('observation/_delete_observation_confirmation.html.twig') }}

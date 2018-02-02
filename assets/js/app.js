@@ -1,4 +1,4 @@
-import 'bootstrap';
+// import 'bootstrap';
 import './jquery.instantSearch.js';
 
 let jQueryBridget = require('jquery-bridget');
@@ -157,11 +157,11 @@ $(function() {
       type : 'GET',
       data : 'seen=true',
       dataType: 'html',
-      success : function(code_html, status){ 
+      success : function(code_html, status){
         if (code_html == 'nothing to flush'){}
-        else{  
+        else{
           $('.notificationAreaNav').replaceWith(code_html);
         }
       }
-    });    
+    });
   });

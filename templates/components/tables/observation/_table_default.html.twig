@@ -8,26 +8,28 @@
     </i>
     {{ obs.id }}
   </th>
-  {% set col_2 = obs.location.formatedAddress|trim|split(' ')%}
-  <td>{% for row in col_2 %}{{ row }}<br>{% endfor %}</td>
+  {% set col_address = obs.location.formatedAddress|trim|split(' ')%}
+  <td>{% for row in col_address %}{{ row }}<br>{% endfor %}</td>
   <td> {{ obs.getAgo(obs.dateObs|date()) }} </td>
-  {% set col_4 = obs.bird.taxref.lbNomType|trim|split(' ',2)%}
-  <td>{% for row in col_4 %}{{ row }}<br>{% endfor %}</td>
+  {% set col_taxref = obs.bird.taxref.lbNomType|trim|split(' ',2)%}
+  <td>{% for row in col_taxref %}{{ row }}<br>{% endfor %}</td>
   <td>
-    {% set col_5 = obs.statusDefinition(obs.status)|split(',') %}
+    {% set col_status = obs.statusDefinition(obs.status)|split(',') %}
     {% if route == 'admin_home' %}
-      {% for i,row in col_5 if i == 0 %}{{ row }}{% endfor %}
+      {% for i_status,row in col_status if i_status == 0 %}{{ row }}{% endfor %}
     {% else %}
-      {% for row in col_5 %}{{ row }}<br>{% endfor %}
+      {% for row in col_status %}{{ row }}<br>{% endfor %}
     {% endif %}
   </td>
   <td class="text-right">
     <a class="" href="{{ path('admin_observation_show',{ id: obs.id }) }}">
       <i class="fa fa-eye"></i>
     </a>
-    <a class="" href="{{ path('admin_observation_edit',{ id: obs.id }) }}">
-      <i class="fa fa-pencil"></i>
-    </a>
-    {{ include('admin/observation/_delete_form.html.twig', {observation: obs}, with_context = false) }}
+    {% if obs.status != 1 %}
+      <a class="" href="{{ path('admin_observation_edit',{ id: obs.id }) }}">
+        <i class="fa fa-pencil"></i>
+      </a>
+    {% endif %}
+      {{ include('admin/observation/_delete_form.html.twig', {observation: obs}, with_context = false) }}
   </td>
 </tr>

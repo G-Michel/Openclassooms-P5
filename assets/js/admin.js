@@ -6,9 +6,9 @@ import './datepicker';
 $(function() {
 
   // Datepicker date obs new
-  $('#observe_bird_moment_dateObs').datetimepicker();
+  // $('#observe_bird_moment_dateObs').datetimepicker();
   // Datepicker date obs edit
-  $('#observation_dateObs').datetimepicker();
+  // $('#observation_dateObs').datetimepicker();
 
   // Choose file picture
   bs_input_file();
@@ -27,12 +27,40 @@ $(function() {
 
 });
 
-// Function Choose file picture
+// Function Choose file picture NEW
 function bs_input_file() {
   $(".input-file").before(
     function() {
       if ( $(this).prev().hasClass('form-control-file') ) {
         var element = $("#observe_bird_detail_picture_file");
+        element.addClass('d-none')
+        element.change(function(){
+          element.next(element).find('input').val((element.val()).split('\\').pop());
+        });
+        $(this).find("button.btn-choose").click(function(){
+          element.click();
+        });
+        // $(this).find("button.btn-reset").click(function(){
+        //   element.val(null);
+        //   $(this).parents(".input-file").find('input').val('');
+        // });
+        $(this).find('input').css("cursor","pointer");
+        $(this).find('input').mousedown(function() {
+          $(this).parents('.input-file').prev().click();
+          return false;
+        });
+        return element;
+      }
+    }
+  );
+}
+
+// Function Choose file picture EDIT
+function bs_input_file() {
+  $(".input-file").before(
+    function() {
+      if ( $(this).prev().hasClass('form-control-file') ) {
+        var element = $("#observation_picture_file");
         element.addClass('d-none')
         element.change(function(){
           element.next(element).find('input').val((element.val()).split('\\').pop());

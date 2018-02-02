@@ -8,14 +8,21 @@
 
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('lib/moment/moment.min.js')}}"></script>
+    <script src="{{ asset('lib/moment/locales.min.js')}}"></script>
+    <script src="{{ asset('build/js/admin.js') }}"></script>
+{% endblock %}
+
 
 {% block mainLeft %}
 
     <div class="mt-lg-5 pt-lg-5 mt-0 ml-0 ml-sm-5 col-lg-3 col-xl-3 ">
-        
+
             <h2 class="text-white display-4 text-wrap">Mes notifications</h2>
             <p class="text-primary lead">L'historique des activités concernant vos observations</p>
-           
+
     </div>
       <div class='mt-5 offset-1 col-lg-7 col-xl-7 observation-preview'>
         <ul class="nav justify-content-center w-100" id="myTab" role="tablist" >
@@ -28,7 +35,7 @@
             </li>
         </ul>
         <div class="tab-content pt-5">
-            
+
             {{ include('components/tables/notification/default.html.twig', {
                 observations: userNotifications,
                 title: 'Mes dernières observations',

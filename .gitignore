@@ -19,5 +19,6 @@
 ### delete after test  ###
 /assets/css/images/temp/*
 /public/*.svg
+/public/uploads/*
 
 ### delete after test  ###

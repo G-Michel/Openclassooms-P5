@@ -54,7 +54,7 @@ class ObservationController extends Controller
             } else {
                 $backgroundTable = ['table-info', 'table-danger','','','','',''];
                 $results[$k]['backgroundTable'] = $backgroundTable[array_rand($backgroundTable,1)];
-                if ($backgroundTable === '') {
+                if ($results[$k]['backgroundTable'] === '') {
                     $results[$k]['btnColor'] = 'btn-secondary';
                 } else {
                     $results[$k]['btnColor'] = 'btn-white';

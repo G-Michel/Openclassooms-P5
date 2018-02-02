@@ -31,8 +31,8 @@ class TaxrefController extends Controller
         $offset      = $request->query->get('o', '');
         $foundTaxref = $taxref->findByFrType($offset);
         $results     = [];
-        foreach ($foundTaxref as $taxref) {
-            $results[] = [
+        foreach ($foundTaxref as $k => $taxref) {
+            $results[$k] = [
                 'page'         => 'taxref',
                 'reignType'    => htmlspecialchars($taxref->getReignType()),
                 'lbNomType'    => htmlspecialchars($taxref->getLbNomType()),
@@ -44,6 +44,18 @@ class TaxrefController extends Controller
                 'url'          => $taxref->getPicture() ? htmlspecialchars($taxref->getPicture()->getUrl()): null,
                 'alt'          => $taxref->getPicture() ? htmlspecialchars($taxref->getPicture()->getAlt()): null
             ];
+            if ($results[$k]['url']) {
+                $results[$k]['backgroundTable'] = '';
+                $results[$k]['btnColor'] = 'btn-secondary';
+            } else {
+                $backgroundTable = ['table-info', 'table-danger','','','','',''];
+                $results[$k]['backgroundTable'] = $backgroundTable[array_rand($backgroundTable,1)];
+                if ($results[$k]['backgroundTable'] === '') {
+                    $results[$k]['btnColor'] = 'btn-secondary';
+                } else {
+                    $results[$k]['btnColor'] = 'btn-white';
+                }
+            }
         }
 
         return $this->json($results);

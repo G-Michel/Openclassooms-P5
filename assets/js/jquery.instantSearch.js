@@ -27,6 +27,9 @@
             e.preventDefault();
         }
       });
+      this.$form.on('submit', function(e) {
+        e.preventDefault();
+      });
 
       this.$input.keyup(this.debounce());
   };
@@ -50,6 +53,13 @@
                 <div class="ftr text-center">\
                 <a href="/taxref/{{ slug }}" class="btn btn-secondary">Détails</a>\
                 </div>\
+            </div>\
+        </div>',
+        moreTemplate: '\
+        <div class="card card-blog card-search">\
+            <div class="ftr text-center h-100 p-0 m-0">\
+                <a href="/taxref" class="btn btn-primary h-100 w-100 p-0 m-0 d-flex flex-column justify-content-center">\
+                <i class="material-icons md-60">add</i></a>\
             </div>\
         </div>'
   };
@@ -95,6 +105,7 @@
   InstantSearch.prototype.show = function (items) {
       var $preview = this.$preview;
       var itemTemplate = this.options.itemTemplate;
+      var moreTemplate = this.options.moreTemplate;
 
       if (0 === items.length) {
           $preview.html(this.options.noResultsMessage);
@@ -102,7 +113,8 @@
           $preview.empty();
           $.each(items, function (index, item) {
               $preview.append(itemTemplate.render(item));
-          });
+            });
+            $preview.append(moreTemplate);
       }
   };
 

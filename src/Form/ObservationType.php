@@ -24,7 +24,7 @@ class ObservationType extends AbstractType
         $builder
             ->add('location', LocationType::class)
             ->add('dateObs', DateTimePickerType::class, [
-                'label' => 'Observé le',
+                'label' => 'Observé le'
             ])
             ->add('comment', TextareaType::class)
             ->add('bird', BirdType::class,[

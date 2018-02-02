@@ -35,8 +35,8 @@ class DateTimePickerType extends AbstractType
             'data-date-format' => $this->formatConverter->convert($options['format']),
             'data-date-locale' => mb_strtolower(str_replace('_', '-', \Locale::getDefault())),
             'data-toggle'      => "datetimepicker",
-            'data-target'      => "#observe_bird_moment_dateObs",
-            'class'            => "datetimepicker-input"
+            'data-target'      => ".datetimepicker-input",
+            'class'            => "datetimepicker-input",
         ];
     }
 

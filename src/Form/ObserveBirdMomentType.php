@@ -33,4 +33,5 @@ class ObserveBirdMomentType extends AbstractType
     {
       return ObservationType::class;
     }
+
 }

@@ -17,9 +17,8 @@ $(function() {
     // DISPLAY MORE RESULTS
 
     //=====================
-    // test Masonry
+    // Masonry
     var $grid = $('.result');
-    // let $grid = $('#listingTaxref')
     $grid.masonry({
         itemSelector: '.card',
         gutter: 30,

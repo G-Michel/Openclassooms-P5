@@ -33,6 +33,16 @@ class AppController extends Controller
     }
 
     /**
+     * @Route("/mentions-legales", name="mentionsLegales")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+    public function mentionsLegales()
+    {
+        return $this->render('default/mentionsLegales.html.twig');
+    }
+
+    /**
      * @Route("/contact", name="contact")
      * @Cache(smaxage="10")
      */

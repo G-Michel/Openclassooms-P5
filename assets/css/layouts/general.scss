@@ -149,6 +149,9 @@ body {
     background-image: url('../images/login-xl.jpg');
   }
 }
+
+#main_admin_user_notifications:before,
+#main_edit_profil:before,
 #main_admin_home:before,
 #main_admin_observation_index:before
 {
@@ -194,6 +197,7 @@ body {
 
 #main_home #main-left > div,
 #main_contact #main-left > div,
+#main_login #main-left > div,
 #main_taxref_index #main-left > div,
 #main_observation_index #main-left > div
 {
@@ -267,4 +271,11 @@ body {
       padding: 10px 14px;
     }
   }
+  // LOGIN
+  //
+  // custon css for login
+  .main-login-form-div {
+    margin-top: 3rem;
+  }
+
  }

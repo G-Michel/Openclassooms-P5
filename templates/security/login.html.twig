@@ -7,18 +7,19 @@
 {% block stylesheets %}{% endblock %}
 
 {% block mainLeft %}
-  <div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">
-    <div class="container mt-auto mb-auto" >
-        <h1 class="text-white display-3">Login</h1>
-        <p class="text-primary lead">Connectez vous</p>
+  <div id="main-left" class="col-lg-4 col-xl-3">
+    <div class="d-flex">
+        <div class="container mt-auto mb-auto">
+            <h1 class="text-white display-3">Login</h1>
+            <p class="text-primary lead">Connectez vous</p>
+        </div>
     </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block mainRight %}
 
-  <div class="col col-md-6 offset-md-4 offset-lg-5 login-form">
-
+    <div id="main-right" class=" mt-5 pt-5 mt-lg-0 pt-lg-0 mt-xl-5 pt-xl-5 col-xl-6 offset-lg-5 offset-xl-2  justify-content-center text-white">
 
       {% if error %}
         <div class="alert alert-danger">{{ error.message }}</div>
@@ -28,27 +29,40 @@
             {{ message }}
         </div>
       {% endfor %}
-
-      <p>
-        <a href="{{ flink|raw}}">S'identifier avec Facebook</a><br/>
-      </p>
-        <div>
-          <a href="{{glink}}"><img src="images/glogin.png" alt=""/>S'identifier avec Google</a>
-      </div>
+      <div class="d-flex">
+        <a class="btn btn-link" href="{{ flink|raw}}">
+          <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
+            <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
+          </svg>
+        S'identifier avec Facebook</a>
+      
+          <a class="btn btn-link pull-right" href="{{glink}}">
+            <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
+              <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
+            </svg>
+          S'identifier avec Google
+        </a>
+        </div>
+      
+          <div class="form ">
       <form  action="{{ path('login_check') }}" method="post">
         <div class="form-group">
           <label for="username">Utilisateur :</label>
           <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
           <br/>
           <label for="password">Mot de passe :</label>
-          <input class="form-control" type="password" id="password" name="_password" />
+          <input class="form-control" type="password" id="password" name="_password" />      
+            <small><a class="pull-right" href="{{ path('lostPassword') }}">Mot de passe oublié ?</a></small>
+
           <br />
-          <input type="submit" value="Connexion" />
+          <input class="btn btn-primary" type="submit" value="Connexion" />
         </div>
       </form>
       <p>
-        <a href="{{ path('lostPassword') }}">Mot de passe perdu ?</a><br/>
-        <a href="{{ path('signUp') }}">Inscription</a>
+        <a href="{{ path('signUp') }}">Pas de compte ? CREER UN COMPTE</a>
       </p>
+        </div>
   </div>
 {% endblock %}
+
+

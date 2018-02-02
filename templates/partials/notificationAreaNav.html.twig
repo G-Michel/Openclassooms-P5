@@ -5,6 +5,7 @@
     {% endif %}
 
     {% set notifNumber = 0 %}
+    {% set notifLimit = 0 %}
 
     {% if route != "admin_observation_new_step_1" and
             route != "admin_observation_new_step_2" and
@@ -41,13 +42,29 @@
           <div class="dropdown-divider"></div>
         {% endif %}
         {% if app.session.get("notificationUser") is defined  %}
+
           {% for notification in app.session.get('notificationUser') if notification.seen == 0 %}
-            <a href="{{ path('admin_observation_show', {id: notification.getObservation().getId()}) }}">
-            <h6 class="dropdown-header">{{ notification.getFromUser }} à traité votre observation
-            </h6>
-            <p class="dropdown-item" >Oiseau : {{ notification.getBirdName() }} status: {{ notification.getStatusDefinition() }}</p>
-            </a>
+            
+            {% set notifLimit = notifLimit + 1 %}
+
+            {% if notifLimit < 6 %}
+
+              <a href="{{ path('admin_observation_show', {id: notification.getObservation().getId()}) }}">
+              <h6 class="dropdown-header">{{ notification.getFromUser }} à traité votre observation
+              </h6>
+              <p class="dropdown-item" >Oiseau : {{ notification.getBirdName() }} status: {{ notification.getStatusDefinition() }}</p>
+              </a>
+
+            {% endif %}
+
+
           {% endfor %}
+          {% if notifLimit > 5 %}
+            <a href="{{ path('admin_user_notifications')}}">
+              <h6 class="dropdown-header">{{ notifLimit - 5 }} autres nouvelles notifications
+              </h6>
+            </a>
+          {% endif %}
         {% endif %}
     {% else %}
           <h6 class="dropdown-header">Pas de nouvelles notifications</h6> 

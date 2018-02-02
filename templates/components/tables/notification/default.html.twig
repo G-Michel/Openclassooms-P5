@@ -1,30 +1,19 @@
-<div class="tab-pane fade {% if active|default(false) %}show active{% endif %}" id="{{ id }}Obs" role="tabpanel" aria-labelledby="{{ id }}-tab">
-    <div class="row observation">
-      <div class="col">
-        <h6 class="title">{{ title }} (affichage 1 à 6 de {{observations|length}} enregistrements)</h6>
-      </div>
-      <div class="col-auto">
-        <a href="" class="text-white btn btn-primary btn-round mt-0">
-          <i class="fa fa-plus"></i>
-          Ajouter
+<Table class="table table-striped table-light mt-3">
+  <thead>
+    <tr>          
+      <th>Mes notifications
+        <a href="{{ path('admin_user_notifications',{'erase':'yes'})}}"><span class="text-warning pull-right">Effacer</span></a>
+      </th>
+    </tr>
+  </thead>
+  {% for notification in userNotifications %}
+    <tr>
+      <td class="list-group-item text-center" >
+        <a href="{{ path('admin_observation_show', {id: notification.getObservation().getId()}) }}">
+          <strong>Observation vérifiée par : </strong><span class="text-warning">{{ notification.getFromUser|capitalize }}</span>
+          <strong>Oiseau : </strong><span class="text-warning">{{ notification.getBirdName() }}</span><strong> status: </strong> <span class="text-warning">{{ notification.getStatusDefinition() }}</span>
         </a>
-      </div>
-    </div>
-    <Table class="table table-striped table-light mt-3">
-      <thead>
-      <tr>          
-        <th>Notifications</th>
-      </tr>
-      </thead>
-          {% for notification in userNotifications %}
-          <tr>
-          <td class="list-group-item">
-            <a href="">
-              <strong>Observation vérifiée par :</strong><span class="text-warning">{{ notification.getFromUser }}</span>
-              <strong>Avec le Status suivant : </strong><span class="text-warning"> {{ notification.getStatusDefinition() }}</span>
-            </a>
-          </td>
-          </tr>
-        {% endfor %}
-    </ul>
-  </div>
+      </td>
+    </tr>
+  {% endfor %}
+</Table>

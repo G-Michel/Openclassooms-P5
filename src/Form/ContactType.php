@@ -25,6 +25,7 @@ class ContactType extends AbstractType
     {
         $builder
             ->add('mail', EmailType::class, [
+                'label' => 'Email',
                 'constraints' => [
                     new NotBlank([
                         'message' => "Vous devez saisir un mail"
@@ -36,6 +37,7 @@ class ContactType extends AbstractType
                 ]
             ])
             ->add('username', TextType::class, [
+                'label' => 'Nom',
                 'constraints' => [
                     new NotBlank([
                         'message' => "Vous devez saisir un nom"
@@ -53,6 +55,8 @@ class ContactType extends AbstractType
                 ]
             ])
             ->add('message', TextareaType::class, [
+                'label' => 'Message',
+                'attr'  => array('rows' => 15),
                 'constraints' => [
                     new NotBlank([
                         'message' => "Vous devez saisir un message"

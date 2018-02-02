@@ -52,6 +52,20 @@ class AdminController extends Controller
   public function myNotifications(Request $request, NotificationRepository $notification)
   {
 
+    if ($request->query->get("erase") == "yes")
+    {
+      $em = $this->getDoctrine()->getManager();
+
+      $notifications = $em->getRepository(Notification::class)->findUserNotifications($this->getUser()->getId());
+
+      foreach ($notifications as $notification) $em->remove($notification);
+      $em->flush();
+
+      $this->addFlash('notif','notifications supprimées');
+      return $this->redirectToRoute('admin_user_notifications');
+
+    }
+
     $userNotifications = $notification->findUserNotifications($this->getUser()->getId());
         return $this->render('admin/mesNotifications.html.twig',array(
           'userNotifications' => $userNotifications,
@@ -105,7 +119,7 @@ class AdminController extends Controller
 
     /**
     * @Route("/admin/editProfil", name="edit_profil")
-    * 
+    * @Cache(smaxage="10")
     */
     public function editProfil(Request $request, UserPasswordEncoderInterface $encoder)
     {

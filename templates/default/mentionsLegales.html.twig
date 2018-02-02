@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Contact - {{parent()}}{% endblock %}
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block mainLeft %}
+<div id="main-left" class="col-lg-4 col-xl-3">
+    <div class="d-flex">
+        <div class="container mt-auto mb-auto">
+            <h1 class="text-white display-3">Mentions Légales</h1>
+            <p class="text-primary lead">Nos amis les oiseaux</p>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block mainRight %}
+
+    <div id="main-right" class="mt-5 pt-xl-5 col-xl-6 offset-lg-5 offset-xl-2  justify-content-center text-white">
+
+            <h2 class="text-warning">Mentions Légales</h2>
+            <h2 class="text-info">Nos amis les oiseaux</h2>
+        <p>
+            La société Digitizer au capital de 4 815 162 342 euros, immatriculée au Registre du Commerce et des Sociétés de Nanterre sous le numéro 428 257 455 et dont le siège social est situé 48, rue du Faubourg du Temple 75011 Paris,
+        </p>       
+
+        <h3 class="text-info">Responsable de l'association</h3>
+        <p>Directeur Général de Nos amis les oiseaux : John maclane</p>
+
+        <p>
+            Les sites web mis en ligne par Nos amis les oiseaux sont hébergés par OVH, 25 boulevard de Strasbourg, 75010 Paris, France - Tel: +33 (0)1 75 79 16 50 Fax : +33 (0) 175 77 16 54
+        </p>
+
+        <p>
+            Ces sites ont fait l'objet d'une déclaration auprès de la Commission Nationale de l'Informatique et des Libertés sous le numéro 2110081.
+        </p>
+
+        <h3 class="text-info">Nous contacter</h3>
+        <p>
+            Vous trouverez ci-dessous le détail des contacts de Nos amis les oiseaux. Merci d'adresser vos questions, demandes et commentaires aux départements concernés par e-mail
+        </p>
+
+        <p>Standard : 01 46 35 55 98</p>
+
+        <p>Directeur de la publication : Vincent Balzieu</p>
+
+        <p>Ressources Humaines : frrecrut@cupinteractive.com</p>
+        <h3 class="text-info">Site Développé par Digitizer</h3>
+
+	</div>
+{% endblock %}

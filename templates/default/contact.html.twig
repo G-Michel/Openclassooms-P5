@@ -11,16 +11,19 @@
     <div class="d-flex">
         <div class="container mt-auto mb-auto">
             <h1 class="text-white display-3">Contact</h1>
-            <p class="text-primary lead">écrivez nous</p>
+            <p class="text-primary lead">Une question ? Sortez vôtre plume</p>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block mainRight %}
-	{% form_theme form 'bootstrap_4_layout.html.twig' %}
-    <div id="main-right" class="  col-sm-6 col-xl-5 offset-sm-3 offset-lg-3 offset-xl-2 mt-1">
-        	<div class="form">
+{% if is_granted('ROLE_USER') %}
+    <div id="main-right" class="mt-lg-0 mt-xl-5 pt-xl-4 col-xl-6 offset-lg-5 offset-xl-2  justify-content-center text-white">
+{% else %}
+    <div id="main-right" class="mt-5 pt-xl-5 col-xl-6 offset-lg-5 offset-xl-2  justify-content-center text-white">
+{% endif %}
+        	<div class="form ">
         		{{ form_start(form) }}
                 {{ form_errors(form.mail) }}
                 {{ form_errors(form.username) }}
@@ -42,7 +45,7 @@
                 {% endif %}
                 {{ form_label(form.message)}}
 				{{ form_widget(form.message)}}
-				<button type="submit" class="btn btn-primary">Contacter</button>
+				<button type="submit" class="btn btn-primary">Envoyer</button>
                 {{ form_rest(form)}}
 				{{ form_end(form) }}
     		</div>

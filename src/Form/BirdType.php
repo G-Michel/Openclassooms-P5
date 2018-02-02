@@ -13,6 +13,24 @@ class BirdType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $sizes = [
+            'XL' => 1,
+            'L'  => 2,
+            'M'  => 3,
+            'S'  => 4,
+        ];
+        $colors = [
+            'noir'   => 'noir',
+            'beige'  => 'beige',
+            'blanc'  => 'blanc',
+            'marron' => 'marron',
+            'rouge'  => 'rouge',
+            'jaune'  => 'jaune',
+            'vert'   => 'vert',
+            'bleu'   => 'bleu',
+            'orange' => 'orange'
+        ];
+
         $builder
             ->add('birdNumber', RangeType::class, [
                 'label'      => 'Nombre d\'oiseaux',
@@ -21,28 +39,13 @@ class BirdType extends AbstractType
             ])
             ->add('birdSize', ChoiceType::class, [
               'label'   => 'Taille de l\'oiseau',
-              'choices' => [
-                  'XL' => 1,
-                  'L'  => 2,
-                  'M'  => 3,
-                  'S'  => 4,
-              ],
+              'choices' => $sizes,
             ])
             ->add('birdColors', ChoiceType::class, [
               'label'   => 'Couleur de 1 à 3',
-              'choices' => [
-                'noir'   => 'noir',
-                'beige'  => 'beige',
-                'blanc'  => 'blanc',
-                'marron' => 'marron',
-                'rouge'  => 'rouge',
-                'jaune'  => 'jaune',
-                'vert'   => 'vert',
-                'bleu'   => 'bleu',
-                'orange' => 'orange',
-              ],
-              'multiple' => true,
+              'choices' => $colors,
               'expanded' => true,
+              'multiple' => true
             ])
       ;
     }

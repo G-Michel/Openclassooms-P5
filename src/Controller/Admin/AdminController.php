@@ -37,7 +37,7 @@ class AdminController extends Controller
 		$userObservations    = $observation->findByUser($this->getUser(),5);
 		$observationsToValid = $observation->findEqualToStatus(0,5);
 
-        return $this->render('admin/espacePersonnel.html.twig',array(
+        return $this->render('admin/espacePerso/espacePersonnel.html.twig',array(
         	'userObservations' => $userObservations,
         	'obsToValid'       => $observationsToValid
         ));
@@ -67,7 +67,7 @@ class AdminController extends Controller
     }
 
     $userNotifications = $notification->findUserNotifications($this->getUser()->getId());
-        return $this->render('admin/mesNotifications.html.twig',array(
+        return $this->render('admin/espacePerso/mesNotifications.html.twig',array(
           'userNotifications' => $userNotifications,
         ));
     }
@@ -188,7 +188,7 @@ class AdminController extends Controller
               $this->redirectToRoute('edit_profil');
         }
       }
-      return $this->render('admin/editProfil.html.twig',array(
+      return $this->render('admin/espacePerso/editProfil.html.twig',array(
         'form' => $form->createView()
       ));    
     }

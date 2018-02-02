@@ -1,0 +1,30 @@
+{% extends "admin/espacePerso/layout.html.twig" %}
+
+
+{% block left %}
+    
+    <h2 class="text-white display-4 text-wrap">Mes notifications</h2>
+    <p class="text-primary lead">
+        L'historique des activités concernant vos observations
+    </p> 
+        
+{% endblock %}
+
+
+{% block right %}
+    <ul class="nav justify-content-center w-100" id="myTab" role="tablist" >
+        {# Commons #}
+        <li class="nav-item col p-0">
+            <div class="jumbotron">
+                <h2 class="title">Notifications</h2>
+                <p class="lead">{{userNotifications|length}}</p>
+            </div>
+        </li>
+    </ul>
+    <div class="tab-content pt-5">   
+        {{ include('components/tables/notification/default.html.twig', {
+            observations: userNotifications,
+            title: 'Mes dernières observations',
+        }) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Espace Personnel - {{parent()}}{% endblock %}
+
+{% block body_id route %}
+{% block main_id %}main_{{route}}{% endblock %}
+
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">{% endblock %}
+
+
+{% block mainLeft %}
+
+    <div class="mt-lg-5 pt-lg-5 mt-0 ml-0 ml-sm-5 pl-0 pl-sm-4  col-lg-3 col-xl-3">  
+
+{% block left %}
+{% endblock %}
+    </div>
+
+    <div class=' mt-5 pl-0 pl-sm-4 offset-1 col-lg-7 col-xl-7 observation-preview'>
+
+{% block right %}
+{% endblock %}
+
+    </div>
+
+{% endblock %}
+

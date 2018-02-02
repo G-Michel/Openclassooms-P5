@@ -1,3 +1,4 @@
+
 {% extends "base.html.twig" %}
 
 {% block title %}Espace Personnel - {{parent()}}{% endblock %}
@@ -8,6 +9,12 @@
 
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('lib/moment/moment.min.js')}}"></script>
+    <script src="{{ asset('lib/moment/locales.min.js')}}"></script>
+    <script src="{{ asset('build/js/admin.js') }}"></script>
+{% endblock %}
 
 {% block mainLeft %}
 

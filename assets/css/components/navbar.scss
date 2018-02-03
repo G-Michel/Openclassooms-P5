@@ -7,9 +7,17 @@
 // Navbar brand
 //
 // Custom navbar brand
+.navbar {
+  display: inline-flex;
+  flex-flow: nowrap;
+  justify-content: flex-start;
 
-.navbar-brand {
-  height:56px;
+  .navbar-brand {
+    height:56px;
+    @include media-breakpoint-down(sm) {
+      margin-right: 0;
+    }
+  }
 }
 
 // Navbar nav
@@ -53,6 +61,7 @@
 // Custom navbar navigation (doesn't require `.nav`, but does make use of `.nav-link`).
 .navbar-search {
   flex-flow: row nowrap;
+  flex-grow: 2;
   .btn {
     width:auto;
   }
@@ -220,6 +229,12 @@
   position: relative;
 }
 
+.navbarMobile.dropdown {
+  @include media-breakpoint-up(sm) {
+    display:none!important;
+  }
+}
+
 .dropdown-menu {
   color: $light;
   background: rgba(39, 40, 50, 0.65);
@@ -228,6 +243,13 @@
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   margin-top:0;
+  &.dropdown-menu-right.dropdown-mobile{
+    right: 0;
+    left: auto;
+    width:calc(100vw - 56px);
+    margin-top: 20px;
+    margin-right: -1rem;
+  }
   .dropdown-item {
     color: $light;
   }

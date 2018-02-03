@@ -3,7 +3,7 @@
     <a class="navbar-brand" href="{{ path('home') }}">
         <svg class="logo" height="51" width="75" ><use xlink:href="{{ asset('images/icons/sprite.svg#logo')}}"></svg>
     </a>
-    <form id="search-form" class="form-inline mt-2 mt-md-0 mr-auto navbar-search" action="{{ path('taxref_search') }}">
+    <form id="search-form" class="form-inline mt-2 mt-md-0 mr-md-auto navbar-search" action="{{ path('taxref_search') }}">
       <button class="btn btn-link my-2 my-sm-0 p-2" type="submit">
         <i class="material-icons">search</i>
       </button>
@@ -17,7 +17,34 @@
               data-no-results-message="<p class='pt-5 m-0 text-center text-white w-100'>Aucun résultat pour cette recherche</p>"
       >
     </form>
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+    <li class="navbarMobile dropdown show mr-3 nav-item d-flex">
+        <a class="" href="#" role="button" id="dropdownMenuLinkMobile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-ellipsis-v"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-mobile dropdown-options" aria-labelledby="dropdownMenuLinkMobile" >
+          {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('admin_observation_index') }}" class="dropdown-item">
+                <svg height="21px" width="21px" style="vertical-align: middle;margin-right: -4px;" >
+                    <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
+                </svg>
+                Mes observations
+            </a>
+            <a href="{{ path('edit_profil') }}" class="dropdown-item">
+              <i class="fa fa-user fa-fw"></i>Mon profil</a>
+            <a href="{{ path('logout') }}" class="text-danger dropdown-item">
+              <i class="fa fa-sign-out fa-fw"></i>Déconnection
+            </a>
+          {% endif %}
+          {% if not is_granted('ROLE_USER') %}
+              <a class="dropdown-item" href="{{ path('login') }}">
+                <i class="fa fa-sign-in fa-fw"></i>Connection
+              </a>
+          {% endif %}
+        </div>
+    </li>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       {% if is_granted('ROLE_USER') %}
         <div class="user-action dropdown show ml-auto">
             <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

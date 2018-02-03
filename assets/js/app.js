@@ -1,4 +1,4 @@
-// import 'bootstrap';
+require('bootstrap')
 import './jquery.instantSearch.js';
 
 let jQueryBridget = require('jquery-bridget');
@@ -21,7 +21,7 @@ $(function() {
     var $grid = $('.result');
     $grid.masonry({
         itemSelector: '.card',
-        gutter: 30,
+        gutter: 20,
         itemAnimated: true,
     })
 

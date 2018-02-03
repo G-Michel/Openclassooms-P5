@@ -2,6 +2,16 @@
 body {
   padding-top: 3.5rem;
 }
+svg.logo {
+  fill:#fff;
+  color:#fff;
+}
+.px-sm-0 {
+  @include media-breakpoint-down(sm) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
 .main {
   width: calc(100vw - 56px);
   margin-right: auto;
@@ -430,6 +440,33 @@ body {
   color: #fff;
 }
 
+
+.display-3,.display-4 {
+  @include media-breakpoint-down(sm) {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1;
+    text-align: center;
+  }
+}
+.lead {
+  @include media-breakpoint-down(sm) {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}
+
+// FOOTER
+
+footer {
+  p {
+    @include media-breakpoint-down(sm) {
+      font-size: .75rem;
+      margin-bottom: 0rem;
+    }
+  }
+}
 
 
 

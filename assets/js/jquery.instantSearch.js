@@ -42,7 +42,10 @@
       itemTemplate: '\
       <div class="card card-blog card-search">\
             <div class="card-image">\
-                <a href="/taxref/{{ slug }}"> <img class="img" src="{{ url }}" alt="{{ alt }}"> </a>\
+                <a href="/taxref/{{ slug }}">\
+                    <img class="img" src="{{ url }}" alt="{{ alt }}">\
+                    <svg class="logo" height="51" width="75" ><use xlink:href="../images/icons/sprite.svg#logo"></svg>\
+                </a>\
             </div>\
             <div class="table ">\
                 <h6 class="category text-secondary">{{ lbNomType }}</h6>\

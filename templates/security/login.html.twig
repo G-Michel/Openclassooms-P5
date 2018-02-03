@@ -18,19 +18,21 @@
       {% endfor %}
 
       <div class="d-flex flex-wrap justify-content-md-between pr-md-5 mr-md-5 pr-xs-0 mr-xs-0 ">
-        <a class="btn btn-info" href="{{ flink|raw}}">
-          <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
+        <a class="btn btn-facebook" href="{{ flink|raw}}">
+          {# <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
             <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
-          </svg>
+          </svg> #}
+          <i class="fa fa-facebook-f mr-3"></i>
         S'identifier avec Facebook </a>
-        
-          <a class="btn btn-danger" href="{{glink}}">
-            <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
+
+          <a class="btn btn-google" href="{{glink}}">
+            {# <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
               <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
-            </svg>
+            </svg> #}
+            <i class="fa fa-google mr-3"></i>
              S'identifier avec Google
           </a>
-        
+
       </div>
       <div class="form ">
           <form  action="{{ path('login_check') }}" method="post">
@@ -39,7 +41,7 @@
               <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
               <br/>
               <label for="password">Mot de passe :</label>
-              <input class="form-control" type="password" id="password" name="_password" />      
+              <input class="form-control" type="password" id="password" name="_password" />
                 <small><a class="pull-right" href="{{ path('lostPassword') }}">Mot de passe oublié ?</a></small>
 
               <br />

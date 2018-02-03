@@ -69,6 +69,7 @@
     &:focus {
       color: $white;
       box-shadow: none;
+      background-color: transparent;
       border-color: transparent;
       border-bottom: solid 2px;;
       border-bottom-color: $input-btn-focus-color;
@@ -219,19 +220,29 @@
   position: relative;
 }
 
+.dropdown-menu {
+  color: $light;
+  background: rgba(39, 40, 50, 0.65);
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  margin-top:0;
+  .dropdown-item {
+    color: $light;
+  }
+}
+.dropdown-item:hover {
+  background-color: rgba(39, 40, 50, 0.8)!important;
+}
 .dropdown-notification {
   right: -100%;
-  color: rgb(22,22,22);
-  background: rgba(255,255,255,0.5);
-
 }
 .dropdown-options {
-  
-  background: rgba(255,255,255,0.5);
 }
 
 .notif-icon{
-  
+
   font-size: 13px;
 }
 

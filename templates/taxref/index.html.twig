@@ -7,12 +7,23 @@
 
 {% block mainLeft %}
   <div id="main-left" class="col-lg-4 col-xl-3">
-      <div class="d-flex">
-          <div class="container mt-auto mb-auto">
-              <h1 class="text-white display-3">Ornidex</h1>
-              <p class="text-primary lead">Le référentiel taxonomique taxref</p>
-          </div>
-      </div>
+    <div class="d-flex">
+      <div class="container mt-auto mb-auto">
+          <h1 class="text-white display-3">Ornidex</h1>
+          {% if route == 'taxref_search' %}
+            <p class="text-primary lead">Résultat de la recherche</p>
+            <div>
+                <a class="btn btn-link" href="{{ path('taxref_index') }}">
+                    <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3">
+                        <use xlink:href="/images/icons/sprite.svg#dove">
+                    </use></svg>Consulter tout L'ornidex
+                </a>
+            </div>
+          {% else %}
+            <p class="text-primary lead">Le référentiel taxonomique taxref</p>
+          {% endif %}
+        </div>
+    </div>
   </div>
 {% endblock %}
 

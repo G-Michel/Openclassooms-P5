@@ -204,6 +204,7 @@ CARDS
   // breakpoint(xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 
 .card-blog, .card-background {
+
   @include make-col-ready();
 
   @include media-breakpoint-up(sm) {
@@ -212,6 +213,7 @@ CARDS
   @include media-breakpoint-up(lg) {
     @include make-col(4,13);
   }
+
   margin-top: 20px;
   margin-bottom: 20px;
   border: none;
@@ -299,6 +301,8 @@ CARDS
  /* ============ Card Background ============ */
 
 .card-background {
+  background-color:rgba(39, 40, 50, 0.65);
+  max-height: 200px;
   background-position: center;
   background-size: cover;
   text-align: center;

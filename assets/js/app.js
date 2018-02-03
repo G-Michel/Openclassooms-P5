@@ -107,6 +107,7 @@ $(function() {
             </div>';
         var data = [];
         data = {
+            'q' : $_GET('q'),
             'o' : nbItems-1
         }
         // display spinner and cache btn
@@ -143,6 +144,22 @@ $(function() {
         })
 
         e.preventDefault();
+
+        // Find param query in url
+        function $_GET(param) {
+            var vars = {};
+            window.location.href.replace( location.hash, '' ).replace(
+                /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+                function( m, key, value ) { // callback
+                    vars[key] = value !== undefined ? value : '';
+                }
+            );
+
+            if ( param ) {
+                return vars[param] ? vars[param] : null;
+            }
+            return vars;
+        }
     })
 
 });

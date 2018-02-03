@@ -24,12 +24,12 @@
 
       this.$input.on('keydown', function(e) {
         if (e.which == 13) {
-            e.preventDefault();
+            // e.preventDefault();
         }
       });
-      this.$form.on('submit', function(e) {
-        e.preventDefault();
-      });
+    //   this.$form.on('submit', function(e) {
+    //     e.preventDefault();
+    //   });
 
       this.$input.keyup(this.debounce());
   };
@@ -58,7 +58,7 @@
         moreTemplate: '\
         <div class="card card-blog card-search">\
             <div class="ftr text-center h-100 p-0 m-0">\
-                <a href="/taxref" class="btn btn-primary h-100 w-100 p-0 m-0 d-flex flex-column justify-content-center">\
+                <a href="#" onclick="document.getElementById(\'search-form\').submit();" class="btn btn-primary h-100 w-100 p-0 m-0 d-flex flex-column justify-content-center">\
                 <i class="material-icons md-60">add</i></a>\
             </div>\
         </div>'

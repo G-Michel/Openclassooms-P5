@@ -3,7 +3,7 @@
     <a class="navbar-brand" href="{{ path('home') }}">
         <svg class="logo" height="51" width="75" ><use xlink:href="{{ asset('images/icons/sprite.svg#logo')}}"></svg>
     </a>
-    <form class="form-inline mt-2 mt-md-0 mr-auto navbar-search" action="{{ path('taxref_search') }}">
+    <form id="search-form" class="form-inline mt-2 mt-md-0 mr-auto navbar-search" action="{{ path('taxref_search') }}">
       <button class="btn btn-link my-2 my-sm-0 p-2" type="submit">
         <i class="material-icons">search</i>
       </button>

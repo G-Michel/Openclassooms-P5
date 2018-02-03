@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {{ include('components/apiAnalytics/gSiteTag.html.twig') }}
+        {{ include('components/apiAnalytics/gTagManagerHead.html.twig') }}
+        {{ include('components/apiAnalytics/fPixelCode.html.twig') }}
         <meta charset="UTF-8">
         <title>{% block title %}Nos amis les oiseaux{% endblock %}</title>
         {# Favicon #}
@@ -21,6 +24,8 @@
 
     {%set route = app.request.attributes.get('_route') %}
     <body id="{% block body_id %}{% endblock %}">
+        <h1>{{ app.request.headers }}</h1>
+        {{ include('components/apiAnalytics/gTagManagerBody.html.twig') }}
         {{ include('partials/horizontalNav.html.twig') }}
         <div id="resultsTaxref"></div>
         {{ include('partials/verticalNav.html.twig') }}

@@ -221,10 +221,19 @@
 
 .dropdown-notification {
   right: -100%;
+  color: rgb(22,22,22);
+  background: rgba(255,255,255,0.5);
+
+}
+.dropdown-options {
+  
+  background: rgba(255,255,255,0.5);
 }
 
-
-
+.notif-icon{
+  
+  font-size: 13px;
+}
 
 
 

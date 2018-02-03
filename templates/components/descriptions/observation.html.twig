@@ -5,8 +5,8 @@
   {% endif %}
   <h3 class="title">Caractéristiques observées</h3>
   <div class="content row align-items-start">
-    <h4 class="subtitle col-5">Où se trouvait l'oiseau</h4>
-    <p class=" pl-3 m-0 col-7">: {{observation.bird.birdLocation|default('')}}</p>
+    {# <h4 class="subtitle col-5">Où se trouvait l'oiseau</h4>
+    <p class=" pl-3 m-0 col-7">: {{observation.bird.birdLocation|default('')}}</p> #}
     <h4 class="subtitle col-5">Taille de l'oiseau</h4>
     <p class=" pl-3 m-0 col-7">: {{observation.bird.birdSize}}</p>
     <h4 class="subtitle col-5">Couleurs principales</h4>
@@ -24,7 +24,7 @@
   {% endif %}
 
   {% if route == 'observation_show' %}
-    <a class="btn btn-primary mt-5 mb-5" href="{{ path('taxref_show', {slug: taxref.slug}) }}" role="button">
+    <a class="btn btn-primary mt-5 mb-5 text-truncate" href="{{ path('taxref_show', {slug: taxref.slug}) }}" role="button">
       Toute les observations de cet oiseau
     </a>
   {% endif %}

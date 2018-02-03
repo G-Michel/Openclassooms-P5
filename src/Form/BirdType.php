@@ -42,7 +42,7 @@ class BirdType extends AbstractType
               'choices' => $sizes,
             ])
             ->add('birdColors', ChoiceType::class, [
-              'label'   => 'Couleur de 1 à 3',
+              'label'   => 'Couleur(s) observée(s)',
               'choices' => $colors,
               'expanded' => true,
               'multiple' => true

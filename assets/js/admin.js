@@ -1,6 +1,5 @@
 // admin.js
 
-import 'bootstrap';
 import './datepicker';
 
 $(function() {

@@ -31,11 +31,22 @@
   <div id="main-right" class="col-lg-8 col-xl-9 mt-3">
     <div class="container">
       <div id="listingTaxref" class="result row pt-4">
-        {% for post in posts %}
+        {% if posts %}
+          {% for post in posts %}
           {{ include('components/cards/taxref.html.twig') }}
-        {% endfor %}
-      </div>
-      {{ include('components/buttons/moreResults.html.twig') }}
+          {% endfor %}
+          {% else %}
+          <p class='pt-5 m-0 text-center text-secondary w-100 display-4'>Aucun résultat pour cette recherche</p>
+          <p class='pt-5 m-0 text-center text-secondary w-100'>
+            <a class="btn btn-link" href="{{ path('taxref_index') }}">
+              <svg height="60px" width="60px" style="vertical-align: middle;" class="mr-3">
+                <use xlink:href="/images/icons/sprite.svg#dove"></use>
+              </svg>
+            </a>
+          </p>
+          {% endif %}
+        </div>
+        {{ include('components/buttons/moreResults.html.twig') }}
     </div>
   </div>
 {% endblock %}

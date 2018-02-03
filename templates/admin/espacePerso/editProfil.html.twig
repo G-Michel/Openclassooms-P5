@@ -12,33 +12,36 @@
 	 <ul class="nav" id="myTab" >
     
             <li class="nav-item col p-0">
+            		{% if app.user.picture.url|length > 6 %}
             	<img class="pull-right" height="auto" width="100px" src="{{ app.user.picture.url }}">
+	                {% else %}
+		    			<img class="pull-right" height="auto" width="100px" src="{{ asset( app.user.picture.webPath('thumbnails')) }}">
+	                {% endif %}
                 <div class="jumbotron">
-                    <h2 class="title">Vos informations</h2>
+                    <h2 class="title">Mes informations</h2>
                 </div>
             </li>
         </ul>
 
         <div class="tab-content">
 	 	<table class="table table-striped table-light ">
+	 		{{ form_start(form)}}
 	 		<tr class="invisible">
 	 			<td>table</td>
 	 			<td>{{ form_widget(form.picture.alt,{ 'value': 'image de profil','attr': {'class': 'invisible'} }) }}</td>
 	 		</tr>
 	    	<tr>
-	    		<td class="list-group-item">
+	    		<td class="">
 	    			<h4>Photo de profil</h4>
 	    		</td>
-	    		<td >
+	    		<td class="">
 		    		<div class="d-none form_picture_class">	
 						{{ form_widget(form.picture.file)}}	
 					</div>
 				</td>
-					{% if app.user.picture.url|length > 6 %}
-		    			<td class=""></td>
-	                {% else %}
-		    			<td class=""><img height="auto" width="150px" src="{{ asset( app.user.picture.webPath('thumbnails')) }}"></td>
-	                {% endif %}
+				<td>
+				
+	            </td>
 	    		<td class="text-primary form_picture_button">éditer</td>
 	    	</tr>
 	    	<tr>
@@ -86,7 +89,9 @@
 	    		<td class="text-primary form_surname_button">éditer</td>
 	    	</tr>
     	</table>
-		<button type="submit" class="btn btn-warning">Editer</button>
+	
+		<input type="submit" name="Editer" class="btn btn-warning">
+
 				{{ form_rest(form)}}
   				{{ form_end(form) }}
         </div>

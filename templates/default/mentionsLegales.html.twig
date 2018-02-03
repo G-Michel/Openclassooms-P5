@@ -1,26 +1,14 @@
-{% extends "base.html.twig" %}
+{% extends "default/layout.html.twig" %}
 
-{% block title %}Contact - {{parent()}}{% endblock %}
-{% block body_id route %}
-{% block main_id %}main_{{route}}{% endblock %}
 
-{% block stylesheets %}{% endblock %}
-
-{% block mainLeft %}
-<div id="main-left" class="col-lg-4 col-xl-3">
-    <div class="d-flex">
-        <div class="container mt-auto mb-auto">
+{% block left %}
             <h1 class="text-white display-3">Mentions Légales</h1>
             <p class="text-primary lead">Nos amis les oiseaux</p>
-
-        </div>
-    </div>
-</div>
 {% endblock %}
 
-{% block mainRight %}
+{% block right %}
 
-    <div id="main-right" class="mt-5 pt-xl-5 col-xl-6 offset-lg-5 offset-xl-2  justify-content-center text-white">
+
 
             <h2 class="text-warning">Mentions Légales</h2>
             <h2 class="text-info">Nos amis les oiseaux</h2>
@@ -51,5 +39,5 @@
         <p>Ressources Humaines : frrecrut@cupinteractive.com</p>
         <h3 class="text-info">Site Développé par Digitizer</h3>
 
-	</div>
+	
 {% endblock %}

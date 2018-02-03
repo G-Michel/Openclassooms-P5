@@ -61,7 +61,7 @@ class AdminController extends Controller
       foreach ($notifications as $notification) $em->remove($notification);
       $em->flush();
 
-      $this->addFlash('notif','notifications supprimées');
+      $this->addFlash('primary','notifications supprimées');
       return $this->redirectToRoute('admin_user_notifications');
 
     }
@@ -183,15 +183,15 @@ class AdminController extends Controller
 
           } catch (Doctrine\ORM\ORMException $e) 
           {
-            $this->addFlash('flash_error',"une erreur est survenue lors du changement d'infos personnelles");
+            $this->addFlash('danger',"une erreur est survenue lors du changement d'infos personnelles");
             $this->redirectToRoute('edit_profil');
           }
-          $this->addFlash('Validation',"Vous avez bien mis à jour vos données personnelles");
+          $this->addFlash('success',"Vous avez bien mis à jour vos données personnelles");
           $this->redirectToRoute('edit_profil');
         }
         else
         {
-              $this->addFlash('Erreur',"Aucunes modifications apportées");
+              $this->addFlash('danger',"Aucunes modifications apportées");
               $this->redirectToRoute('edit_profil');
         }
       }

@@ -27,6 +27,7 @@ class SignUpType extends AbstractType
                 'first_options'  => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Repetez le mot de passe'),))
             ->add('acceptTerms', CheckboxType::class, array(
+                'attr' => [ 'class' => 'notThisOne'] ,
                 'label' => 'Acceptez vous les conditions d\'utilisation ?' ,
                 'mapped' => false,
                 'constraints' => new IsTrue(

@@ -1,53 +1,36 @@
-{% extends "base.html.twig" %}
+{% extends "default/layout.html.twig" %}
 
-{% block title %}Contact - {{parent()}}{% endblock %}
-{% block body_id route %}
-{% block main_id %}main_{{route}}{% endblock %}
-
-{% block stylesheets %}{% endblock %}
-
-{% block mainLeft %}
-<div id="main-left" class="col-lg-4 col-xl-3">
-    <div class="d-flex">
-        <div class="container mt-auto mb-auto">
-            <h1 class="text-white display-3">Contact</h1>
-            <p class="text-primary lead">Une question ? Sortez vôtre plume</p>
-        </div>
-    </div>
-</div>
+{% block left %} 
+    <h1 class="text-white display-3">Contact</h1>
+    <p class="text-primary lead">Une question ? Sortez vôtre plume</p>
 {% endblock %}
 
-{% block mainRight %}
-{% if is_granted('ROLE_USER') %}
-    <div id="main-right" class="mt-lg-0 mt-xl-5 pt-xl-4 col-xl-6 offset-lg-5 offset-xl-2  justify-content-center text-white">
-{% else %}
-    <div id="main-right" class="mt-5 pt-xl-5 col-xl-6 offset-lg-5 offset-xl-2  justify-content-center text-white">
-{% endif %}
-        	<div class="form ">
-        		{{ form_start(form) }}
-                {{ form_errors(form.mail) }}
-                {{ form_errors(form.username) }}
-                {{ form_errors(form.message) }}
-                {% if is_granted('ROLE_USER')%}
-                    {{ form_widget(form.mail,{
-                        'value': app.User.getMail(),
-                         'attr' :{'class': 'invisible'}
-                     })}}
-                    {{ form_widget(form.username,{
-                        'value': app.User.getUsername(),
-                        'attr' :{'class': 'invisible'}
-                    })}}
-                {% else %}
-                    {{ form_label(form.mail)}}
-                    {{ form_widget(form.mail)}}
-                    {{ form_label(form.username)}}
-                    {{ form_widget(form.username)}}
-                {% endif %}
-                {{ form_label(form.message)}}
-				{{ form_widget(form.message)}}
-				<button type="submit" class="btn btn-primary">Envoyer</button>
-                {{ form_rest(form)}}
-				{{ form_end(form) }}
-    		</div>
-	</div>
+
+{% block right %}
+    <div class="form ">
+        {{ form_start(form) }}
+        {{ form_errors(form.mail) }}
+        {{ form_errors(form.username) }}
+        {{ form_errors(form.message) }}
+        {% if is_granted('ROLE_USER')%}
+            {{ form_widget(form.mail,{
+                'value': app.User.getMail(),
+                 'attr' :{'class': 'invisible'}
+             })}}
+            {{ form_widget(form.username,{
+                'value': app.User.getUsername(),
+                'attr' :{'class': 'invisible'}
+            })}}
+        {% else %}
+            {{ form_label(form.mail)}}
+            {{ form_widget(form.mail)}}
+            {{ form_label(form.username)}}
+            {{ form_widget(form.username)}}
+        {% endif %}
+        {{ form_label(form.message)}}
+        {{ form_widget(form.message)}}
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+        {{ form_rest(form)}}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

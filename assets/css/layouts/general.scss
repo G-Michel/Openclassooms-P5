@@ -83,6 +83,8 @@ body {
     background-image: url('../images/listing-xl.jpg');
   }
 }
+#main_lostPassword:before,
+#main_resetPassword:before,
 #main_contact:before {
   content: '';
   background: url('../images/contact-sm.jpg');
@@ -116,6 +118,7 @@ body {
     background-image: url('../images/contact-xl.jpg');
   }
 }
+#main_signUp:before,
 #main_login:before {
   content: '';
   background: url('../images/login-sm.jpg');
@@ -197,10 +200,14 @@ body {
 
 #main_home #main-left > div,
 #main_contact #main-left > div,
+#main_lostPassword #main-left > div,
+#main_resetPassword #main-left > div,
+#main_signUp #main-left > div,
 #main_login #main-left > div,
 #main_taxref_index #main-left > div,
 #main_observation_index #main-left > div,
 #main_mentionsLegales #main-left > div,
+#main_conditionsGenerales #main-left > div,
 #main_error #main-left > div
 {
   @include media-breakpoint-up(lg) {
@@ -308,7 +315,7 @@ body {
   padding-left: 5px;
 }
 
-.form-check label::before {
+.form-check label::before :not(notThisOne) {
   content: "";
   display: inline-block;
   position: absolute;
@@ -324,7 +331,7 @@ body {
   transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
 }
 
-.form-check label::after {
+.form-check label::after :not(notThisOne) {
   display: inline-block;
   position: absolute;
   width: 16px;
@@ -338,7 +345,7 @@ body {
   color: #555555;
 }
 
-.form-check input[type="checkbox"] {
+.form-check input[type="checkbox"] :not(notThisOne) {
   opacity: 0;
 }
 

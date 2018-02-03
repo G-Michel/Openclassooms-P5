@@ -1,68 +1,53 @@
-{% extends "base.html.twig" %}
+{% extends "default/layout.html.twig" %}
 
-{% block title %}Login - {{parent()}}{% endblock %}
-{% block body_id route %}
-{% block main_id %}main_{{route}}{% endblock %}
+{% block left %}
+    <h1 class="text-white display-3">Login</h1>
+    <p class="text-primary lead">Connectez vous</p>
+ {% endblock %}
 
-{% block stylesheets %}{% endblock %}
-
-{% block mainLeft %}
-  <div id="main-left" class="col-lg-4 col-xl-3">
-    <div class="d-flex">
-        <div class="container mt-auto mb-auto">
-            <h1 class="text-white display-3">Login</h1>
-            <p class="text-primary lead">Connectez vous</p>
+{% block right %}
+  {% if error %}
+        <div class="alert alert-danger">
+          {{ error.message | replace({"Bad credentials." : "Nom d'utilisateur/Mot de passe invalide."}) }}
         </div>
-    </div>
-</div>
-{% endblock %}
-
-{% block mainRight %}
-
-    <div id="main-right" class=" mt-5 pt-5 mt-lg-0 pt-lg-0 mt-xl-5 pt-xl-5 col-xl-6 offset-lg-5 offset-xl-2  justify-content-center text-white">
-
-      {% if error %}
-        <div class="alert alert-danger">{{ error.message | replace({"Bad credentials." : "Nom d'utilisateur/Mot de passe invalide."}) }}
-        </div>
-      {% endif %}
+  {% endif %}
       {% for message in app.flashes('flashError') %}
         <div class="alert alert-danger">
             {{ message }}
         </div>
       {% endfor %}
-      <div class="d-flex">
-        <a class="btn btn-link" href="{{ flink|raw}}">
+
+      <div class="d-flex flex-wrap justify-content-md-between pr-md-5 mr-md-5 pr-xs-0 mr-xs-0 ">
+        <a class="btn btn-info" href="{{ flink|raw}}">
           <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
             <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
           </svg>
-        S'identifier avec Facebook</a>
-      
-          <a class="btn btn-link pull-right" href="{{glink}}">
+        S'identifier avec Facebook </a>
+        
+          <a class="btn btn-danger" href="{{glink}}">
             <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
               <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
             </svg>
-          S'identifier avec Google
-        </a>
-        </div>
-        <div class="form ">
-            <form  action="{{ path('login_check') }}" method="post">
-              <div class="form-group">
-                <label for="username">Utilisateur :</label>
-                <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
-                <br/>
-                <label for="password">Mot de passe :</label>
-                <input class="form-control" type="password" id="password" name="_password" />      
-                  <small><a class="pull-right" href="{{ path('lostPassword') }}">Mot de passe oublié ?</a></small>
+             S'identifier avec Google
+          </a>
+        
+      </div>
+      <div class="form ">
+          <form  action="{{ path('login_check') }}" method="post">
+            <div class="form-group">
+              <label for="username">Utilisateur :</label>
+              <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
+              <br/>
+              <label for="password">Mot de passe :</label>
+              <input class="form-control" type="password" id="password" name="_password" />      
+                <small><a class="pull-right" href="{{ path('lostPassword') }}">Mot de passe oublié ?</a></small>
 
-                <br />
-                <input class="btn btn-primary" type="submit" value="Connexion" />
-              </div>
-            </form>
-            <p>
-              <a href="{{ path('signUp') }}">Pas de compte ? CREER UN COMPTE</a>
-            </p>
-        </div>
-  </div>
-{% endblock %}
-
-
+              <br />
+              <input class="btn btn-primary" type="submit" value="Connexion" />
+            </div>
+          </form>
+          <p>
+            <a href="{{ path('signUp') }}">Pas de compte ? CREER UN COMPTE</a>
+          </p>
+      </div>
+ {% endblock %}

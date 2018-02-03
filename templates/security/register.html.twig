@@ -1,45 +1,54 @@
+{% extends "default/layout.html.twig" %}
 
-
-{% extends "base.html.twig" %}
-
-{% block title %}Inscription - {{parent()}}{% endblock %}
-{% block body_id route %}
-{% block main_id %}main_{{route}}{% endblock %}
-
-{% block stylesheets %}{% endblock %}
-
-{% block mainLeft %}
-<div class="col-sm-3 d-flex" style="position:fixed;top: 56px;bottom: 0;">
-	<div class="container mt-auto mb-auto">
-    	<h1 class="text-white display-3">{{message[0]}}</h1>
-    	<p class="text-primary lead">{{message[1]}}</p>
-	</div>
-</div>
+{% block left %}
+  <h1 class="text-white display-3">{{message[0]}}</h1>
+  <p class="text-primary lead">{{message[1]}}</p>
 {% endblock %}
 
-{% block mainRight %}
-
-  	<div class="col col-md-6 offset-md-4 offset-lg-5">
-    	<div class="login-form">
-        	<div class="form">
+{% block right %}
+      
+          <div class="form">
           {% for message in app.flashes('flashError') %}
             <div class="alert alert-danger">
                 {{ message }}
             </div>
           {% endfor %}
 
-          {% if googleRegister is defined %}
-            <p><a href="{{googleRegister}}">S'inscrire avec Google plouche</a></p>
-          {% endif %}
-          {% if facebookRegister is defined %}
-            <p><a href="{{facebookRegister|raw }}">S'inscrire avec fessbouk</a></p>
-          {% endif %}
-        	{{ form_start(form) }}
-    				{{ form_widget(form) }}
-    				<button type="submit" class="btn btn-primary">S'inscrire</button>
-  				{{ form_end(form) }}
-    		</div>
-  		</div>
-	</div>
+          <div class="d-flex flex-wrap justify-content-md-between pr-md-5 mr-md-5 pr-xs-0 mr-xs-0">
+            <a class="btn btn-info" href="{{facebookRegister|raw }}">
+              <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
+                <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
+              </svg>
+              S'inscrire avec Facebook 
+            </a>
+            
+            <a class="btn btn-danger" href="{{googleRegister}}">
+              <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
+                <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
+              </svg>
+              S'inscrire avec Google
+            </a>           
+          </div>
+          {{ form_start(form) }}
+          {{ form_row(form.mail) }}
+          {{ form_row(form.username) }}
+          {{ form_row(form.plainPassword) }}
+          
+          <div>
+              {{ form_label(form.acceptTerms) }}
+              {{ form_errors(form.acceptTerms) }}
+              {{ form_widget(form.acceptTerms) }}
+          </div>
+          <a class="btn btn-link" href="{{ path('conditionsGenerales')}}">
+                Conditions d'utilisations
+              </a>
 
+          {{ form_rest(form)}}
+
+          <button type="submit" class="btn btn-primary">S'inscrire</button>
+        {{ form_end(form) }}
+      </div>
+
+      
+      
 {% endblock %}

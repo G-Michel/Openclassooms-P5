@@ -68,18 +68,16 @@ class UserManagementController extends Controller
                     try {
                        $em->flush();
                     } catch (UniqueConstraintViolationException $e) {
-                        $this->addFlash('flashError',"Erreur lors de l'inscription dans la base de donnée");
+                        $this->addFlash('danger',"Erreur lors de l'enregistrement de l'utilisateur");
                         return $this->redirectToRoute('signUp');
                     }
 
-                     return $this->render('security/registerComfirm.html.twig',array(
-                    'message' => array(
-                        'inscription complétée',
-                        'Vous pouvez maintenant vous connecter')));
+                     $this->addFlash('success',"Inscription complétée : vous pouvez maintenant vous connecter");
+                        return $this->redirectToRoute('login');
                 }
                 else
                 {
-                    $this->addFlash('flashError',"Accés non autorisé par le fourniseur externe");
+                    $this->addFlash('danger',"Accés non autorisé par le fourniseur externe");
                     return $this->redirectToRoute('signUp');
                 }
         }
@@ -93,6 +91,8 @@ class UserManagementController extends Controller
 
         {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $picture->setAlt('avatar');
+            $picture->setUrl('http://cdn.dribbble.com/users/297466/screenshots/3228007/1_1x.jpg');
             $user->eraseCredentials();
             $user->setPassword($password);
             $user->setRoles(array('ROLE_USER'));
@@ -114,10 +114,9 @@ class UserManagementController extends Controller
                 array('user' => $user)),'text/html');
             $this->get('mailer')->send($message);
 
-            return $this->render('security/registerComfirm.html.twig',array(
-                'message' => array(
-                    'inscription complétée',
-                    'vous allez recevoir un mail pour confirmer votre inscription')));
+            $this->addFlash('success',"Inscription complétée : vous allez recevoir un mail pour confirmer votre inscription");
+                        return $this->redirectToRoute('login');
+
         }
 
         // SIGNUP PAGE RENDERING
@@ -141,9 +140,9 @@ class UserManagementController extends Controller
         $user = $this->getDoctrine()->getRepository(User::class)->tokenComfirm($token);
         if($user== null)
         {
-            return $this->render('security/registerComfirm.html.twig',array(
-                'message' => array("Erreur d'activation",
-                    "Token incorrect")));
+            $this->addFlash('danger',"Erreur d'activation: Code d'activation incorrect");
+            return $this->redirectToRoute('login');
+   
         }
         else if ($user->getAuth()->getComfirmedAt()== NULL)
         {
@@ -154,15 +153,14 @@ class UserManagementController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            return $this->render('security/registerComfirm.html.twig',array(
-                'message' => array('Addresse Mail confirmée',
-                    'Vous pouvez maintenant vous connecter')));
+
+            $this->addFlash('success',"Adresse Mail confirmée : Vous pouvez maintenant vous connecter");
+            return $this->redirectToRoute('login');
         }
         else
         {
-            return $this->render('security/registerComfirm.html.twig',array(
-                'message' => array("Erreur d'activation",
-                    "Compte déja activé")));
+            $this->addFlash('danger',"Erreur d'activation: Compte déja activé");
+            return $this->redirectToRoute('login');
         }
     }
 
@@ -199,6 +197,11 @@ class UserManagementController extends Controller
 
                 $encodedSub= $pbkdPasswordEncoder->encodePassword($userInfo['id'],"OPC-P5");
 
+                if ($user == null)
+                {
+                    $this->addFlash('danger',"Facebook/Google erreur d'identification, veillez vous inscrire ");
+                    return $this->redirectToRoute('login');
+                }
                 if ($user->getOAuthUserID() == $encodedSub )
                 {
   
@@ -207,17 +210,18 @@ class UserManagementController extends Controller
                     $this->get('session')->set('_security_main', serialize($token));
                     $event = new InteractiveLoginEvent($request, $token);
                     $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+                    $this->addFlash('success',"Vous êtes maintenant connecté");
                     return $this->redirectToRoute('home');
                 }
                 else
                 {
-                    $this->addFlash('flashError',"Les informations de connection ne correspondent pas");
+                    $this->addFlash('danger',"Facebook/Google Les informations de connection ne correspondent pas");
                     return $this->redirectToRoute('login');
                 }
             }
             else
             {
-                $this->addFlash('flashError',"Erreur d'authentification");
+                $this->addFlash('danger',"Facebook/Google Erreur d'authentification");
                 return $this->redirectToRoute('login');
             }
         }
@@ -276,19 +280,17 @@ class UserManagementController extends Controller
                             array('user' => $user)),'text/html');
                     $this->get('mailer')->send($message);
 
-                    return $this->render('security/registerComfirm.html.twig',array(
-                        'message' => array('Réinitialisation Mot de Passe',
-                        'Un mail vous a été envoyé pour réinitialiser votre mot de passe')));
+                    $this->addFlash('success',"Réinitialisation Mot de Passe: Un mail vous a été envoyé pour réinitialiser votre mot de passe");
+                    return $this->redirectToRoute('login');
                 }
             }
             else
             {
-                return $this->render('security/registerComfirm.html.twig',array(
-                        'message' => array('Erreur',
-                        'Aucune addresse mail trouvée')));
+                $this->addFlash('danger',"Erreur: Aucune addresse mail trouvée");
+                return $this->redirectToRoute('login');
             }
         }
-        return $this->render('security/register.html.twig', [
+        return $this->render('security/lostPassword.html.twig', [
             'form' => $form->createView(),
             'message' => array(
                 'Perte de mot de passe',
@@ -311,9 +313,8 @@ class UserManagementController extends Controller
 
         if($user== null)
         {
-            return $this->render('security/registerComfirm.html.twig',array(
-                'message' => array("Erreur Réinitialisation mot de passe",
-                    "Token incorrect")));
+            $this->addFlash('danger',"Erreur Réinitialisation mot de passe: code de réinitialisation incorrect");
+            return $this->redirectToRoute('login');
         }
         //check if the token is not outdated
         else if ($user->getAuth()->getResetAt()->diff(new \DateTime('NOW'))->format('%d')<3)
@@ -331,12 +332,11 @@ class UserManagementController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                return $this->render('security/registerComfirm.html.twig',array(
-                'message' => array('mot de passe changé',
-                    'Vous pouvez maintenant vous connecter avec votre nouveau mot de passe')));
+                $this->addFlash('success',"Mot de passe changé: Vous pouvez maintenant vous connecter avec votre nouveau mot de passe");
+                return $this->redirectToRoute('login');
             }
 
-            return $this->render('security/register.html.twig', [
+            return $this->render('security/lostPassword.html.twig', [
             'form' => $form->createView(),
             'message' => array(
                 'Réinitialisation du mot de passe',
@@ -344,9 +344,8 @@ class UserManagementController extends Controller
         }
         else
         {
-            return $this->render('security/registerComfirm.html.twig',array(
-                        'message' => array('Erreur Réinitialisation Mot de Passe',
-                        'délai dépassé veuillez faire à nouveau la demande')));
+            $this->addFlash('danger',"Délai dépassé: Veuillez faire à nouveau la demande de réinitialisation");
+                return $this->redirectToRoute('login');
         }
     }
 }

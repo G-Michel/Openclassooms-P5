@@ -43,6 +43,16 @@ class AppController extends Controller
     }
 
     /**
+     * @Route("/conditions-generales", name="conditionsGenerales")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+    public function conditionsGenerales()
+    {
+        return $this->render('default/conditions_generales.html.twig');
+    }
+
+    /**
      * @Route("/contact", name="contact")
      * @Cache(smaxage="10")
      */
@@ -63,7 +73,16 @@ class AppController extends Controller
                 ->setTo('opclass-p5@openclass-cours.ovh')
                 ->setBody( $this->renderView('mails/contactUs.html.twig',array(
                     "formData" => $formData)));
+
+            $message2 = (new \Swift_Message("Copie de votre message - NAO"))
+                ->setFrom('Openclassroom5pteam@smtp.openclass-cours.ovh')
+                ->setTo($this->getUser()->getMail())
+                ->setBody( $this->renderView('mails/contactUs.html.twig',array(
+                    "formData" => $formData)));
             $mailer->send($message);
+            $mailer->send($message2);
+
+            $this->addFlash('success',"message envoyé: Nous traiteront votre requête dans de plus brefs délais ");
         }
 
         return $this->render('default/contact.html.twig', [

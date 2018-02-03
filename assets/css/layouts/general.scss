@@ -6,7 +6,7 @@ svg.logo {
   fill:#fff;
   color:#fff;
 }
-.px-sm-0 {
+.px-sm-down-0 {
   @include media-breakpoint-down(sm) {
     padding-right: 0;
     padding-left: 0;

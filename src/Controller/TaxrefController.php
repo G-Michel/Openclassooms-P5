@@ -76,13 +76,24 @@ class TaxrefController extends Controller
      */
     public function search(Request $request, TaxrefRepository $taxref): Response
     {
+
         $rawQuery = $request->query->get('q', '');
         $query = $this->sanitizeSearchQuery($rawQuery);
         $searchTerms = $this->extractSearchTerms($query);
         $termsLighting = $this->lightingSearchTerms($searchTerms);
+
+
+        if (!$request->isXmlHttpRequest()) {
+            if ($rawQuery == '') {
+                return $this->redirectToRoute('taxref_index');
+            }
+            $posts = $taxref->findBySearchQuery($searchTerms);
+            return $this->render('taxref/index.html.twig', compact('posts'));
+        }
+
+        // Search Bar
         $limit = $request->query->get('l', 5);
         $foundPosts = $taxref->findBySearchQuery($searchTerms, $limit);
-
         $results = [];
         foreach ($foundPosts as $post) {
 
@@ -99,6 +110,39 @@ class TaxrefController extends Controller
                 'url'          => $post->getPicture() ? htmlspecialchars($post->getPicture()->getUrl()): '',
                 'alt'          => $post->getPicture() ? htmlspecialchars($post->getPicture()->getAlt()): ''
             ];
+        }
+
+        // More Results
+        if ($request->query->get('o')) {
+            $offset      = $request->query->get('o', '');
+            $foundTaxref = $taxref->findBySearchQuery($searchTerms,Taxref::NUM_ITEMS,$offset);
+            $results     = [];
+            foreach ($foundTaxref as $k => $taxref) {
+                $results[$k] = [
+                    'page'         => 'taxref',
+                    'reignType'    => htmlspecialchars($taxref->getReignType()),
+                    'lbNomType'    => htmlspecialchars($taxref->getLbNomType()),
+                    'lbAuteurType' => trim(htmlspecialchars($taxref->getLbAuteurType()),'()'),
+                    'nomVernType'  => htmlspecialchars($taxref->getNomVernType()),
+                    'slug'         => htmlspecialchars($taxref->getSlug()),
+                    'phylumType'   => htmlspecialchars($taxref->getPhylumType()),
+                    'classType'    => htmlspecialchars($taxref->getClassType()),
+                    'url'          => $taxref->getPicture() ? htmlspecialchars($taxref->getPicture()->getUrl()): null,
+                    'alt'          => $taxref->getPicture() ? htmlspecialchars($taxref->getPicture()->getAlt()): null
+                ];
+                if ($results[$k]['url']) {
+                    $results[$k]['backgroundTable'] = '';
+                    $results[$k]['btnColor'] = 'btn-secondary';
+                } else {
+                    $backgroundTable = ['table-info', 'table-danger','','','','',''];
+                    $results[$k]['backgroundTable'] = $backgroundTable[array_rand($backgroundTable,1)];
+                    if ($results[$k]['backgroundTable'] === '') {
+                        $results[$k]['btnColor'] = 'btn-secondary';
+                    } else {
+                        $results[$k]['btnColor'] = 'btn-white';
+                    }
+                }
+            }
         }
 
         return $this->json($results);

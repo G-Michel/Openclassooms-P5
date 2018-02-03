@@ -16,7 +16,7 @@ class TaxrefRepository extends ServiceEntityRepository
     /**
      * @return Taxref[]
      */
-    public function findBySearchQuery(array $searchTerms, int $limit = Taxref::NUM_ITEMS): array
+    public function findBySearchQuery(array $searchTerms, int $limit = Taxref::NUM_ITEMS, int $offset = 0): array
     {
 
         if (0 === count($searchTerms)) {
@@ -38,6 +38,7 @@ class TaxrefRepository extends ServiceEntityRepository
 
         return $queryBuilder
             // ->orderBy('p.publishedAt', 'DESC')
+            ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();

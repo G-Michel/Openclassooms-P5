@@ -8,7 +8,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {% if route == 'taxref_index' or route == 'taxref_show' %}active{% endif %}" href="{{ path('taxref_index') }}">
+            <a class="nav-link {% if route == 'taxref_index' or route == 'taxref_show' or route == 'taxref_search' %}active{% endif %}" href="{{ path('taxref_index') }}">
                 <svg class="nav-icons" >
                     <use xlink:href="{{ asset('images/icons/sprite.svg#dove')}}">
                 </svg>

@@ -94,7 +94,7 @@ class AdminController extends Controller
           if ($notifs != null)
           {
 
-            foreach ($notifs as $notification) 
+            foreach ($notifs as $notification)
             {
               if ($notification->getSeen()==false)
               {
@@ -105,7 +105,7 @@ class AdminController extends Controller
                 $em->persist($notifdb);
               }
             }
-            if ($toFlush>0) 
+            if ($toFlush>0)
             {
               $em->flush();
               return $this->render('partials/notificationAreaNav.html.twig');
@@ -113,12 +113,12 @@ class AdminController extends Controller
             else
             {
               return new Response('nothing to flush');
-            } 
+            }
           }
           else
             {
               return new Response('nothing to flush');
-            } 
+            }
         }
 
   }
@@ -139,19 +139,19 @@ class AdminController extends Controller
       if ($form->isSubmitted() && $form->isValid())
       {
         $formData = $form->getData();
-        
+
         //check if a new value has been included
         $toEdit=false;
         $valuesToChange = array("name","surname","mail");
 
-        foreach ($valuesToChange as $value) 
+        foreach ($valuesToChange as $value)
         {
           if ($formData[$value]!=null)
           {
             $toEdit=true;
             $method = "set".$value;
             $user->$method($formData[$value]);
-          } 
+          }
         }
 
         if ($formData['picture']->getFile() !== null)
@@ -161,7 +161,7 @@ class AdminController extends Controller
         }
 
         // is password valid ?
-        if ($formData["resetPassword"]["plainPassword"] != null && $formData["currentPassword"] != null) 
+        if ($formData["resetPassword"]["plainPassword"] != null && $formData["currentPassword"] != null)
         {
           $validCurrentPassword = $encoder->isPasswordValid($user,$formData["currentPassword"]);
 
@@ -169,19 +169,19 @@ class AdminController extends Controller
           {
             $encodedPassword = $encoder->encodePassword($user,$formData["resetPassword"]['plainPassword']);
             $user->setPassword($encodedPassword);
-            $toEdit=true; 
+            $toEdit=true;
           }
         }
-        //flush if values entered 
+        //flush if values entered
         if($toEdit)
         {
           $em = $this->getDoctrine()->getManager();
           $em->persist($user);
-          try 
+          try
           {
             $em->flush();
 
-          } catch (Doctrine\ORM\ORMException $e) 
+          } catch (Doctrine\ORM\ORMException $e)
           {
             $this->addFlash('danger',"une erreur est survenue lors du changement d'infos personnelles");
             $this->redirectToRoute('edit_profil');
@@ -197,9 +197,8 @@ class AdminController extends Controller
       }
       return $this->render('admin/espacePerso/editProfil.html.twig',array(
         'form' => $form->createView()
-      ));    
+      ));
     }
 }
 
 
-     

@@ -19,6 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 /**
@@ -205,8 +206,9 @@ class ObservationController extends Controller
         SessionInterface $session,
         TaxrefRepository $taxref,
         ObservationRepository $observation,
-        int $id = null)
-    {
+        int $id = null,
+        AuthorizationCheckerInterface $authChecker
+    ) {
         if (!$request->isXmlHttpRequest()) {
             $session->set('step', '4');
             $observation = $observation->find($session->get('observation'));
@@ -215,7 +217,11 @@ class ObservationController extends Controller
 
                 $observation->getBird()->setTaxref($taxref->find($id));
                 $observation->setUser($this->getUser());
-                $observation->setStatus(0);
+                if (true === $authChecker->isGranted('ROLE_NATURALIST')) {
+                    $observation->setStatus(1);
+                } else {
+                    $observation->setStatus(0);
+                }
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($observation);
@@ -343,7 +349,7 @@ class ObservationController extends Controller
             return $this->redirectToRoute('admin_observation_index');
         }
         $observation->setStatus($request->request->get('status'));
-        
+
         $notification = new Notification(
           $observation,
           $this->getUser()->getUsername()

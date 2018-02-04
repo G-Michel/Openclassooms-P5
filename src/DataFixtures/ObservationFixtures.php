@@ -44,7 +44,7 @@ class ObservationFixtures extends Fixture implements OrderedFixtureInterface
             // Variables
             $user   = $this->getReference('user-'.rand(4,20));
             $status = $faker->randomElement($array = ['0','1','-201','-202','-203','-204','-205']);
-            if ($user->getRoles() == 'ROLE_ADMIN' || $user->getRoles() == 'ROLE_NATURALIST') {
+            if (in_array($user->getRoles()[0],['ROLE_ADMIN','ROLE_NATURALIST'])) {
               $status = 1;
             }
             $dateObs = $faker->dateTimeBetween($startDate = '-10 years', $endDate = '- 5 days');

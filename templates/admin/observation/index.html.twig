@@ -8,7 +8,7 @@
   <div id="main-header" class="row observation-preview">
     <ul class="nav justify-content-center w-100" id="myTab" role="tablist" >
       {# Commons #}
-      <li class="nav-item col align-self-end">
+      <li class="nav-item col align-self-end" style="flex-grow: 2;">
         <a class="nav-link active" id="all-tab" data-toggle="tab" href="#allObs" role="tab" aria-controls="allObs" aria-selected="true">
           <div class="jumbotron">
               <h2 class="title">Mes observations</h2>
@@ -16,20 +16,20 @@
           </div>
         </a>
       </li>
-      <li class="nav-item col align-self-end">
-        <a class="nav-link" id="valid-tab" data-toggle="tab" href="#validObs" role="tab" aria-controls="validObs" aria-selected="false">
-          <div class="jumbotron">
-              <h2 class="title">En ligne</h2>
-              {% set countInline = 0 %}
-              {% for inline in userObservations if inline.status == 1 %}
-                  {% set countInline = countInline + 1 %}
-              {% endfor %}
-              <p class="lead">{{ countInline }}</p>
-          </div>
-        </a>
-      </li>
       {# Only User #}
       {% for role in app.user.roles if role =="ROLE_USER" %}
+        <li class="nav-item col align-self-end">
+          <a class="nav-link" id="valid-tab" data-toggle="tab" href="#validObs" role="tab" aria-controls="validObs" aria-selected="false">
+            <div class="jumbotron">
+                <h2 class="title">En ligne</h2>
+                {% set countInline = 0 %}
+                {% for inline in userObservations if inline.status == 1 %}
+                    {% set countInline = countInline + 1 %}
+                {% endfor %}
+                <p class="lead">{{ countInline }}</p>
+            </div>
+          </a>
+        </li>
         <li class="nav-item col align-self-end">
           <a class="nav-link" id="wait-tab" data-toggle="tab" href="#waitObs" role="tab" aria-controls="waitObs" aria-selected="false">
             <div class="jumbotron">
@@ -88,14 +88,14 @@
       title: 'Toutes mes observations',
       active: true,
     }) }}
-    <!-- Valid Obs -->
-    {{ include('components/tables/observation/default.html.twig', {
-      observations: userObservations,
-      id:  'valid',
-      title: 'Mes observations en ligne',
-    }) }}
     {# Only User #}
-    {% for role in app.user.roles if role =="ROLE_USER" %}
+    {% for role in app.user.roles if role == "ROLE_USER" %}
+      <!-- Valid Obs -->
+      {{ include('components/tables/observation/default.html.twig', {
+        observations: userObservations,
+        id:  'valid',
+        title: 'Mes observations en ligne',
+      }) }}
       <!-- Wait Obs -->
       {{ include('components/tables/observation/default.html.twig', {
         observations: userObservations,

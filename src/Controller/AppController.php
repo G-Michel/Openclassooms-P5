@@ -60,12 +60,12 @@ class AppController extends Controller
      */
 	public function contact(Request $request)
 	{
-        
+
         $form = $this->createForm(ContactType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $formData = $form->getData();
 
             $mailer = $this->get("mailer");
@@ -109,6 +109,6 @@ class AppController extends Controller
         $response = new Response();
         $response->headers->setCookie(new Cookie('accept-cookie', 'true'));
         return $response;
-        
+
   }
 }

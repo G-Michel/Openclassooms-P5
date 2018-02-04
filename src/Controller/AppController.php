@@ -85,7 +85,7 @@ class AppController extends Controller
             $mailer->send($message);
             $mailer->send($message2);
 
-            $this->addFlash('success',"message envoyé: Nous traiteront votre requête dans de plus brefs délais ");
+            $this->addFlash('success',"Votre message à bien été envoyé: L’équipe NAO vous répondra dans les plus bref délais ");
         }
 
         return $this->render('default/contact.html.twig', [
@@ -97,7 +97,7 @@ class AppController extends Controller
 
 
     /**
-     * @Route("/admin/cookieAccept", name="cookie_accept")
+     * @Route("/cookieAccept", name="cookie_accept")
      * @Method("GET")
      * @Cache(smaxage="10")
      */

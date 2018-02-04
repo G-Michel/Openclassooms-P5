@@ -223,10 +223,11 @@ class OauthLoginHandler
 					'picture'=>$ticket['picture'],
 					'username'=>strtolower($ticket['name']),
 					'name'=>$ticket['given_name'],
-					'famillyName'=>$ticket['family_name'],
 					'email'=>$ticket['email'],
 					'id'=>$ticket['sub'],
 				);
+
+				if (isset($ticket['family_name'])) $userInfo['famillyName']=$ticket['family_name'];
 
 				return $userInfo;	
 			}
@@ -260,7 +261,9 @@ class OauthLoginHandler
         		$pbkdPasswordEncoder = new Pbkdf2PasswordEncoder();
 
                 $user->setName($userInfo['name']);
-                $user->setSurname($userInfo['famillyName']);
+
+                if (isset($userInfo['famillyName'])) $user->setSurname($userInfo['famillyName']);
+
                 $user->setUsername(strtolower($userInfo['username']));
                 $user->setMail(strtolower($userInfo['email']));
                 

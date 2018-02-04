@@ -72,7 +72,7 @@ class UserManagementController extends Controller
                         return $this->redirectToRoute('signUp');
                     }
 
-                     $this->addFlash('success',"Inscription complétée : vous pouvez maintenant vous connecter");
+                     $this->addFlash('success',"Votre inscription à bien été enregistrée.Vous pouvez dès à présent utiliser la plateformes et poster vos observations.L’équipe NAO !");
                         return $this->redirectToRoute('login');
                 }
                 else

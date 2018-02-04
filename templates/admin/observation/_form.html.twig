@@ -12,7 +12,7 @@
 {% endif %}
 
 {# {{ form_start(form, {attr: attr|default({})}) }} #}
-{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_start(form, {'attr': attr|default({})}) }}
     {{ form_widget(form) }}
 
     <!-- include btn for go to back and forward -->

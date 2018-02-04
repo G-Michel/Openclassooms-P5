@@ -62,6 +62,37 @@ $(function() {
                   </div>\
               </div>\
           </div>';
+          var taxrefTemplateForId = '\
+          <div class="card card-blog">\
+              <div class="table {{ backgroundTable }}">\
+                  <h6 class="category text-secondary">{{ lbAuteurType }}</h6>\
+                  <h4 class="card-caption">\
+                      <a href="/taxref/{{ slug }}">{{ lbNomType }}</a>\
+                  </h4>\
+                  <div class="card-description">{{ nomVernType }}</div>\
+                  <div class="ftr text-center">\
+                      <a href="{{ path }}" class="btn {{ btnColor }}">c\'est mon oiseau</a>\
+                      <a href="/taxref/{{ slug }}" class="btn {{ btnColor }}">Détails</a>\
+                  </div>\
+              </div>\
+          </div>';
+      var taxrefTemplateForIdWithImg = '\
+          <div class="card card-blog">\
+              <div class="card-image">\
+                  <a href="/taxref/{{ slug }}"> <img class="img" src="{{ url }}" alt="{{ alt }}"> </a>\
+              </div>\
+              <div class="table {{ backgroundTable }}">\
+                  <h6 class="category text-secondary">{{ lbAuteurType }}</h6>\
+                  <h4 class="card-caption">\
+                      <a href="/taxref/{{ slug }}">{{ lbNomType }}</a>\
+                  </h4>\
+                  <div class="card-description">{{ nomVernType }}</div>\
+                  <div class="ftr text-center">\
+                      <a href="{{ path }}" class="btn {{ btnColor }}">c\'est mon oiseau</a>\
+                      <a href="/taxref/{{ slug }}" class="btn {{ btnColor }}">Détails</a>\
+                  </div>\
+              </div>\
+          </div>';
           var obsTemplate = '\
           <div class="card card-blog">\
               <div class="table {{ backgroundTable }}">\
@@ -127,13 +158,21 @@ $(function() {
               $.each(items, function (i, item) {
                   if (item.url) {
                       if (item.page == 'taxref') {
-                          var doc = new DOMParser().parseFromString(taxrefTemplateWithImg.render(item),'text/html');
+                          if (item.path) {
+                              var doc = new DOMParser().parseFromString(taxrefTemplateForIdWithImg.render(item),'text/html');
+                          } else {
+                              var doc = new DOMParser().parseFromString(taxrefTemplateWithImg.render(item),'text/html');
+                          }
                       }else {
                           var doc = new DOMParser().parseFromString(obsTemplateWithImg.render(item),'text/html');
                       }
                   } else {
                       if (item.page == 'taxref') {
-                          var doc = new DOMParser().parseFromString(taxrefTemplate.render(item),'text/html');
+                        if (item.path) {
+                            var doc = new DOMParser().parseFromString(taxrefTemplateForId.render(item),'text/html');
+                        } else {
+                            var doc = new DOMParser().parseFromString(taxrefTemplate.render(item),'text/html');
+                        }
                       }else {
                           var doc = new DOMParser().parseFromString(obsTemplate.render(item),'text/html');;
                       }

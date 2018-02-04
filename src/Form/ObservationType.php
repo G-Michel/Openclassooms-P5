@@ -26,7 +26,9 @@ class ObservationType extends AbstractType
             ->add('dateObs', DateTimePickerType::class, [
                 'label' => 'Observé le'
             ])
-            ->add('comment', TextareaType::class)
+            ->add('comment', TextareaType::class,[
+                'required'  => false
+            ])
             ->add('bird', BirdType::class,[
                 'label' => false,
             ])

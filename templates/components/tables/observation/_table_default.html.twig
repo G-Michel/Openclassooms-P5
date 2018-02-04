@@ -9,7 +9,10 @@
     {{ obs.id }}
   </th>
   {% set col_address = obs.location.formatedAddress|trim|split(' ')%}
-  <td>{% for row in col_address %}{{ row }}<br>{% endfor %}</td>
+  {% if col_address %}
+    <td>{% for row in col_address %}{{ row }}<br>{% endfor %}</td>
+  {% else %}
+  {% endif %}
   <td> {{ obs.getAgo(obs.dateObs|date()) }} </td>
   {% set col_taxref = obs.bird.taxref.lbNomType|trim|split(' ',2)%}
   <td>{% for row in col_taxref %}{{ row }}<br>{% endfor %}</td>

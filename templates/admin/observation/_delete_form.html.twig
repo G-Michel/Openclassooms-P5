@@ -18,11 +18,11 @@
     action="{{ path('admin_observation_delete', {id: observation.id}) }}"
     method="post"
     data-confirmationDelete="true"
-    id="delete-form" class=""
+    id="delete-form" class="mb-5"
   >
       <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
-      <button type="submit" class="btn btn-lg btn-block btn-danger">
-          <i class="fa fa-trash" aria-hidden="true"></i>
+      <button type="submit" class="btn btn-lg btn-block btn-danger d-flex justify-content-center">
+          <i class="fa fa-trash mr-1" aria-hidden="true"></i>
           Supprimer l'observation
       </button>
   </form>

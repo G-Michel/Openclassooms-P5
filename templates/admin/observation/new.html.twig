@@ -21,7 +21,7 @@
             {% endif %}
 
 
-            <div class="wrapper" style="height:60vh;overflow-y:scroll;">
+            <div class="wrapper newObs">
                 {% if app.session.get('step') != 4 %}
                     {{ include('admin/observation/_form.html.twig', {
                         form: form,
@@ -32,12 +32,18 @@
                         back_btn_path: options.form.back_btn_path,
                     }, with_context = false) }}
                     {% block obsAction %}{% endblock %}
-                    {% else %}
-                    {% for post in posts %}
-                    {{ include('components/cards/taxref.html.twig', {
-                        include_id_btn: true,
+                {% else %}
+                    <div class="result">
+                        {% for post in posts %}
+                        {{ include('components/cards/taxref.html.twig', {
+                            include_id_btn: true,
+                        }) }}
+                        {% endfor %}
+                    </div>
+
+                    {{ include('components/buttons/moreResults.html.twig', {
+                        route:'taxref_index',
                     }) }}
-                    {% endfor %}
                 {% endif %}
             </div>
         </div>
@@ -45,15 +51,12 @@
 {% endblock %}
 
 {% block mainRight %}
-    <div class="col-lg-7 col-xl-8 p-0"><div id="map"></div></div>
+    <div id="main-map" class="col-lg-7 col-xl-8 p-0"><div id="map"></div></div>
     {{ include('components/apiMap/observation_new.html.twig') }}
 {% endblock %}
 
 {% block javascripts %}
     {{parent()}}
-    <script src="{{ asset('lib/moment/moment.min.js')}}"></script>
-    <script src="{{ asset('lib/moment/locales.min.js')}}"></script>
-    <script src="{{ asset('build/js/admin.js') }}"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDED89bCETmWyPqiKoncfU6-g3GkHzGY1Y&callback=initMap">
     </script>

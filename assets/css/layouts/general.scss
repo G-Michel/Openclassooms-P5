@@ -239,8 +239,9 @@ svg.logo {
 //
 // Custom map api
 #map {
-  height: calc(100%);
+  height: calc(100% + 56px);
   min-height: 600px;
+  margin-top: -56px;
 }
 
 /* CSS used here will be applied after bootstrap.css */
@@ -285,29 +286,13 @@ svg.logo {
       box-shadow: 0 2px 8px rgba(0, 0, 0, .09), 0 4px 40px rgba(0, 0, 0, .24);
     }
   }
- // TUNNEL OBS BUTTON
- //
- // Custom css for search results
- .tunnel-obs {
-  display: inline-flex;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-  width:100%;
-  .btn {
-    width: auto;
-    &.back {
-      padding: 10px 14px;
-    }
-  }
-  // LOGIN
-  //
-  // custon css for login
-  .main-login-form-div {
-    margin-top: 3rem;
-  }
 
-
- }
+// LOGIN
+//
+// custon css for login
+.main-login-form-div {
+  margin-top: 3rem;
+}
   // MATERIAL ICONS
   //
   // custon size for icons
@@ -482,6 +467,59 @@ footer {
 
 }
 
+// NEW OBS
+//
+
+// FORM left
+#main-left {
+  .wrapper.newObs {
+    @include media-breakpoint-up(lg) {
+      height:60vh;
+      overflow-y:scroll;
+    }
+
+    .actions.tunnel-obs {
+      display: flex;
+      flex-flow: wrap;
+      justify-content: space-between;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center
+      }
+      @include media-breakpoint-only(md) {
+        flex-flow: nowrap;
+        margin-bottom: 2.5rem;
+        .back {
+          margin-right: 1rem;
+        }
+        .forward {
+          margin-left: 1rem;
+        }
+      }
+
+      // .btn {
+      //   width: auto;
+      //   &.back {
+      //     padding: 10px 14px;
+      //   }
+      // }
+    }
+
+    .input-group-prepend, .input-group-text{
+      width:50px;
+    }
+
+  }
+}
+// MAP right
+#main-map {
+  @include media-breakpoint-down(md) {
+    display:none;
+  }
+}
 
 
 

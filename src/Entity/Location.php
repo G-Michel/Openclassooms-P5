@@ -133,6 +133,10 @@ class Location
     public function getFormatedAddress()
     {
         $array = explode(',', $this->address);
-        return $array[1];
+        if (isset($array[1])) {
+            return $array[1];
+        } else {
+            return $this->address;
+        }
     }
 }

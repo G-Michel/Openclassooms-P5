@@ -1,7 +1,4 @@
-import 'bootstrap';
-
-
-
+// import 'bootstrap';
 
 var getHttpRequest = function () {
   var httpRequest = false;

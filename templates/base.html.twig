@@ -44,6 +44,8 @@
         {% block javascripts %}
             <script src="{{ asset('build/js/manifest.js')}}"></script>
             <script src="{{ asset('build/js/common.js')}}"></script>
+            <script src="{{ asset('lib/moment/moment.min.js')}}"></script>
+            <script src="{{ asset('lib/moment/locales.min.js')}}"></script>
             <script type="text/javascript">
             var symfoUrlRoute= "{{ url('seen_update')}}";
             var cookiesAccepted ="{{ url('cookie_accept')}}";

@@ -29,11 +29,15 @@
     </a>
   {% endif %}
   {% if route == 'admin_observation_show' %}
-  <a class="btn btn-primary btn-round mt-5" href="{{ path('admin_home') }}" role="button">
+  <a class="btn btn-primary mt-5 d-flex align-items-start justify-content-center" href="{{ path('admin_home') }}" role="button">
+      <svg class="nav-icons" style="height:20px;" >
+          <use xlink:href="{{ asset('images/icons/sprite.svg#home')}}">
+      </svg>
       Retourner à l'accueil
     </a>
-    <a class="btn btn-secondary btn-round" href="{{ path('admin_observation_new') }}" role="button">
-      Ajouter une nouvelle Observation
+    <a class="btn btn-secondary text-truncate d-flex align-items-center justify-content-center" href="{{ path('admin_observation_new') }}" role="button">
+      <i class="material-icons">add</i>
+      Ajouter une nouvelle Obs.
     </a>
     {{ include('admin/observation/_delete_form.html.twig', {observation: observation}, with_context = false) }}
   {% endif %}

@@ -1,8 +1,10 @@
 {% extends "default/layout.html.twig" %}
 
+
 {% block left %} 
     <h1 class="text-white display-3">Une question ?</h1>
     <p class="text-primary lead">Sortez vôtre plume</p>
+
 {% endblock %}
 
 
@@ -29,7 +31,7 @@
         {% endif %}
         {{ form_label(form.message)}}
         {{ form_widget(form.message)}}
-        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <button type="submit" class="btn btn-primary mb-5">Envoyer</button>
         {{ form_rest(form)}}
         {{ form_end(form) }}
     </div>

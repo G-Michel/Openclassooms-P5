@@ -20,8 +20,6 @@ Encore
     .addEntry('js/manifest', './assets/js/manifest.js')
     .addEntry('js/common', './assets/js/common.js')
     .addEntry('js/app', './assets/js/app.js')
-    .addEntry('js/mapShowDetail', './assets/js/mapShowDetail.js')
-    .addEntry('js/admin', './assets/js/admin.js')
     .addEntry('js/user-infos', './assets/js/user-infos.js')
     .addEntry('js/notif', './assets/js/notif.js')
     .addStyleEntry('css/app', './assets/css/app.scss')

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Route("/taxref")
@@ -21,7 +22,7 @@ class TaxrefController extends Controller
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-    public function index(Request $request, TaxrefRepository $taxref): Response
+    public function index(Request $request, TaxrefRepository $taxref, SessionInterface $session): Response
     {
         if (!$request->isXmlHttpRequest()) {
             $posts = $taxref->findByFrType();
@@ -56,6 +57,11 @@ class TaxrefController extends Controller
                     $results[$k]['btnColor'] = 'btn-white';
                 }
             }
+            if ($session->get('step') && $session->get('step') == 4) {
+                $results[$k]['btnId'] = true;
+                $results[$k]['path'] = '/admin/observation/ajout/reference/'.$taxref->getId();
+            }
+
         }
 
         return $this->json($results);

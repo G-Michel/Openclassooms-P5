@@ -103,6 +103,16 @@
         });
       {% endif %}
 
+      // event for get my position button
+      var gpsCall = document.getElementById("getCurrentPosition");
+
+      gpsCall.addEventListener("click",function(e){
+        marker.setMap(null);
+        if (navigator.geolocation){
+          navigator.geolocation.getCurrentPosition(onPositionReceived,locationNotReceived);
+        }
+      });
+
     }
 
     /*
@@ -184,15 +194,6 @@
 
 //GEOLOCALISATION
 
-    // event for get my position button
-    var gpsCall = document.getElementById("getCurrentPosition");
-
-    gpsCall.addEventListener("click",function(e){
-      if (navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(onPositionReceived,locationNotReceived);
-      }
-    });
-
     // Error handling
     function locationNotReceived(positionError){
       console.log(positionError);
@@ -211,7 +212,7 @@
         animation: google.maps.Animation.DROP,
         icon: "{{ asset('images/map/marker.svg') }}"
       });
-     
+
       var gpsY =document.getElementById("observe_bird_location_location_gpsY");
       var gpsX =document.getElementById("observe_bird_location_location_gpsX");
 

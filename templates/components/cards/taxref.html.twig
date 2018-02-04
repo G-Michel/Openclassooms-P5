@@ -21,7 +21,7 @@
     <div class="card-description">{{ post.nomVernType }}</div>
     <div class="ftr text-center">
       {% if include_id_btn|default(false) %}
-        <a href="{{ path('admin_observation_new_step_4', {id: post.id|round}) }}" class="btn {{ btnColor }} btn-round">c'est mon oiseau</a>
+        <a href="{{ path('admin_observation_new_step_4', {id: post.id|round}) }}" class="btn {{ btnColor }}">c'est mon oiseau</a>
       {% endif %}
       <a href="{{ path('taxref_show', {slug: post.slug}) }}" class="btn {{ btnColor }}">Détails</a>
     </div>

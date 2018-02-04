@@ -9,13 +9,6 @@
 
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">{% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('lib/moment/moment.min.js')}}"></script>
-    <script src="{{ asset('lib/moment/locales.min.js')}}"></script>
-    <script src="{{ asset('build/js/admin.js') }}"></script>
-{% endblock %}
-
 {% block mainLeft %}
 
     <div class="mt-lg-5 pt-lg-5 mt-0 ml-0 ml-sm-5 pl-sm-4  col-lg-3 col-xl-3">

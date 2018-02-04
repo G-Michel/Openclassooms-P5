@@ -94,21 +94,4 @@ class AppController extends Controller
 	}
 
 
-
-
-    /**
-     * @Route("/cookieAccept", name="cookie_accept")
-     * @Method("GET")
-     * @Cache(smaxage="10")
-     */
-  public function cookie_accept(Request $request)
-  {
-      if (!$request->isXmlHttpRequest()) {
-            return $this->redirectToRoute('admin_home');
-        }
-        $response = new Response();
-        $response->headers->setCookie(new Cookie('accept-cookie', 'true'));
-        return $response;
-
-  }
 }

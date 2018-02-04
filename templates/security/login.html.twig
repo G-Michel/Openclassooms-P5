@@ -17,22 +17,15 @@
         </div>
       {% endfor %}
 
-      <div class="d-flex flex-wrap justify-content-md-between pr-md-5 mr-md-5 pr-xs-0 mr-xs-0 ">
-        <a class="btn btn-facebook" href="{{ flink|raw}}">
-          {# <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
-            <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
-          </svg> #}
+      <div class="d-flex flex-wrap justify-content-md-between">
+        <a class="btn btn-facebook mr-md-2" href="{{ flink|raw}}">
           <i class="fa fa-facebook-f mr-3"></i>
-        S'identifier avec Facebook </a>
-
-          <a class="btn btn-google" href="{{glink}}">
-            {# <svg height="24px" width="24px" style="vertical-align: middle;" class="mr-3" >
-              <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">
-            </svg> #}
-            <i class="fa fa-google mr-3"></i>
-             S'identifier avec Google
-          </a>
-
+          S'identifier avec Facebook
+        </a>
+        <a class="btn btn-google ml-md-2" href="{{glink}}">
+          <i class="fa fa-google mr-3"></i>
+            S'identifier avec Google
+        </a>
       </div>
       <div class="form ">
           <form  action="{{ path('login_check') }}" method="post">

@@ -51,7 +51,9 @@
 {% endblock %}
 
 {% block mainRight %}
-    <div id="main-map" class="col-lg-7 col-xl-8 p-0"><div id="map"></div></div>
+    {% set mapClass = 'step'~app.session.get('step') %}
+
+    <div id="main-map" class="col-lg-7 col-xl-8 p-0 {{mapClass}}"><div id="map"></div></div>
     {{ include('components/apiMap/observation_new.html.twig') }}
 {% endblock %}
 

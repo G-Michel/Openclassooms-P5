@@ -248,11 +248,11 @@ CARDS
     margin:0px;
   }
 }
-.wrapper > .card-blog,
+.wrapper .card-blog,
 .card-background
  {
   @include make-col(12,12);
-}
+  }
 
 
 

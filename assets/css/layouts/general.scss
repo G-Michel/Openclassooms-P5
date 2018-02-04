@@ -464,6 +464,25 @@ footer {
 }
 
 
+// LOGO TXT
+#logoTxt {
+
+  @include media-breakpoint-down(md) {
+    position: relative!important;
+    width: 100%!important;
+    padding-left:1rem!important;
+    padding-right:1rem!important;
+
+    > svg {
+      width: 100%!important;
+      height: 100px;
+
+    }
+  }
+
+}
+
+
 
 
 

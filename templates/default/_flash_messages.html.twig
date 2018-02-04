@@ -1,5 +1,5 @@
 <div class="messages pt-3">
- {#
+ 
   {%  if app.request.cookies.get('accept-cookie') != "true" %}
     <div class="accept-cookie-policy alert alert-info alert-dismissable " role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -8,7 +8,7 @@
         <p>En poursuivant votre navigation, vous acceptez l'utilisation de cookies à des fins statistiques, de personnalisation et de partage sur les réseaux sociaux</p>
     </div>
   {% endif %}
-  #}
+  
 
   {% for type, messages in app.flashes %}
       {% for message in messages %}

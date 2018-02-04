@@ -181,7 +181,7 @@ $(function() {
     });
   });
 
-/*
+
 //Accept cookies
   $('.accept-cookie-policy button').on('click', function (event) {
     console.log("prout");
@@ -196,7 +196,7 @@ $(function() {
 
       }
     });
-  });*/
+  });
 
 $('[data-toggle="tooltip"]').tooltip();
 

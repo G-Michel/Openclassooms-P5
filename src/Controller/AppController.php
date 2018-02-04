@@ -108,6 +108,7 @@ class AppController extends Controller
         }
         $response = new Response();
         $response->headers->setCookie(new Cookie('accept-cookie', 'true'));
-        return new Response("success");
+        return $response;
+        
   }
 }

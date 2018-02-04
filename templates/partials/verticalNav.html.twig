@@ -1,27 +1,27 @@
 <nav class="bg-dark sidebar d-flex flex-column justify-content-center">
     <ul class="nav nav-pills flex-column justify-content-around h-75">
-        <li class="nav-item">
+        <li data-toggle="tooltip" data-placement="top" title="Accueil" data-offset="-50 0" data-delay="400" class="nav-item">
             <a class="nav-link {% if route == 'home' or route == 'admin_home' %}active{% endif %}" href="{{ path('home') }}">
                 <svg class="nav-icons" >
                     <use xlink:href="{{ asset('images/icons/sprite.svg#home')}}">
                 </svg>
             </a>
         </li>
-        <li class="nav-item">
+        <li data-toggle="tooltip" data-placement="top" title="Ornidex: Tout les oiseaux" data-offset="-100 0" data-delay="400" class="nav-item">
             <a class="nav-link {% if route == 'taxref_index' or route == 'taxref_show' or route == 'taxref_search' %}active{% endif %}" href="{{ path('taxref_index') }}">
                 <svg class="nav-icons" >
                     <use xlink:href="{{ asset('images/icons/sprite.svg#dove')}}">
                 </svg>
             </a>
         </li>
-        <li class="nav-item">
+        <li data-toggle="tooltip" data-placement="top" title="Contact" data-offset="-50 0" data-delay="400" class="nav-item">
             <a class="nav-link {% if route == 'contact' %}active{% endif %}" href="{{ path('contact') }}">
                 <svg class="nav-icons" >
                     <use xlink:href="{{ asset('images/icons/sprite.svg#contact')}}">
                 </svg>
             </a>
         </li>
-        <li class="nav-item">
+        <li data-toggle="tooltip" data-placement="top" title="Les observations" data-offset="-50 0" data-delay="400" class="nav-item">
             <a class="nav-link {% if route == 'observation_index' or route == 'observation_show' %}active{% endif %}" href="{{ path('observation_index') }}">
                 <svg class="nav-icons" >
                     <use xlink:href="{{ asset('images/icons/sprite.svg#obs')}}">

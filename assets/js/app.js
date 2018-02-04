@@ -165,4 +165,41 @@ $(function() {
 });
 
 
+//Update notifications
+  $('.dropdown-event-listener').on('hidden.bs.dropdown', function () {
+    var result = $.ajax({
+      url : symfoUrlRoute,
+      type : 'GET',
+      data : 'seen=true',
+      dataType: 'html',
+      success : function(code_html, status){
+        if (code_html == 'nothing to flush'){}
+        else{
+          $('.notificationAreaNav').replaceWith(code_html);
+        }
+      }
+    });
+  });
+
+/*
+//Accept cookies
+  $('.accept-cookie-policy button').on('click', function (event) {
+    console.log("prout");
+    event.preventDefault();
+    var result = $.ajax({
+      url : cookiesAccepted,
+      type : 'GET',
+      data : 'cookie=ok',
+      dataType: 'html',
+      success : function(){
+    $(".alert").alert('close');
+
+      }
+    });
+  });*/
+
+$('[data-toggle="tooltip"]').tooltip();
+
+
+
 

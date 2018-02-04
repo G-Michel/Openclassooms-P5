@@ -182,5 +182,44 @@
     }
 
 
+//GEOLOCALISATION
+
+    // event for get my position button
+    var gpsCall = document.getElementById("getCurrentPosition");
+
+    gpsCall.addEventListener("click",function(e){
+      if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(onPositionReceived,locationNotReceived);
+      }
+    });
+
+    // Error handling
+    function locationNotReceived(positionError){
+      console.log(positionError);
+    }
+
+    //when clicked callback function
+    function onPositionReceived(position){
+
+      var geocoder = new google.maps.Geocoder();
+
+      var marker = new google.maps.Marker({
+        map,
+        position: position,
+        clickable: false,
+        draggable:true,
+        animation: google.maps.Animation.DROP,
+        icon: "{{ asset('images/map/marker.svg') }}"
+      });
+     
+      var gpsY =document.getElementById("observe_bird_location_location_gpsY");
+      var gpsX =document.getElementById("observe_bird_location_location_gpsX");
+
+      gpsY.value = position.coords.latitude;
+      gpsX.value = position.coords.longitude;
+
+      geocodeLatLng(geocoder, map, marker);
+    }
+
 
   </script>

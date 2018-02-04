@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Cookie;
+
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -58,6 +60,7 @@ class AppController extends Controller
      */
 	public function contact(Request $request)
 	{
+        
         $form = $this->createForm(ContactType::class);
 
         $form->handleRequest($request);
@@ -89,4 +92,22 @@ class AppController extends Controller
             'form' => $form->createView(),
         ]);
 	}
+
+
+
+
+    /**
+     * @Route("/admin/cookieAccept", name="cookie_accept")
+     * @Method("GET")
+     * @Cache(smaxage="10")
+     */
+  public function cookie_accept(Request $request)
+  {
+      if (!$request->isXmlHttpRequest()) {
+            return $this->redirectToRoute('admin_home');
+        }
+        $response = new Response();
+        $response->headers->setCookie(new Cookie('accept-cookie', 'true'));
+        return new Response("success");
+  }
 }

@@ -22,9 +22,12 @@
       {% set notifNumber = notifNumber + 1 %}
     {% endfor %}
 
-    <a  class="nav-link dropdown" href="#" id="dropdownMenuNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+    <a class="nav-link dropdown" href="#" id="dropdownMenuNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+    <span data-toggle="tooltip" data-placement="bottom" title="Notifications" data-delay="600">
       <i class="material-icons">notifications</i>
-      
+      </span >
       {% if notifNumber > 0%}
         <span class="badge badge-notify">{{notifNumber}}</span>
       {% endif %}
@@ -70,7 +73,7 @@
     {% endif %}
     <div class="dropdown-divider"></div>
       <a href="{{ path('admin_user_notifications')}}">
-        <h6 class="dropdown-header">
+        <h6 class="dropdown-item">
           <i class="material-icons notif-icon">notifications</i>
         Mes notifications
         </h6>

@@ -15,6 +15,7 @@
               autocomplete="off"
               autofocus
               data-no-results-message="<p class='pt-5 m-0 text-center text-white w-100'>Aucun résultat pour cette recherche</p>"
+              
       >
     </form>
 
@@ -96,7 +97,7 @@
           </a>
         </li> -->
         {% if not is_granted('ROLE_USER') %}
-          <li class="nav-item">
+          <li data-toggle="tooltip" data-placement="bottom" title="Se connecter" data-delay="600" class="nav-item">
             <a class="nav-link {% if route == 'login' %} active {% endif %}" href="{{ path('login') }}"><i class="material-icons">input</i></a>
           </li>
         {% endif %}

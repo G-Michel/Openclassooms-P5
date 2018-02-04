@@ -6,7 +6,13 @@
 
 {% block stylesheets %}{% endblock %}
 
+
 {% block mainLeft %}
+    <section class="logo-texte position-fixed w-75 px-5 text-center">
+          <svg class="w-75" >
+              <use xlink:href="{{ asset('images/icons/sprite.svg#logoTxt')}}">
+          </svg>
+    </section>
 <div id="main-left" class="col-lg-8 col-xl-9 px-sm-down-0">
     <div class="d-flex">
         <div class="container mt-auto mb-auto">

@@ -3,5 +3,12 @@
 	<p class="text-center text-primary">
 		<span>© Digitizer tout droits réservés</span>
 		<a href="{{ path('mentionsLegales')}}">Mentions Légales </a>
+		<a href="{{ path('login') }}">
+		{% if is_granted('ROLE_USER') %}
+		{% else %}
+		<span class="text-muted"><i class="material-icons foot-connect">input</i>
+		Se connecter</span></a>
+		{% endif %}
 	</p>
+
 </footer>

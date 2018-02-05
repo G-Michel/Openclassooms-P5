@@ -211,12 +211,30 @@ $(function() {
     var result = $.ajax({
       url : symfoUrlRoute,
       type : 'GET',
-      data : 'seen=true',
+      data : 'seen=desktop',
       dataType: 'html',
       success : function(code_html, status){
         if (code_html == 'nothing to flush'){}
         else{
           $('.notificationAreaNav').replaceWith(code_html);
+        }
+      }
+    });
+  });
+
+
+//Update notifications mobile
+  $('.navbarMobile').on('hidden.bs.dropdown', function () {
+    var result = $.ajax({
+      url : symfoUrlRoute,
+      type : 'GET',
+      data : 'seen=mobile',
+      dataType: 'html',
+      success : function(code_html, status){
+        if (code_html == 'nothing to flush'){}
+        else{
+        $('.navbarMobile').on('hidden.bs.dropdown', function () {
+          $('.mobile-notif-updater').replaceWith(code_html);});
         }
       }
     });

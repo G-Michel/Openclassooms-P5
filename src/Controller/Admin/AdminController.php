@@ -86,7 +86,7 @@ class AdminController extends Controller
         $toFlush=0;
         $seen = $request->query->get('seen');
 
-        if ($seen == "true" )
+        if ($seen == "desktop" || $seen == "mobile" )
         {
           $em = $this->getDoctrine()->getManager();
           $notifs = $this->get('session')->get("notificationUser");
@@ -108,7 +108,8 @@ class AdminController extends Controller
             if ($toFlush>0)
             {
               $em->flush();
-              return $this->render('partials/notificationAreaNav.html.twig');
+              if ($seen == "desktop") return $this->render('partials/notificationAreaNav.html.twig');
+              if ($seen == "mobile") return $this->render('partials/notificationMobileNav.html.twig');
             }
             else
             {

@@ -3,14 +3,14 @@
 
 {% block left %}
   	<h2 class="text-white display-4">Mon profil</h2>
-    <p class="text-primary lead">Editez vos informations personnelles</p> 
-        
+    <p class="text-primary lead">Editez vos informations personnelles</p>
+
 {% endblock %}
 
 
 {% block right %}
 	 <ul class="nav" id="myTab" >
-    
+
             <li class="nav-item col p-0">
             		{% if app.user.picture.url|length > 6 %}
             	<img class="pull-right" height="auto" width="100px" src="{{ app.user.picture.url }}">
@@ -23,7 +23,7 @@
             </li>
         </ul>
 
-        <div class="tab-content">
+        <div class="table-responsive">
 	 	<table class="table table-striped table-light ">
 	 		{{ form_start(form)}}
 	 		<tr class="invisible">
@@ -35,12 +35,12 @@
 	    			<h4>Photo de profil</h4>
 	    		</td>
 	    		<td class="">
-		    		<div class="d-none form_picture_class">	
-						{{ form_widget(form.picture.file)}}	
+		    		<div class="d-none form_picture_class">
+						{{ form_widget(form.picture.file)}}
 					</div>
 				</td>
 				<td>
-				
+
 	            </td>
 	    		<td class="text-primary form_picture_button">éditer</td>
 	    	</tr>
@@ -61,7 +61,7 @@
 		    			{{ form_widget(form.currentPassword,{ 'attr': {'placeholder': 'Entrez votre mot de passe actuel'} }) }}<br/>
 						{{ form_widget(form.resetPassword.plainPassword.first,{ 'attr': {'placeholder': 'Entrez le nouveu mot de passe'} }) }}<br/>
 						{{ form_widget(form.resetPassword.plainPassword.second,{ 'attr': {'placeholder': 'Repetez le mot de passe'} }) }}
-					
+
 					</div>
 	    		</td>
 	    		<td></td>
@@ -82,14 +82,14 @@
 	    		<td>
 		    		<div class="d-none form_surname_class">
 						{{ form_widget(form.surname)}}
-						
+
 					</div>
 	    		</td>
 	    		<td>{{app.user.getSurname()}}</td>
 	    		<td class="text-primary form_surname_button">éditer</td>
 	    	</tr>
     	</table>
-	
+
 		<input type="submit" name="Editer" class="btn btn-warning">
 
 				{{ form_rest(form)}}

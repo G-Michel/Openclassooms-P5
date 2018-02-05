@@ -22,7 +22,7 @@
             </a>
             <a href="{{ path('edit_profil') }}" class="dropdown-item">
               <i class="fa fa-user fa-fw"></i>Mon profil</a>
-            <a href="{{ path('edit_profil') }}" class="dropdown-item"> 
+            <a href="{{ path('admin_user_notifications')}}" class="dropdown-item"> 
               <i class="material-icons drop-notif-icon">notifications</i>Notifications
               {% if notificNumber > 0 %}<span class="text-danger pull-right">{{notificNumber}}</span>{% endif %}
             </a>

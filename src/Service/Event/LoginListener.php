@@ -11,8 +11,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 
-
-
 class LoginListener
 {
 

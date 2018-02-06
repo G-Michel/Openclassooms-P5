@@ -114,7 +114,7 @@ class UserManagementController extends Controller
                 array('user' => $user)),'text/html');
             $this->get('mailer')->send($message);
 
-            $this->addFlash('success',"Inscription complétée : vous allez recevoir un mail pour confirmer votre inscription");
+            $this->addFlash('success',"Inscription complétée: vous allez recevoir un mail pour confirmer votre inscription");
                         return $this->redirectToRoute('login');
 
         }
@@ -154,7 +154,7 @@ class UserManagementController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success',"Adresse Mail confirmée : Vous pouvez maintenant vous connecter");
+            $this->addFlash('success',"Adresse Mail confirmée: Vous pouvez maintenant vous connecter");
             return $this->redirectToRoute('login');
         }
         else
@@ -199,7 +199,7 @@ class UserManagementController extends Controller
 
                 if ($user == null)
                 {
-                    $this->addFlash('danger',"Facebook/Google erreur d'identification, veillez vous inscrire ");
+                    $this->addFlash('danger',"Facebook/Google: erreur d'identification, veillez vous inscrire ");
                     return $this->redirectToRoute('login');
                 }
                 if ($user->getOAuthUserID() == $encodedSub )
@@ -215,13 +215,13 @@ class UserManagementController extends Controller
                 }
                 else
                 {
-                    $this->addFlash('danger',"Facebook/Google Les informations de connection ne correspondent pas");
+                    $this->addFlash('danger',"Facebook/Google: Les informations de connection ne correspondent pas");
                     return $this->redirectToRoute('login');
                 }
             }
             else
             {
-                $this->addFlash('danger',"Facebook/Google Erreur d'authentification");
+                $this->addFlash('danger',"Facebook/Google: Erreur d'authentification");
                 return $this->redirectToRoute('login');
             }
         }
@@ -286,7 +286,7 @@ class UserManagementController extends Controller
             }
             else
             {
-                $this->addFlash('danger',"Erreur: Aucune addresse mail trouvée");
+                $this->addFlash('danger',"Erreur: Aucune adresse email trouvée");
                 return $this->redirectToRoute('login');
             }
         }
@@ -294,7 +294,7 @@ class UserManagementController extends Controller
             'form' => $form->createView(),
             'message' => array(
                 'Perte de mot de passe',
-                'Veuillez entrer votre addresse mail')]);
+                'Veuillez entrer votre adresse mail')]);
     }
 
     /**

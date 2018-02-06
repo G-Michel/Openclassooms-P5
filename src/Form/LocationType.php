@@ -15,12 +15,17 @@ class LocationType extends AbstractType
     {
         $builder
             ->add('gpsX', NumberType::class, [
+                'label' => "Longitude",
                 'invalid_message' => "Vous devez saisir une longitude valide"
             ])
             ->add('gpsY', NumberType::class, [
+                'label' => "Latitude",
                 'invalid_message' => "Vous devez saisir une latitude valide"
             ])
-            ->add('address', TextType::class)
+            ->add('address', TextType::class,[
+                "label" => "Adresse",
+                "attr" => ["placeholder" => "Veuillez entrer le lieu d'observation"]
+            ])
         ;
     }
 

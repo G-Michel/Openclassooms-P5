@@ -79,7 +79,7 @@ class AppController extends Controller
 
             $message2 = (new \Swift_Message("Copie de votre message - NAO"))
                 ->setFrom('Openclassroom5pteam@smtp.openclass-cours.ovh')
-                ->setTo($this->getUser()->getMail())
+                ->setTo($formData['mail'])
                 ->setBody( $this->renderView('mails/contactUs.html.twig',array(
                     "formData" => $formData)));
             $mailer->send($message);

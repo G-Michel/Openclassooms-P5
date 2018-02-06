@@ -22,7 +22,7 @@ class SetNotifToSession extends Event
 	{
 		$this->container = $container;
 	}
-
+	// on login put notification on session to let the user know if a notification has been pulled into database
 	public function putNotifOnSession()
 	{
 		$em = $this->container->get('doctrine.orm.entity_manager');
@@ -43,6 +43,7 @@ class SetNotifToSession extends Event
 
 	}
 
+	// update session array of user's notifications
 	public function updateNotifOnSession()
 	{
 		$em = $this->container->get('doctrine.orm.entity_manager');

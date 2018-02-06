@@ -167,7 +167,7 @@ class ObservationController extends Controller
         $form = $this->createForm(ObserveBirdDetailType::class, $observation);
         $options = [
             'page' => [
-                "subtitle" => "étape 3 - détail de l'observation"
+                "subtitle" => "étape 3 - détails de l'observation"
             ],
             'form' => [
                 "include_back_btn" => true,
@@ -230,7 +230,7 @@ class ObservationController extends Controller
                 $session->remove('observation');
                 $session->remove('step');
 
-                $this->addFlash('success', 'Observation ajouté avec succès !');
+                $this->addFlash('success', 'Observation ajoutée avec succès !');
 
                 return $this->redirectToRoute('admin_observation_show', ['id' => $observation->getId()]);
             }
@@ -287,7 +287,7 @@ class ObservationController extends Controller
         $em->persist($observation);
         $em->flush();
 
-        $this->addFlash('success', 'Observation modifié avec succès !');
+        $this->addFlash('success', 'Observation modifiée avec succès !');
 
         return $this->redirectToRoute('admin_observation_index');
       }
@@ -360,7 +360,7 @@ class ObservationController extends Controller
         $em->persist($notification);
         $em->flush();
 
-        $this->addFlash('success', 'Votre vérification a bien été pris en compte !');
+        $this->addFlash('success', 'Votre vérification a bien été prise en compte !');
 
         return $this->redirectToRoute('admin_observation_index');
     }

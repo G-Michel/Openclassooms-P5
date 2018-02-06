@@ -22,12 +22,16 @@ class ObservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('location', LocationType::class)
+            ->add('location', LocationType::class,[
+                'label' => 'Coordonées'
+            ])
             ->add('dateObs', DateTimePickerType::class, [
                 'label' => 'Observé le'
             ])
             ->add('comment', TextareaType::class,[
-                'required'  => false
+                'required'  => false,
+                'label'     => 'Commentaire',
+                'attr'      => ['placeholder' => "Un commentaire concernant l'observation ?"]
             ])
             ->add('bird', BirdType::class,[
                 'label' => false,
